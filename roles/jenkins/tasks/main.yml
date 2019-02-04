@@ -36,15 +36,16 @@
     update_cache: yes
     state: latest
     name: ['openjdk-8-jdk','openjdk-8-jre','jenkins']
+  notify: Start Jenkins
   tags:
     - Installing dependencies
 
 # Move to handlers later on
-- name: Start & Enable Jenkins
-  systemd:
-    name: jenkins
-    state: started
-    enabled: true
+#- name: Start & Enable Jenkins
+#  systemd:
+#    name: jenkins
+#    state: started
+#    enabled: true
 
 - name: Copying the initial Admin password
   become: true
@@ -54,5 +55,27 @@
 - debug:
     msg: output.stdout
 
+- name: Creating init.groovy.d
+  become: true
+  file: 
+    path: /var/lib/jenkins/init.groovy.d
+    state: directory
+    owner: root
+    group: root
+    mode: 0775
+
+- name: Copying Groovy file to target machine
+  template:
+    src:  setup-admin.groovy.j2
+    dest: /var/lib/jenkins/init.groovy.d/setup-admin.groovy
+  notify: Restart Jenkins
+
+#- name: Configure JVM Arguments
+#  lineinfile:
+#    dest: /etc/default/jenkins
+#    regexp: '^JAVA_ARGS='
+#    line: 'JAVA_ARGS="-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false"'
+#  notify:
+#    - Restart Jenkins
 
 # Next step is user creation and setup
