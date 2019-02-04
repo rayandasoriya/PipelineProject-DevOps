@@ -6,3 +6,53 @@
     update_cache: yes
   tags:
     - Update apt packages
+
+- name: Adding repository for Java
+  become: true
+  apt_repository:
+    repo: 'ppa:openjdk-r/ppa'
+  tags:
+    - Update apt packages
+
+- name: Adding the apt signing key for Jenkins
+  apt_key:
+    url: https://pkg.jenkins.io/debian/jenkins-ci.org.key
+    state: present
+  tags:
+    - Update apt packages
+
+- name: Creating a jenkins.list file in /etc/apt/sources.list.d/
+  become: true
+  lineinfile:
+    path: /etc/apt/sources.list.d/jenkins.list
+    line: 'deb http://pkg.jenkins.io/debian-stable binary/'
+    create: yes
+  tags:
+    - Update apt packages
+
+- name: Installing openjdk-8-jdk, openjdk-8-jre, Jenkins
+  become: true
+  apt:
+    update_cache: yes
+    state: latest
+    name: ['openjdk-8-jdk','openjdk-8-jre','jenkins']
+  tags:
+    - Installing dependencies
+
+# Move to handlers later on
+- name: Start & Enable Jenkins
+  systemd:
+    name: jenkins
+    state: started
+    enabled: true
+
+- name: Copying the initial Admin password
+  become: true
+  command: cat /var/lib/jenkins/secrets/initialAdminPassword
+  register: output
+
+- debug:
+    msg: output.stdout
+
+
+# Next step is user creation and setup
