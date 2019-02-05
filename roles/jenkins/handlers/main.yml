@@ -11,10 +11,3 @@
     name: jenkins
     state: restarted
  
- - name: Update apt packages
-  become: true
-  apt:
-    upgrade: yes
-    update_cache: yes
-  tags:
-    - Update apt packages
