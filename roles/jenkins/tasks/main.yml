@@ -42,7 +42,6 @@
   become: true
   apt:
     update_cache: yes
-    upgrade: yes
     state: latest
     force: yes
     name: ['openjdk-8-jdk','openjdk-8-jre']
@@ -57,7 +56,6 @@
   become: true
   apt:
     update_cache: yes
-    upgrade: yes
     state: latest
     force: yes
     name: ['jenkins']

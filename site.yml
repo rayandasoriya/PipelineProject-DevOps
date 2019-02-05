@@ -6,3 +6,4 @@
 
   roles: 
     - jenkins
+    - install-modules
