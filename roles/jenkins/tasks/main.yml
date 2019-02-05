@@ -47,13 +47,37 @@
 #    state: started
 #    enabled: true
 
-- name: Copying the initial Admin password
-  become: true
-  command: cat /var/lib/jenkins/secrets/initialAdminPassword
-  register: output
+# Check if you really need this file
+- name: Sleep for 10 seconds and continue with play
+  wait_for:
+    timeout: 10
 
-- debug:
-    msg: output.stdout
+- name: Copying jenkins.install.UpgradeWizard.state to target machine
+  copy:
+    src: jenkins.install.UpgradeWizard.state
+    dest: /var/lib/jenkins/jenkins.install.UpgradeWizard.state
+  notify: Restart Jenkins
+  tags: 
+    - Jenkins Configuration
+
+- name: "Turn off Jenkins setup wizard"
+  lineinfile:
+      dest: /etc/init.d/jenkins
+      regexp: '^JAVA_ARGS='
+      line: 'JAVA_ARGS="-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false"'
+      insertbefore: '^DAEMON_ARGS='
+  notify: Restart Jenkins
+  tags: 
+    - Jenkins Configuration
+
+# No longer need it
+#- name: Copying the initial Admin password
+#  become: true
+#  command: cat /var/lib/jenkins/secrets/initialAdminPassword
+#  register: output
+
+#- debug:
+#    msg: output.stdout
 
 - name: Creating init.groovy.d
   become: true
@@ -63,19 +87,16 @@
     owner: root
     group: root
     mode: 0775
+  tags: 
+    - Jenkins Configuration
 
 - name: Copying Groovy file to target machine
   template:
     src:  setup-admin.groovy.j2
     dest: /var/lib/jenkins/init.groovy.d/setup-admin.groovy
   notify: Restart Jenkins
+  tags: 
+    - Jenkins Configuration
 
-#- name: Configure JVM Arguments
-#  lineinfile:
-#    dest: /etc/default/jenkins
-#    regexp: '^JAVA_ARGS='
-#    line: 'JAVA_ARGS="-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false"'
-#  notify:
-#    - Restart Jenkins
 
 # Next step is user creation and setup
