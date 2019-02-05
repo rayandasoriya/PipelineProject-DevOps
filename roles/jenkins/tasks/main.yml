@@ -121,5 +121,9 @@
   tags: 
     - Jenkins Configuration
 
-
+- name: Restart Jenkins
+  become: true
+  systemd:
+    name: jenkins
+    state: restarted
 # Next step is user creation and setup
