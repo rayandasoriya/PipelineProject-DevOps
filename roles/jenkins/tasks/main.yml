@@ -30,12 +30,37 @@
   tags:
     - Update apt packages
 
-- name: Installing openjdk-8-jdk, openjdk-8-jre, Jenkins
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+  tags:
+    - Update apt packages
+
+- name: Installing openjdk-8-jdk, openjdk-8-jre
   become: true
   apt:
     update_cache: yes
+    upgrade: yes
     state: latest
-    name: ['openjdk-8-jdk','openjdk-8-jre','jenkins']
+    force: yes
+    name: ['openjdk-8-jdk','openjdk-8-jre']
+  tags:
+    - Installing dependencies
+  
+- name: Sleep for 10 seconds and continue with play
+  wait_for:
+    timeout: 10
+
+- name: Installing Jenkins
+  become: true
+  apt:
+    update_cache: yes
+    upgrade: yes
+    state: latest
+    force: yes
+    name: ['jenkins']
   notify: Start Jenkins
   tags:
     - Installing dependencies
