@@ -1,3 +1,4 @@
+
 - name: Get Jenkins crumb
   uri:
     user: admin
@@ -8,7 +9,7 @@
   register: crumb_token
   until: crumb_token.content.find('Please wait while Jenkins is getting ready') == -1
   retries: 10
-  delay: 5
+  delay: 10
 
 - name: Set crumb token
   set_fact:

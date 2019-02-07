@@ -1,1 +1,8 @@
-#NginX
+#Node
+
+- name: Installing Node
+  become: true
+  apt: 
+     name: ['npm','nodejs','nodejs-legacy']
+  tags:
+    - Installing dependencies
