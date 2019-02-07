@@ -9,3 +9,4 @@
     - install-modules
     - nginx
     - node
+    - mongodb
