@@ -1,13 +1,5 @@
 #MongoDB
 
-- name: start mongodb
-  systemd: 
-    name: mongod 
-    state: started
-vagrant@ubuntu-xenial:~/CSC519-Project$ cat roles/mongodb/tasks/main.yml 
-#MongoDB
-#MongoDB
-
 - name: Import the public key used by the PMS
   apt_key: 
     keyserver: hkp://keyserver.ubuntu.com:80 
