@@ -144,7 +144,7 @@
 
 - name: Copying the jenkins_job.ini file to target machine
   copy:
-    src: jenkins_job.ini
+    src: jenkins_jobs.ini
     dest: /etc/jenkins_job/
 
 - name: Disabling Security
@@ -166,3 +166,5 @@
 - name: Reloading Jenkins
   become: true
   command: curl -X POST http://admin:admin@127.0.0.1:8080/reload
+
+#jenkins-jobs --conf etc/jenkins_jobs.ini --user admin --password admin update tests/yamlparser/fixtures/templates002.yaml
