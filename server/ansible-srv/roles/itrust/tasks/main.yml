@@ -1,0 +1,23 @@
+---
+
+- name: Cloning iTrust
+  git:
+    repo: "https://github.com/rayandasoriya/iTrust.git"
+    dest: "{{home_path}}/itrust"
+    
+- file:
+    path:  "{{home_path}}/itrust/iTrust2"
+    mode: 0777
+
+- name: Copy a "db.properties.template" file on the remote machine for editing
+  copy:
+    src: itrust/iTrust2/src/main/java/db.properties.template
+    dest: itrust/iTrust2/src/main/java/db.properties
+    remote_src: yes
+
+- name: Copy a "email.properties.template" file on the remote machine for editing
+  copy:
+    src: itrust/iTrust2/src/main/java/email.properties.template
+    dest: itrust/iTrust2/src/main/java/email.properties
+    remote_src: yes
+
