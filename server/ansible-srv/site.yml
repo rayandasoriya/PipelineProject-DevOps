@@ -10,4 +10,7 @@
     - nginx
     - node
     - mongodb
+    - mysql
+    - maven
     - itrust
+

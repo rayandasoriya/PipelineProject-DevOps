@@ -1,0 +1,92 @@
+#should be part of a 'tasks'
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+  tags:
+    - Update apt packages
+ 
+#using debconf to specify the password 
+- name: Specify MySQL root password before installing
+  debconf: 
+    name: 'mysql-server' 
+    question: 'mysql-server/root_password'
+    value: '{{login_passwd_va | quote}}' 
+    vtype: 'password'
+  become: true
+  tags: 
+    - Setup Password
+
+- name: Confirm MySQL root password before installing
+  debconf: 
+    name: 'mysql-server' 
+    question: 'mysql-server/root_password_again' 
+    value: '{{login_passwd_va | quote}}' 
+    vtype: 'password'
+  become: true
+  tags: 
+    - Setup Password
+
+#Installing MySQL
+- name: Installing MySQL
+  become: true
+  apt:
+    update_cache: yes
+    state: latest
+    name: ['mysql-server', 'python3-pip', 'python-pip','python-mysqldb']
+  tags:
+    - dependencies
+
+# can notify 'Start MySQL' handler       
+- name: Install the Python MySQLB module
+  pip:
+    name: PyMySQL 
+  notify: Start MySQL
+  tags:
+    - dependencies
+
+- name: Creating a new Root User
+  mysql_user:
+    name: root
+    priv: "*.*:ALL,GRANT"
+    login_user: root
+    login_password: "test"
+    state: present
+  notify: Restart MySQL
+  tags: 
+    - Create User
+
+- name: Copying my.cnf global MySQL configuration.
+  template:
+    src: my.cnf.j2
+    dest: ~/.my.cnf
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart MySQL
+
+# 'Tasks'
+- name: Creating a database with name mattermost
+  mysql_db:
+    name: mattermost
+    state: present
+  tags: 
+    - Create Database
+
+# 'Tasks'
+- name: Creating a user with Username mmuser and Password - test
+  mysql_user:
+    name: mmuser
+    password: test
+    priv: '*.*:ALL' 
+    state: present
+  tags: 
+    - Create User
+
+# 'Tasks'
+- name: Giving Privileges to the created user for the database
+  mysql_user:
+    name: mmuser
+    priv: 'mattermost.*:ALL'
+    state: present
