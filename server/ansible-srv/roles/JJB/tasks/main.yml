@@ -1,0 +1,170 @@
+#-name: Intalling JJB
+#  pip:
+#    name: jenkins-job-builder
+
+#- name: Setting up directory structure for JJB
+#  file:
+#    path: /etc/jenkins_job/
+#    state: directory
+
+#- name: Copying the jenkins_job.ini file to target machine
+#  copy:
+#    path: jenkins_job.ini
+#    dest: /etc/jenkins_job/
+
+- name: Getting jenkins-job-builder repo
+  git:
+    repo: https://github.com/jubeenshah/jenkins-job-builder.git
+    dest: /home/vagrant/jenkins-job-builder
+    force: yes
+
+- name: Installing Python-pip
+  #become: true
+  apt:
+    name: python-pip
+
+- name: Install virtualenv via pip
+  pip:
+    name: virtualenv
+    executable: pip
+
+- name: Install requirements
+  pip: 
+    requirements: /home/vagrant/jenkins-job-builder/requirements.txt
+    virtualenv: /home/vagrant/jenkins-job-builder
+    virtualenv_python: python2.7
+
+- name: Manually create the initial virtualenv
+  command: virtualenv /home/vagrant/jenkins-job-builder -p python2.7 creates="/home/vagrant/jenkins-job-builder"  
+
+- name: Installing Pyyaml
+  #become: true
+  pip:
+    name: pyyaml
+    virtualenv: /home/vagrant/jenkins-job-builder
+    #ivirtualenv_command: virtualenv-3.4
+
+- name: Installing pbr
+  #become: true
+  pip:
+    name: pbr
+    virtualenv: /home/vagrant/jenkins-job-builder
+
+- name: Installing python-jenkins
+  #become: true
+  pip:
+    name: python-jenkins
+    virtualenv: /home/vagrant/jenkins-job-builder
+  
+- name: Installing Setuptools
+  #become: true
+  pip:
+    name: setuptools
+    virtualenv: /home/vagrant/jenkins-job-builder
+
+- name: Installing ordereddict
+  #become: true
+  pip:
+    name: ordereddict
+    virtualenv: /home/vagrant/jenkins-job-builder
+
+#- name: Installing jenkins-job-builder
+  #become: true
+ # command: python setup.py install
+ # args:
+ #   chdir: /home/vagrant/jenkins-job-builder
+ #   creates: .installed-jenkins.txt
+
+- name: Downloading Jenkins Cli
+  get_url:
+    url: http://localhost:8080/jnlpJars/jenkins-cli.jar
+    dest: /home/vagrant
+
+- name: Installing stevedore
+  #become: true
+  pip:
+    name: stevedore
+    virtualenv: /home/vagrant/jenkins-job-builder/
+
+- name: Installing fasteners
+  #become: true
+  pip:
+    name: fasteners
+    virtualenv: /home/vagrant/jenkins-job-builder/
+
+- name: Intalling JJB
+ # become: true
+  pip:
+    name: jenkins-job-builder
+
+- name: Installing jenkins-job-builder
+  #become: true
+  command: python setup.py install
+  args:
+    chdir: /home/vagrant/jenkins-job-builder
+    creates: .installed-jenkins.txt
+
+#- name: Installing dependencies
+#  pip:
+#    requirements: /home/vagrant/jenkins-job-builder/requirements.txt 
+
+#- name: Installing dependencies
+#  become: true
+#  pip:
+#    name: setuptools
+
+#- name: Installing setuptools
+#  become: true
+#  apt:
+#    name: python-setuptools
+
+#- name: Installing jenkins-job-builder
+#  become: true
+#  command: python setup.py install
+#  args:
+#    chdir: /home/vagrant/jenkins-job-builder
+#    creates: .installed-jenkins.txt
+    #remote_src: true
+#  register: test
+
+#- name: debug
+#  debug:
+#    var: test.stderr
+
+- name: Ensuring Install
+  command: pip install -r requirements.txt
+  args:
+    creates: .exececuted.txt
+    chdir: /home/vagrant/jenkins-job-builder
+
+- name: Setting up directory structure for JJB
+  file:
+    path: /etc/jenkins_job/
+    state: directory
+
+- name: Copying the jenkins_job.ini file to target machine
+  copy:
+    src: jenkins_jobs.ini
+    dest: /etc/jenkins_job/
+
+- name: Disabling Security
+  become: true
+  copy:
+    src: config.xml
+    dest: /var/lib/jenkins/config.xml
+
+- name: Restart Jenkins
+  become: true
+  systemd:
+    name: jenkins
+    state: restarted
+
+- name: Sleep
+  wait_for:
+    timeout: 5
+
+- name: Reloading Jenkins
+  become: true
+  command: curl -X POST http://admin:admin@127.0.0.1:8080/reload
+
+#jenkins-jobs --conf etc/jenkins_jobs.ini --user admin --password admin update tests/yamlparser/fixtures/templates002.yaml

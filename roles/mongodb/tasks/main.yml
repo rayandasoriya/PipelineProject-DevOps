@@ -1,0 +1,143 @@
+#MongoDB
+
+- name: Import the public key used by the PMS
+  apt_key: 
+    keyserver: hkp://keyserver.ubuntu.com:80 
+    id: 7F0CEB10 
+    state: present
+
+- name: Add MongoDB repository
+  apt_repository: 
+    repo: 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' 
+    state: present
+
+- name: install mongodb 
+  apt: 
+    pkg: mongodb 
+    state: latest 
+    update_cache: yes 
+#  notify: 
+#    - start mongodb
+
+- name: Creating /data/db
+  file: 
+    path: /data/db
+    state: directory
+    mode: 0777
+
+- name: Installing Python-Pip
+  apt:
+    name: ['python3-pip']
+    state: latest
+    
+- name: Install the latest pymongo package
+  pip: 
+    name: pymongo==3.5.1 
+    use_mirrors: no
+
+- name: Create mongodb Database and User
+  become: true
+  mongodb_user:
+    database: admin
+    name: "admin"
+    password: "admin"
+    state: present
+    roles: readWrite,dbAdmin,userAdmin
+
+- name: Creating a sevice file 
+  copy: 
+    src: mongodb.service
+    dest: /lib/systemd/system/mongodb.service
+    mode: 0777
+
+- name: Cloning repository
+  git:
+    repo: "https://github.com/jubeenshah/checkbox.io.git"
+    dest: "{{home_path}}/checkbox.io"
+
+- name: Create mongodb Database and User
+  mongodb_user:
+    database: admin
+    name: "{{env_vars.MONGO_USER}}"
+    password: "{{env_vars.MONGO_PASSWORD}}"
+    state: present
+    roles: readWrite,dbAdmin,userAdmin
+
+- name: NPM Install (NPM Module)
+  become: true
+  npm:
+    global: yes
+    path: "{{home_path}}/checkbox.io/server-side/site/"
+    state: present
+
+- name: NPM Install (shell command)
+  become: true
+  shell: npm install
+  args:  
+    chdir: "{{home_path}}/checkbox.io/server-side/site/"
+    creates: .modules-installed.txt
+
+- name: Installing pm2
+  npm:
+    name: pm2
+    global: yes
+    state: present
+
+- name: "Check list of Node.js apps running."
+  become: no
+  command: pm2 list
+  register: pm2
+  changed_when: false
+
+- name: Installing express
+  become: true
+  apt:
+    name: ['node-express-generator']
+    state: present
+
+#- name: Linking dependencies
+ # become: true
+ # shell: npm link cors
+ # args:
+ #   creates: .link-cors.txt 
+
+- name: Installing dependencies
+  become: true
+  npm:
+    name: cors
+    global: yes
+    state: present
+
+#- name: NPM Install (shell command)
+#  become: true
+#  shell: npm install -g
+#  args:
+#    chdir: "{{home_path}}/checkbox.io/server-side/site/"
+#    creates: .modules-installed.txt
+
+- name: "Start checkbox api server app."
+  become: true
+  shell: pm2 start server.js -f
+  args:
+   chdir: "{{home_path}}/checkbox.io/server-side/site/"
+  environment: "{{env_vars}}"
+  #when: "pm2.stdout.find('server') == -1"
+
+- name: update config file
+  blockinfile:
+    dest: "{{nginx_config_path}}"
+    insertbefore: "sendfile on;"
+    block: "upstream app_nodejs_design {
+      server 127.0.0.1:3002;
+      }"
+
+- name: Replacing the site-enable config
+  template:
+    force: yes
+    src: "templates/default.conf.j2"
+    dest: "{{nginx_sites_path}}"
+    mode: 0700
+
+- service: 
+    name: nginx
+    state: restarted
