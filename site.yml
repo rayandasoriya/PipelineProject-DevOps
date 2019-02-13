@@ -10,3 +10,6 @@
     - nginx
     - node
     - mongodb
+    - JJB
+    - mysql
+    - maven
