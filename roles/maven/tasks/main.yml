@@ -56,6 +56,10 @@
 
 - name: Set root user password
   become: true
+  run_once: true
+  ignore_errors: true
   shell: mysqladmin -u root -p'test' password ''
   args: 
     creates: .removedPassword.txt
+  tags:
+    - run_once

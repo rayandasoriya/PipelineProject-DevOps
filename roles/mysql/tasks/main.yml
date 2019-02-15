@@ -47,6 +47,7 @@
     - dependencies
 
 - name: Creating a new Root User
+  ignore_errors: true
   mysql_user:
     name: root
     priv: "*.*:ALL,GRANT"
@@ -56,6 +57,7 @@
   notify: Restart MySQL
   tags: 
     - Create User
+    - run_once
 
 - name: Copying my.cnf global MySQL configuration.
   template:
@@ -66,27 +68,3 @@
     mode: 0644
   notify: Restart MySQL
 
-# 'Tasks'
-- name: Creating a database with name mattermost
-  mysql_db:
-    name: mattermost
-    state: present
-  tags: 
-    - Create Database
-
-# 'Tasks'
-- name: Creating a user with Username mmuser and Password - test
-  mysql_user:
-    name: mmuser
-    password: test
-    priv: '*.*:ALL' 
-    state: present
-  tags: 
-    - Create User
-
-# 'Tasks'
-- name: Giving Privileges to the created user for the database
-  mysql_user:
-    name: mmuser
-    priv: 'mattermost.*:ALL'
-    state: present

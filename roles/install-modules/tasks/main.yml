@@ -1,4 +1,3 @@
-
 - name: Get Jenkins crumb
   uri:
     user: admin
@@ -7,13 +6,20 @@
     url: "http://127.0.0.1:8080/crumbIssuer/api/json"
     return_content: yes
   register: crumb_token
+  run_once: true
+  ignore_errors: true
   until: crumb_token.content.find('Please wait while Jenkins is getting ready') == -1
   retries: 10
   delay: 10
+  tags:
+    - run_once
 
 - name: Set crumb token
+  ignore_errors: true
   set_fact:
     crumb: "{{ crumb_token.json.crumbRequestField }}={{ crumb_token.json.crumb }}"
+  tags:
+    - run_once
 
 #- name: Install plugin
 #  jenkins_plugin:
@@ -24,6 +30,8 @@
 #  notify: Restart Jenkins
 
 - name: Install plugins
+  run_once: true
+  ignore_errors: true
   uri:
     user: admin
     password: "admin"
@@ -41,9 +49,13 @@
     - 'maven-plugin'
     - 'junit'
     - 'postbuild-task'
-    - 'jacoco'
+    - 'jacoco'  
+  tags:
+    - run_once
 
 - name: Wait for plugins to be installed
+  run_once: true
+  ignore_errors: true
   uri:
     user: admin
     password: "admin"
@@ -58,6 +70,8 @@
   delay: 10
 #- debug:
 #    var: "{{plugin_status.stdout}}"
+  tags:
+    - run_once
 
 - name: Restart Jenkins
   become: true
