@@ -77,7 +77,7 @@
 
 - name: Downloading Jenkins Cli
   get_url:
-    url: http://localhost:8080/jnlpJars/jenkins-cli.jar
+    url: http://localhost:9999/jnlpJars/jenkins-cli.jar
     dest: /home/vagrant
 
 - name: Installing stevedore
@@ -165,6 +165,6 @@
 
 - name: Reloading Jenkins
   become: true
-  command: curl -X POST http://admin:admin@127.0.0.1:8080/reload
+  command: curl -X POST http://admin:admin@127.0.0.1:9999/reload
 
 #jenkins-jobs --conf etc/jenkins_jobs.ini --user admin --password admin update tests/yamlparser/fixtures/templates002.yaml

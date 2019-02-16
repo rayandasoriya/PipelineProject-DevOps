@@ -121,6 +121,13 @@
   tags: 
     - Jenkins Configuration
 
+- name: Copying the default configuration on target machine
+  template:
+    src: jenkins.j2
+    dest: /etc/default/jenkins
+  tags:
+    - Jenkins Configuration
+
 - name: Restart Jenkins
   become: true
   systemd:
