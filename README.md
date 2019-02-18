@@ -54,8 +54,6 @@ We set the permissions for the public key file using the command:
 
 ```chmod 600 ~/.ssh/web-srv```
 
-<img width="528" alt="screenshot 2019-02-17 at 7 18 28 pm" src="https://media.github.ncsu.edu/user/12952/files/d2167780-32e8-11e9-8b96-ba6aec9bc490">
-
 We then copy the public key (web-srv.pub) present in the jenkins-srv folder and paste it in the authorized_keys file inside the .ssh folder in the jenkins server.
 
 <img width="1440" alt="screenshot 2019-02-17 at 7 15 08 pm" src="https://media.github.ncsu.edu/user/12952/files/5ae0e380-32e8-11e9-8893-528cf0eaa5c3">
