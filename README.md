@@ -37,14 +37,11 @@ We have created two bash script:
  
 These can be used to create and destroy the servers respectively.
 
-We bake the configuration server (ansible server) from inside the ansible-srv folder in servers folder, using the following command: 
+We create the configuration server (ansible server) from inside the ansible-srv folder in servers folder, using the following command: 
 
 ```baker bake```
 
-We then bake the jenkins server from inside the jenkins-srv folder in servers folder, using the following command: 
-
-
-
+We then create the jenkins server from inside the jenkins-srv folder in servers folder.
 
 We then copy the private key (web-srv) present in the jenkins-srv folder and paste it in a web-srv folder (new created) inside the .ssh folder inside configuration server.
 
