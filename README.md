@@ -95,11 +95,5 @@ We can also verify if the web application checkbox.io has been deployed, by open
 We can also verify if the jenkins server has been deployed, by opening the web browser at http://192.168.33.100:8080
 
 <img width="1440" alt="screenshot 2019-02-17 at 10 29 31 pm" src="https://media.github.ncsu.edu/user/12952/files/95a44500-3303-11e9-8642-dd3e68a95e08">
-    
-<img width="1440" alt="screenshot 2019-02-17 at 10 26 33 pm" src="https://media.github.ncsu.edu/user/12952/files/1a429380-3303-11e9-834b-431934ffea34">
-
-<img width="1440" alt="screenshot 2019-02-17 at 10 27 13 pm" src="https://media.github.ncsu.edu/user/12952/files/2fb7bd80-3303-11e9-9686-0861183d06ea">
-
-<img width="1440" alt="screenshot 2019-02-17 at 10 31 34 pm" src="https://media.github.ncsu.edu/user/12952/files/cbe1c480-3303-11e9-828a-d89c110d6e5f">
 
 <img width="1440" alt="screenshot 2019-02-17 at 10 27 33 pm" src="https://media.github.ncsu.edu/user/12952/files/3cd4ac80-3303-11e9-8a29-7745b2b7c8d1">
