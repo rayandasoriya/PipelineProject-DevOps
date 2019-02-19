@@ -42,7 +42,7 @@
 - name: Install the Python MySQLB module
   pip:
     name: PyMySQL 
-  notify: Start MySQL
+  #notify: Start MySQL
   tags:
     - dependencies
 
@@ -54,7 +54,7 @@
     login_user: root
     login_password: "test"
     state: present
-  notify: Restart MySQL
+  #notify: Restart MySQL
   tags: 
     - Create User
     - run_once
@@ -66,5 +66,5 @@
     owner: root
     group: root
     mode: 0644
-  notify: Restart MySQL
+  #notify: Restart MySQL
 

@@ -3,11 +3,11 @@
 ## Milestone 1 - Configuration Management & Build
 
 ![](./resources/01-NCSU-Logo.png)
-| [MILESTONE 1]() | [MILESTONE 2]() | [MILESTONE 3]() | [MILESTONE 4]() |
+| [MILESTONE 1](#) | [MILESTONE 2](#) | [MILESTONE 3](#) | [MILESTONE 4](#) |
 
 # Content
 1. [Our Team](#our-team)
-2. [About the Project](#about-the-project)
+2. [About the Milestone](#about-the-milestone)
 3. [Pre-requisites](#prerequisites)
 4. [Setup Instructions](#setup-instructions)
 	1. [Cloning](#cloning)
@@ -22,7 +22,7 @@
 * Rayan Dasoriya([rdasori](mailto:rdasori@ncsu.edu))
 * Shraddha Bhadauria([sbhadau](mailto:sbhadau@ncsu.edu))
 
-## About the project
+## About the milestone
 
 Continuous Delivery (CD) is a software strategy that enables organizations to deliver new features to users as fast and efficiently as possible. The goal of Continuous Delivery is to enable a constant flow of changes into production via an automated software production line. A typical CD pipeline will include the following stages: configuration management and build automation; test automation; and deployment automation.
 
@@ -60,13 +60,13 @@ Go to the CSC519-Project directory. To begin with the setup, we have created two
     
 To start and stop the server, we can use `start-server.sh` and `stop-server.sh` respectively. The `start-server.sh` will create the two servers by running `baker bake` and will also generate a public-private key pair(web-srv) which will be used for setting up the connection between the configuration server and the Jenkins server. The `stop-server.sh` will be used to destroy the servers using `baker destroy`.
  
-After the successful configuration of the two servers, we will create an SSH connection between the two servers. We will copy the private key (web-srv) present in the jenkins-srv folder, do `baker ssh` and then paste it in a newly created web-srv (`vi .ssh/web-srv`) file inside the .ssh folder inside configuration server. Change the permission of the private key using the command:
+After the successful configuration of the two servers, we will create an SSH connection between the two servers. We will copy the private key (web-srv) generated in the jenkins-srv folder, do `baker ssh` and then paste it in a newly created web-srv (`vi .ssh/web-srv`) file inside the .ssh folder inside configuration server. Change the permission of the private key using the command:
 
 ```
 chmod 600 ~/.ssh/web-srv
 ```
 
-Now, copy the public key (web-srv.pub) present in the jenkins-srv folder, do `baker ssh` and paste it in the authorized_keys file inside the .ssh folder (`vi .ssh/authorized_keys`) in the Jenkins server.
+Now, copy the public key (web-srv.pub) generated in the jenkins-srv folder, do `baker ssh` and paste it in the authorized_keys file inside the .ssh folder (`vi .ssh/authorized_keys`) in the Jenkins server.
 
 We have setup an ssh access from the configuration server to the Jenkins server. To test this, run the following command from the configuration server:
 
@@ -114,7 +114,7 @@ A snippet of the successful completion of the ansible playbook is illustrayted b
 
 <img width="1440" alt="script" src="./resources/script.png">
 
-We can also verify if the jenkins server has been deployed and the build is successful, by opening the web browser at http://192.168.33.100:9999
+We can also verify if the jenkins server has been deployed and the build is successful, by opening the web browser at [http://192.168.33.100:9999](http://192.168.33.100:9999)
 
 <img width="1440" alt="jenkins" src="./resources/jenkins.jpg">
 

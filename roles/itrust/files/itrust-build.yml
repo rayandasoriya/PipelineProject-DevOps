@@ -13,7 +13,7 @@
         maven-version: mvn
         pom: /home/vagrant/iTrust/iTrust2/pom.xml
         goals: clean test verify checkstyle:checkstyle
-    - maven-target:
-        maven-version: mvn
-        pom: /home/vagrant/iTrust/iTrust2/pom.xml
-        goals: jetty:run
+    #- maven-target:
+    #    maven-version: mvn
+    #    pom: /home/vagrant/iTrust/iTrust2/pom.xml
+    #    goals: jetty:run
