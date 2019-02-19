@@ -8,7 +8,7 @@
 # Content
 1. [Our Team](#our-team)
 2. [About the Project](#about-the-project)
-3. [Pre-requisites]()
+3. [Pre-requisites](#rerequisites)
 4. [Setup Instructions](#setup-instructions)
 	1. [Cloning](#cloning)
 	2. [Build and Deployment](#build-and-deployment)
@@ -125,11 +125,11 @@ We can also verify if the jenkins server has been deployed, by opening the web b
 
 <img width="1440" alt="screenshot 2019-02-17 at 10 27 33 pm" src="https://media.github.ncsu.edu/user/12952/files/3cd4ac80-3303-11e9-8a29-7745b2b7c8d1">
 
-### Screencast
+## Screencast
 
 The screencast for Milestone 1 is available [here]().
 
-### References
+## References
 
 [[1] https://github.com/CSC-DevOps/Course/blob/master/Project/CM.md](https://github.com/CSC-DevOps/Course/blob/master/Project/CM.md "https://github.com/CSC-DevOps/Course/blob/master/Project/CM.md")
 
