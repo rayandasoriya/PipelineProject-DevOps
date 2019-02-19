@@ -8,7 +8,7 @@
 # Content
 1. [Our Team](#our-team)
 2. [About the Project](#about-the-project)
-3. [Pre-requisites](#rerequisites)
+3. [Pre-requisites](#prerequisites)
 4. [Setup Instructions](#setup-instructions)
 	1. [Cloning](#cloning)
 	2. [Build and Deployment](#build-and-deployment)
@@ -101,29 +101,15 @@ If we are running the site.yml file twice, we have to use the `skip-tags` to ens
 ansible-playbook site.yml -i inventory --skip-tags "run_once" 
 ```
 
-<img width="1440" alt="screenshot 2019-02-17 at 9 54 28 pm" src="https://media.github.ncsu.edu/user/12952/files/b1591c80-32fe-11e9-8fff-49e3d7b07199">
+A snippet of the successful completion of the ansible playbook is illustrayted below:
 
-<img width="1440" alt="screenshot 2019-02-17 at 9 56 29 pm" src="https://media.github.ncsu.edu/user/12952/files/e5ccd880-32fe-11e9-8c20-aff6df3f1028">
+<img width="1440" alt="script" src="./resources/script.png">
 
-<img width="1440" alt="screenshot 2019-02-17 at 9 56 58 pm" src="https://media.github.ncsu.edu/user/12952/files/f715e500-32fe-11e9-9794-220fbfd80387">
 
-<img width="1440" alt="screenshot 2019-02-17 at 9 57 19 pm" src="https://media.github.ncsu.edu/user/12952/files/02691080-32ff-11e9-9dc6-2b867b205290">
+We can also verify if the jenkins server has been deployed and the build is successful, by opening the web browser at http://192.168.33.100:8080
 
-<img width="1440" alt="screenshot 2019-02-17 at 9 57 45 pm" src="https://media.github.ncsu.edu/user/12952/files/114fc300-32ff-11e9-9af0-8d6cf9bc9100">
+<img width="1440" alt="jenkins" src="./resources/jenkins.jpg">
 
-<img width="1440" alt="screenshot 2019-02-17 at 9 58 04 pm" src="https://media.github.ncsu.edu/user/12952/files/1d3b8500-32ff-11e9-8066-2a1eafba430e">
-
-<img width="1440" alt="screenshot 2019-02-17 at 9 58 19 pm" src="https://media.github.ncsu.edu/user/12952/files/24fb2980-32ff-11e9-9b99-5dee569ce61c">
-
-We can also verify if the web application checkbox.io has been deployed, by opening the web browser at http://192.168.33.100
-
-<img width="1440" alt="screenshot 2019-02-17 at 10 21 07 pm" src="https://media.github.ncsu.edu/user/12952/files/5e816400-3302-11e9-965f-aac1114b2a7a">
-
-We can also verify if the jenkins server has been deployed, by opening the web browser at http://192.168.33.100:8080
-
-<img width="1440" alt="screenshot 2019-02-17 at 10 29 31 pm" src="https://media.github.ncsu.edu/user/12952/files/95a44500-3303-11e9-8642-dd3e68a95e08">
-
-<img width="1440" alt="screenshot 2019-02-17 at 10 27 33 pm" src="https://media.github.ncsu.edu/user/12952/files/3cd4ac80-3303-11e9-8a29-7745b2b7c8d1">
 
 ## Screencast
 
