@@ -1,6 +1,6 @@
 # CSC519-Project
 
-## Configuration Management & Build Milestone
+## Milestone 1 - Configuration Management & Build
 
 ![](./resources/01-NCSU-Logo.png)
 | [MILESTONE 1]() | [MILESTONE 2]() | [MILESTONE 3]() | [MILESTONE 4]() |
@@ -8,11 +8,12 @@
 # Content
 1. [Our Team](#our-team)
 2. [About the Project](#about-the-project)
-2. [Pre-requisites]()
-3. [Two Easy steps]()
-	1. [Cloning]()
-	2. [Build and Deployment]()
-4. [Screencast Link]()
+3. [Pre-requisites]()
+4. [Setup Instructions](#setup-instructions)
+	1. [Cloning](#cloning)
+	2. [Build and Deployment](#build-and-deployment)
+5. [Screencast](#screencast)
+6. [References](#references)
 
 ## Our Team
 
@@ -28,37 +29,77 @@ Continuous Delivery (CD) is a software strategy that enables organizations to de
 In this milestone, we have demonstrated the build automation and configuration management using Ansible. We have:
 
 * Provisioned a configuration server ([Ansible](https://www.ansible.com)) and a [Jenkins](https://jenkins.io) server on remote virtual machine instances.
-* Configured the jenkins server, automatically using ansible.
-* Used a [jenkins-job-builder](https://docs.openstack.org/infra/jenkins-job-builder/) and ansible, to automatically setup build jobs for two applications:
-	* A nodejs web application [`checkbox.io`](https://github.com/chrisparnin/checkbox.io)
+* Configured the Jenkins server, automatically using Ansible.
+* Used a [jenkins-job-builder](https://docs.openstack.org/infra/jenkins-job-builder/) and Ansible, to automatically setup build jobs for two applications:
+	* A Nodejs web application [`checkbox.io`](https://github.com/chrisparnin/checkbox.io)
 	* An "enterprise" Java system [`iTrust`](https://github.ncsu.edu/engr-csc326-staff/iTrust2-v4/tree/master/iTrust2)
 * Used a combination of [mocha](https://www.npmjs.com/package/mocha)/[pm2](https://www.npmjs.com/package/pm2), to create a test script that will start and stop the `checkbox.io` service on the server.
 * Created a git hook to trigger a build when a push is made to the repo.
 
-### Setup Instructions
+## Prerequisites
+To run this project, you will require the following tools:
+1. [Virtualbox](https://www.virtualbox.org/) (Recommended v5.2.2)
+2. [Baker](https://getbaker.io/)
 
-Clone the repository using ```git clone https://github.ncsu.edu/jnshah2/CSC519-Project.git``` and go inside the CSC519-Project directory. To begin with the setup, we have created two local VMs using Baker.
+## Setup Instructions
+
+### Cloning
+
+Clone this repository.
+
+```
+git clone https://github.ncsu.edu/jnshah2/CSC519-Project.git
+```
+
+### Build and Deployment
+
+Go to the CSC519-Project directory. To begin with the setup, we have created two local VMs using Baker.
 
     (i)  Configuration Server (Ansible Server)
     (ii) Jenkins Server
     
-To start and stop the server, we can use `start-server.sh` and `stop-server.sh`respectively. The `start-server.sh` will create the two servers by running `baker bake` and will also generate a public-priavte key pair(web-srv) which will be used for setting up the conncetion between the configiuration server and the Jenkins server. The `stop-server.sh` will be used to destroy the servers using `baker destroy`.
+To start and stop the server, we can use `start-server.sh` and `stop-server.sh` respectively. The `start-server.sh` will create the two servers by running `baker bake` and will also generate a public-private key pair(web-srv) which will be used for setting up the connection between the configuration server and the Jenkins server. The `stop-server.sh` will be used to destroy the servers using `baker destroy`.
  
 After the successful configuration of the two servers, we will create an SSH connection between the two servers. We will copy the private key (web-srv) present in the jenkins-srv folder, do `baker ssh` and then paste it in a newly created web-srv (`vi .ssh/web-srv`) file inside the .ssh folder inside configuration server. Change the permission of the private key using the command:
 
 ```chmod 600 ~/.ssh/web-srv```
 
-Now, copy the public key (web-srv.pub) present in the jenkins-srv folder, do `baker ssh` and paste it in the authorized_keys file inside the .ssh folder (`vi .ssh/authorized_keys`) in the jenkins server.
+Now, copy the public key (web-srv.pub) present in the jenkins-srv folder, do `baker ssh` and paste it in the authorized_keys file inside the .ssh folder (`vi .ssh/authorized_keys`) in the Jenkins server.
 
-We have setup an ssh access from the configuration serevr to the jenkins server. To test this, run the following command from the configuration serevr:
+We have setup an ssh access from the configuration server to the Jenkins server. To test this, run the following command from the configuration server:
 
 ```ssh -i ~/.ssh/web-srv vagrant@192.168.33.100```
 
 <img width="1440" alt="screenshot 2019-02-17 at 7 21 16 pm" src="https://media.github.ncsu.edu/user/12952/files/35a0a500-32e9-11e9-840f-ed8035b887df">
 
-Now, from the ansible-srv folder inside the configuration server, we run our site.yml file, ie. our ansible playbook to install and configure the jenkins server and it's dependencies on the jenkins server. We use the following command:
+Now, from the ansible-srv folder inside the configuration server, we run our site.yml file. The site.yml file contains several roles.
 
-```ansible-playbook site.yml -i inventory```
+<img width="400" alt="role" src="./resources/role.png">
+
+1. build - Running the build job for Checkbox.io and iTrust
+2. checkbox - Cloning and configuring he checkbox.io
+3. chrome - Installing headless chrome for iTrust
+4. install-modules - Installing the prerequisite modules
+5. itrust - Cloning the iTrust Repo
+6. jenkins - Installing and configuring Jenkins
+7. JJB - Jenkins Job Builder
+8. maven - Installing and configuring Maven
+9. mongodb - Installing and configuring MongoDB
+10. mysql - Installing and configuring MySQL
+11. nginx  - Installing and configuring Nginx web server
+12. node - Installing Node.js
+
+We will run the site.yml file with the inventory(to target the Jenkins server) to install these dependencies and run the build for checkbox.io and iTrust. We use the following command:
+
+```
+ansible-playbook site.yml -i inventory
+```
+
+If we are running the site.yml file twice, we have to use the `skip-tags` to ensure the idempotency of the system. If you are running the file more than once, we recommend this command to avoid the build failures:
+
+```
+ansible-playbook site.yml -i inventory --skip-tags "run_once" 
+```
 
 <img width="1440" alt="screenshot 2019-02-17 at 9 54 28 pm" src="https://media.github.ncsu.edu/user/12952/files/b1591c80-32fe-11e9-8fff-49e3d7b07199">
 
@@ -73,10 +114,6 @@ Now, from the ansible-srv folder inside the configuration server, we run our sit
 <img width="1440" alt="screenshot 2019-02-17 at 9 58 04 pm" src="https://media.github.ncsu.edu/user/12952/files/1d3b8500-32ff-11e9-8066-2a1eafba430e">
 
 <img width="1440" alt="screenshot 2019-02-17 at 9 58 19 pm" src="https://media.github.ncsu.edu/user/12952/files/24fb2980-32ff-11e9-9b99-5dee569ce61c">
-
-Once the playbook has successfully completed running all the tasks, we can ssh into the jenkins server to check if the checkbox.io folder and the iTrust folder have been created. 
-
-<img width="1440" alt="screenshot 2019-02-17 at 10 00 20 pm" src="https://media.github.ncsu.edu/user/12952/files/70153c80-32ff-11e9-84e5-59d735d35e4b">
 
 We can also verify if the web application checkbox.io has been deployed, by opening the web browser at http://192.168.33.100
 
