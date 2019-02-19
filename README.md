@@ -1,6 +1,6 @@
 # CSC519-Project
 
-## Connfiguration Management & Build Milestone
+## Configuration Management & Build Milestone
 
 ![](./resources/01-NCSU-Logo.png)
 | [MILESTONE 1]() | [MILESTONE 2]() | [MILESTONE 3]() | [MILESTONE 4]() |
@@ -23,7 +23,9 @@
 
 ## About the project
 
-In this part of the project we have:
+Continuous Delivery (CD) is a software strategy that enables organizations to deliver new features to users as fast and efficiently as possible. The goal of Continuous Delivery is to enable a constant flow of changes into production via an automated software production line. A typical CD pipeline will include the following stages: configuration management and build automation; test automation; and deployment automation.
+
+In this milestone, we have demonstrated the build automation and configuration management using Ansible. We have:
 
 * Provisioned a configuration server ([Ansible](https://www.ansible.com)) and a [Jenkins](https://jenkins.io) server on remote virtual machine instances.
 * Configured the jenkins server, automatically using ansible.
@@ -33,39 +35,22 @@ In this part of the project we have:
 * Used a combination of [mocha](https://www.npmjs.com/package/mocha)/[pm2](https://www.npmjs.com/package/pm2), to create a test script that will start and stop the `checkbox.io` service on the server.
 * Created a git hook to trigger a build when a push is made to the repo.
 
-### Step-wise implementation:<br/>
+### Setup Instructions
 
-We create two local virtual machines using baker. The two machines are:
+Clone the repository using ```git clone https://github.ncsu.edu/jnshah2/CSC519-Project.git``` and go inside the CSC519-Project directory. To begin with the setup, we have created two local VMs using Baker.
 
-    (i)  Configuration Server
+    (i)  Configuration Server (Ansible Server)
     (ii) Jenkins Server
     
-We have created two bash script:   
+To start and stop the server, we can use `start-server.sh` and `stop-server.sh`respectively. The `start-server.sh` will create the two servers by running `baker bake` and will also generate a public-priavte key pair(web-srv) which will be used for setting up the conncetion between the configiuration server and the Jenkins server. The `stop-server.sh` will be used to destroy the servers using `baker destroy`.
  
-    (i)  start-server.sh
-    (ii) stop-servers.sh
- 
-These can be used to create and destroy the servers respectively.
-
-We create the configuration server (ansible server) from inside the ansible-srv folder in servers folder, using the following command: 
-
-```baker bake```
-
-We then create the jenkins server from inside the jenkins-srv folder in servers folder.
-
-We then copy the private key (web-srv) present in the jenkins-srv folder and paste it in a web-srv folder (new created) inside the .ssh folder inside configuration server.
-
-<img width="1440" alt="screenshot 2019-02-17 at 7 08 25 pm" src="https://media.github.ncsu.edu/user/12952/files/6a136180-32e7-11e9-9066-8691c2a1d4f8">
-
-We set the permissions for the public key file using the command:
+After the successful configuration of the two servers, we will create an SSH connection between the two servers. We will copy the private key (web-srv) present in the jenkins-srv folder, do `baker ssh` and then paste it in a newly created web-srv (`vi .ssh/web-srv`) file inside the .ssh folder inside configuration server. Change the permission of the private key using the command:
 
 ```chmod 600 ~/.ssh/web-srv```
 
-We then copy the public key (web-srv.pub) present in the jenkins-srv folder and paste it in the authorized_keys file inside the .ssh folder in the jenkins server.
+Now, copy the public key (web-srv.pub) present in the jenkins-srv folder, do `baker ssh` and paste it in the authorized_keys file inside the .ssh folder (`vi .ssh/authorized_keys`) in the jenkins server.
 
-<img width="1440" alt="screenshot 2019-02-17 at 7 15 08 pm" src="https://media.github.ncsu.edu/user/12952/files/5ae0e380-32e8-11e9-8893-528cf0eaa5c3">
-
-We have setup ssh access from the configuration serevr to the jenkins server. We can test this, by running the following command from the configuration serevr:
+We have setup an ssh access from the configuration serevr to the jenkins server. To test this, run the following command from the configuration serevr:
 
 ```ssh -i ~/.ssh/web-srv vagrant@192.168.33.100```
 
@@ -102,3 +87,15 @@ We can also verify if the jenkins server has been deployed, by opening the web b
 <img width="1440" alt="screenshot 2019-02-17 at 10 29 31 pm" src="https://media.github.ncsu.edu/user/12952/files/95a44500-3303-11e9-8642-dd3e68a95e08">
 
 <img width="1440" alt="screenshot 2019-02-17 at 10 27 33 pm" src="https://media.github.ncsu.edu/user/12952/files/3cd4ac80-3303-11e9-8a29-7745b2b7c8d1">
+
+### Screencast
+
+The screencast for Milestone 1 is available [here]().
+
+### References
+
+[[1] https://github.com/CSC-DevOps/Course/blob/master/Project/CM.md](https://github.com/CSC-DevOps/Course/blob/master/Project/CM.md "https://github.com/CSC-DevOps/Course/blob/master/Project/CM.md")
+
+[[2] https://jenkins.io/doc/book/getting-started/installing/](https://jenkins.io/doc/book/getting-started/installing/ "https://jenkins.io/doc/book/getting-started/installing/")
+
+[[3] http://docs.ansible.com](http://docs.ansible.com "http://docs.ansible.com")
