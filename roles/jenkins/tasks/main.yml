@@ -48,9 +48,14 @@
   tags:
     - Installing dependencies
   
-- name: Sleep for 10 seconds and continue with play
-  wait_for:
-    timeout: 10
+#- name: Sleep for 10 seconds and continue with play
+#  wait_for:
+#    timeout: 10
+
+
+- name: Fix missing
+  become: true
+  shell: apt-get update --fix-missing
 
 - name: Installing Jenkins
   become: true
@@ -59,7 +64,7 @@
     state: latest
     force: yes
     name: ['jenkins']
-  notify: Start Jenkins
+#  notify: Start Jenkins
   tags:
     - Installing dependencies
 
@@ -79,7 +84,7 @@
   copy:
     src: jenkins.install.UpgradeWizard.state
     dest: /var/lib/jenkins/jenkins.install.UpgradeWizard.state
-  notify: Restart Jenkins
+#  notify: Restart Jenkins
   tags: 
     - Jenkins Configuration
 
@@ -89,7 +94,7 @@
       regexp: '^JAVA_ARGS='
       line: 'JAVA_ARGS="-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false"'
       insertbefore: '^DAEMON_ARGS='
-  notify: Restart Jenkins
+#  notify: Restart Jenkins
   tags: 
     - Jenkins Configuration
 
@@ -117,7 +122,7 @@
   template:
     src:  setup-admin.groovy.j2
     dest: /var/lib/jenkins/init.groovy.d/setup-admin.groovy
-  notify: Restart Jenkins
+ # notify: Restart Jenkins
   tags: 
     - Jenkins Configuration
 
@@ -134,3 +139,4 @@
     name: jenkins
     state: restarted
 # Next step is user creation and setup
+

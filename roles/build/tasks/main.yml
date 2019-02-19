@@ -1,0 +1,5 @@
+- name: Running the Build job for iTrust
+  command: curl -X POST http://admin:admin@127.0.0.1:9999/job/iTrust2/build
+
+- name: Running the Build job for Checkbox
+  command: curl -X POST http://admin:admin@127.0.0.1:9999/job/checkbox/build

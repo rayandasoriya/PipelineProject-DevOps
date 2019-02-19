@@ -51,5 +51,8 @@
   args:
     chdir: /home/vagrant/jenkins-job-builder
 
-- name: Running the Build job for itrust
-  command: curl -X POST http://admin:admin@127.0.0.1:9999/job/iTrust2/build
+#- name: Running the Build job for itrust
+#  command: curl -X POST http://admin:admin@127.0.0.1:9999/job/iTrust2/build
+
+#- name: Running the Build job for itrust
+#  command: curl -X POST http://admin:admin@127.0.0.1:9999/job/checkbox/build
