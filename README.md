@@ -62,22 +62,31 @@ To start and stop the server, we can use `start-server.sh` and `stop-server.sh` 
  
 After the successful configuration of the two servers, we will create an SSH connection between the two servers. We will copy the private key (web-srv) present in the jenkins-srv folder, do `baker ssh` and then paste it in a newly created web-srv (`vi .ssh/web-srv`) file inside the .ssh folder inside configuration server. Change the permission of the private key using the command:
 
-```chmod 600 ~/.ssh/web-srv```
+```
+chmod 600 ~/.ssh/web-srv
+```
 
 Now, copy the public key (web-srv.pub) present in the jenkins-srv folder, do `baker ssh` and paste it in the authorized_keys file inside the .ssh folder (`vi .ssh/authorized_keys`) in the Jenkins server.
 
 We have setup an ssh access from the configuration server to the Jenkins server. To test this, run the following command from the configuration server:
 
-```ssh -i ~/.ssh/web-srv vagrant@192.168.33.100```
+```
+ssh -i ~/.ssh/web-srv vagrant@192.168.33.100
+```
 
 <img width="1440" alt="screenshot 2019-02-17 at 7 21 16 pm" src="https://media.github.ncsu.edu/user/12952/files/35a0a500-32e9-11e9-840f-ed8035b887df">
 
-Now, from the ansible-srv folder inside the configuration server, we run our site.yml file. The site.yml file contains several roles.
+In this project, we have used the following ports for different services:
+* checkbox.io- :80 (default)
+* iTrust- :8080 
+* jenkins - :9999
+
+Now, from the ansible-srv folder inside the configuration server, we run our site.yml file. The `site.yml` file contains several roles.
 
 <img width="400" alt="role" src="./resources/role.png">
 
 1. build - Running the build job for Checkbox.io and iTrust
-2. checkbox - Cloning and configuring he checkbox.io
+2. checkbox - Cloning and configuring the checkbox.io
 3. chrome - Installing headless chrome for iTrust
 4. install-modules - Installing the prerequisite modules
 5. itrust - Cloning the iTrust Repo
@@ -105,11 +114,9 @@ A snippet of the successful completion of the ansible playbook is illustrayted b
 
 <img width="1440" alt="script" src="./resources/script.png">
 
-
-We can also verify if the jenkins server has been deployed and the build is successful, by opening the web browser at http://192.168.33.100:8080
+We can also verify if the jenkins server has been deployed and the build is successful, by opening the web browser at http://192.168.33.100:9999
 
 <img width="1440" alt="jenkins" src="./resources/jenkins.jpg">
-
 
 ## Screencast
 
