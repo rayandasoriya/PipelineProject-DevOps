@@ -1,27 +1,37 @@
 # CSC519-Project
-Project
-
-# CSC519-Project
 
 ## Connfiguration Management & Build Milestone
 
-Team 11:<br/>
+![](./resources/01-NCSU-Logo.png)
+| [MILESTONE 1]() | [MILESTONE 2]() | [MILESTONE 3]() | [MILESTONE 4]() |
 
-Arshdeep Singh Syal (asyal): <br/>
-Jubeen Shah (jnshah2): <br/>
-Rayan Dasoriya(rdasori): <br/>
-Shraddha Bhadauria(sbhadau): <br/>
+# Content
+1. [Our Team](#our-team)
+2. [About the Project](#about-the-project)
+2. [Pre-requisites]()
+3. [Two Easy steps]()
+	1. [Cloning]()
+	2. [Build and Deployment]()
+4. [Screencast Link]()
 
-Link to screencast video: 
+## Our Team
 
-In this part of the project we have:<br/>
-(i)   Provisioned a configuration server and a jenkins server on remote virtual machine instances.<br/>
-(ii)  Configured the jenkins server, automatically using ansible.<br/>
-(iii) Used a jenkins-job-builder and ansible, to automatically setup build jobs for two applications:<br/>
-<t/>-   A nodejs web application checkbox.io<br/>
-<t/>-   An "enterprise" Java system iTrust<br/>
-(iv)  Used a combination of mocha/pm2, to create a test script that will start and stop the checkbox.io service on the server.</br>
-(v)   Created a git hook to trigger a build when a push is made to the repo.
+* Arshdeep Singh Syal ([asyal](mailto:asyal@ncsu.edu))
+* Jubeen Shah ([jnshah2](mailto:jnshah2@ncsu.edu))
+* Rayan Dasoriya([rdasori](mailto:rdasori@ncsu.edu))
+* Shraddha Bhadauria([sbhadau](mailto:sbhadau@ncsu.edu))
+
+## About the project
+
+In this part of the project we have:
+
+* Provisioned a configuration server ([Ansible](https://www.ansible.com)) and a [Jenkins](https://jenkins.io) server on remote virtual machine instances.
+* Configured the jenkins server, automatically using ansible.
+* Used a [jenkins-job-builder](https://docs.openstack.org/infra/jenkins-job-builder/) and ansible, to automatically setup build jobs for two applications:
+	* A nodejs web application [`checkbox.io`](https://github.com/chrisparnin/checkbox.io)
+	* An "enterprise" Java system [`iTrust`](https://github.ncsu.edu/engr-csc326-staff/iTrust2-v4/tree/master/iTrust2)
+* Used a combination of [mocha](https://www.npmjs.com/package/mocha)/[pm2](https://www.npmjs.com/package/pm2), to create a test script that will start and stop the `checkbox.io` service on the server.
+* Created a git hook to trigger a build when a push is made to the repo.
 
 ### Step-wise implementation:<br/>
 
