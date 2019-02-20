@@ -5,12 +5,12 @@
 
 - name: Creating a bare-repo for checkbox.io
   file:
-    path: {{checkbox_bare}}
+    path: "{{checkbox_bare}}"
     state: directory
 
 - name: Creating a bare-repo for iTrust
   file:
-    path: {{itrust_bare}}
+    path: "{{itrust_bare}}"
     state: directory
 
 - name: Initializing a bare repo for Checkbox and iTrust
@@ -23,14 +23,14 @@
   copy:
     mode: 0111
     src: post-receive-checkbox
-    dest: {{checkbox_bare}}/hooks/post-receive
+    dest: "{{checkbox_bare}}/hooks/post-receive"
 
 - name: Copying the post-receive  file in iTrust-bare.git
   become: true
   copy:
     mode: 0111
     src: post-receive-itrust
-    dest: {{itrust_bare}}/hooks/post-receive
+    dest: "{{itrust_bare}}/hooks/post-receive"
 
 - name: Adding a remote from Checkbox to the bare repo
   become: true

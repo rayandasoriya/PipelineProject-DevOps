@@ -88,15 +88,16 @@ Now, from the ansible-srv folder inside the configuration server, we run our sit
 1. build - Running the build job for Checkbox.io and iTrust
 2. checkbox - Cloning and configuring the checkbox.io
 3. chrome - Installing headless chrome for iTrust
-4. install-modules - Installing the prerequisite modules
-5. itrust - Cloning the iTrust Repo
-6. jenkins - Installing and configuring Jenkins
-7. JJB - Jenkins Job Builder
-8. maven - Installing and configuring Maven
-9. mongodb - Installing and configuring MongoDB
-10. mysql - Installing and configuring MySQL
-11. nginx  - Installing and configuring Nginx web server
-12. node - Installing Node.js
+4. githooks - For creating the post-receive hook on the jenkins server
+5. install-modules - Installing the prerequisite modules
+6. itrust - Cloning the iTrust Repo
+7. jenkins - Installing and configuring Jenkins
+8. JJB - Jenkins Job Builder
+9. maven - Installing and configuring Maven
+10. mongodb - Installing and configuring MongoDB
+11. mysql - Installing and configuring MySQL
+12. nginx  - Installing and configuring Nginx web server
+13. node - Installing Node.js
 
 We will run the site.yml file with the inventory(to target the Jenkins server) to install these dependencies and run the build for checkbox.io and iTrust. We use the following command:
 
