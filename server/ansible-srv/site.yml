@@ -16,4 +16,5 @@
     - chrome
     - checkbox
     - itrust
-    - build
+    #- build
+    - githooks
