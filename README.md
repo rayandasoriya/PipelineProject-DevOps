@@ -12,8 +12,9 @@
 4. [Setup Instructions](#setup-instructions)
 	1. [Cloning](#cloning)
 	2. [Build and Deployment](#build-and-deployment)
-5. [Screencast](#screencast)
-6. [References](#references)
+5. [Report](#report)
+6. [Screencast](#screencast)
+7. [References](#references)
 
 ## Our Team
 
@@ -118,6 +119,10 @@ A snippet of the successful completion of the ansible playbook is illustrayted b
 We can also verify if the jenkins server has been deployed and the build is successful, by opening the web browser at [http://192.168.33.100:9999](http://192.168.33.100:9999)
 
 <img width="1440" alt="jenkins" src="./resources/jenkins.jpg">
+
+## Report
+
+We faced the following set of difficulties while configuring the jenkins server. Starting off with the project was somewhat challenging, just understanding what the dependencies were. This became clear, once some attention was paid to the actual implementation of the different applications. What we noticed is that, though the initial configuration of the jenkins server, that is, the setup and configuration of Jenkins itself, along with other dependencies were not very difficult and we were done with a mjority of the project well before the deadline, we were stuck with simple tasks such as -- the mocha and pm2 test cases, which took us sometime to understand and then implement. We also faced difficulties while implementing GitHooks because we were not able to clearly understand the requirement itself. Though it was clearly mentioned that the push to the local bare repository were `itrust` and `checkbox` while implementing we thought it was _this_ repository that we need to make the push to, which would then trigger the build for the two applications. 
 
 ## Screencast
 
