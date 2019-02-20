@@ -121,7 +121,7 @@ We can also verify if the jenkins server has been deployed and the build is succ
 
 ## Screencast
 
-The screencast for Milestone 1 is available [here]().
+The screencast for Milestone 1 is available [here](https://youtu.be/9UFJjtvXmZY).
 
 ## References
 
@@ -130,4 +130,4 @@ The screencast for Milestone 1 is available [here]().
 [[2] https://jenkins.io/doc/book/getting-started/installing/](https://jenkins.io/doc/book/getting-started/installing/ "https://jenkins.io/doc/book/getting-started/installing/")
 
 [[3] http://docs.ansible.com](http://docs.ansible.com "http://docs.ansible.com")<br/><br/>
-[[4] Video](https://youtu.be/9UFJjtvXmZY)
+
