@@ -22,7 +22,7 @@ function sleep(ms) {
  console.log("Starting");
  await start();
  console.log("Sleeping");
- await sleep (3000);
+ await sleep (30000);
  console.log("Stopping");
  await stop();
 })();
