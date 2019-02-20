@@ -50,7 +50,10 @@
   shell: jenkins-jobs --conf /etc/jenkins_job/jenkins_jobs.ini --user admin --password admin update itrust-build.yml
   args:
     chdir: /home/vagrant/jenkins-job-builder
-
+    
+ - name: Setting timezone for itrust build
+   timezone:
+     name: America/New_York
 #- name: Running the Build job for itrust
 #  command: curl -X POST http://admin:admin@127.0.0.1:9999/job/iTrust2/build
 
