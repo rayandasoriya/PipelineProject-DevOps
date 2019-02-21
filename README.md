@@ -86,19 +86,19 @@ Now, from the ansible-srv folder inside the configuration server, we run our sit
 
 <img width="400" alt="role" src="./resources/role.png">
 
-1. build - Running the build job for Checkbox.io and iTrust
-2. checkbox - Cloning and configuring the checkbox.io
-3. chrome - Installing headless chrome for iTrust
-4. githooks - For creating the post-receive hook on the jenkins server
-5. install-modules - Installing the prerequisite modules
-6. itrust - Cloning the iTrust Repo
-7. jenkins - Installing and configuring Jenkins
-8. JJB - Jenkins Job Builder
-9. maven - Installing and configuring Maven
-10. mongodb - Installing and configuring MongoDB
-11. mysql - Installing and configuring MySQL
-12. nginx  - Installing and configuring Nginx web server
-13. node - Installing Node.js
+1. [build](./server/ansible-srv/roles/build) - Running the build job for Checkbox.io and iTrust
+2. [checkbox](./server/ansible-srv/roles/checkbox) - Cloning and configuring the checkbox.io
+3. [chrome](./server/ansible-srv/roles/chrome) - Installing headless chrome for iTrust
+4. [githooks](./server/ansible-srv/roles/githooks) - For creating the post-receive hook on the jenkins server
+5. [install-modules](./server/ansible-srv/roles/install-modules) - Installing the prerequisite modules
+6. [itrust](./server/ansible-srv/roles/itrust) - Cloning the iTrust Repo
+7. [jenkins](./server/ansible-srv/roles/jenkins) - Installing and configuring Jenkins
+8. [JJB](./server/ansible-srv/roles/jjb) - Jenkins Job Builder
+9. [maven](./server/ansible-srv/roles/maven) - Installing and configuring Maven
+10. [mongodb](./server/ansible-srv/roles/mongodb) - Installing and configuring MongoDB
+11. [mysql](./server/ansible-srv/roles/mysql) - Installing and configuring MySQL
+12. [nginx](./server/ansible-srv/roles/nginx)  - Installing and configuring Nginx web server
+13. [node](./server/ansible-srv/roles/node) - Installing Node.js
 
 We will run the site.yml file with the inventory(to target the Jenkins server) to install these dependencies and run the build for checkbox.io and iTrust. We use the following command:
 
@@ -137,4 +137,3 @@ The screencast for Milestone 1 is available [here](https://youtu.be/9UFJjtvXmZY)
 [[2] https://jenkins.io/doc/book/getting-started/installing/](https://jenkins.io/doc/book/getting-started/installing/ "https://jenkins.io/doc/book/getting-started/installing/")
 
 [[3] http://docs.ansible.com](http://docs.ansible.com "http://docs.ansible.com")<br/><br/>
-
