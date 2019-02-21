@@ -19,9 +19,13 @@
 ## Our Team
 
 * Arshdeep Singh Syal ([asyal](mailto:asyal@ncsu.edu))
+	* Responsible for Git Hooks integration and README.md write-up
 * Jubeen Shah ([jnshah2](mailto:jnshah2@ncsu.edu))
+	* Responsible for Jenkins configuration, Checkbox.io and iTrust Build
 * Rayan Dasoriya([rdasori](mailto:rdasori@ncsu.edu))
+	* Responsible for pm2/mocha tests, iTrust Build and README.md write-up
 * Shraddha Bhadauria([sbhadau](mailto:sbhadau@ncsu.edu))
+	* Responsible for pm2/mocha tests
 
 ## About the milestone
 
