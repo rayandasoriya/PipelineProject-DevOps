@@ -120,7 +120,7 @@ A snippet of the successful completion of the ansible playbook is illustrayted b
 
 <img width="1440" alt="script" src="./resources/script.png">
 
-We can also verify if the jenkins server has been deployed and the build is successful, by opening the web browser at [http://192.168.33.100:9999](http://192.168.33.100:9999)
+To run the build, comment out all the roles in the site.yml file and uncomment the `build` role. We can also verify if the jenkins server has been deployed and the build is successful, by opening the web browser at [http://192.168.33.100:9999](http://192.168.33.100:9999)
 
 <img width="1440" alt="jenkins" src="./resources/jenkins.jpg">
 
@@ -140,4 +140,4 @@ The screencast for Milestone 1 is available [here](https://youtu.be/9UFJjtvXmZY)
 
 [[2] https://jenkins.io/doc/book/getting-started/installing/](https://jenkins.io/doc/book/getting-started/installing/ "https://jenkins.io/doc/book/getting-started/installing/")
 
-[[3] http://docs.ansible.com](http://docs.ansible.com "http://docs.ansible.com")<br/><br/>
+[[3] http://docs.ansible.com](http://docs.ansible.com "http://docs.ansible.com")<br/>
