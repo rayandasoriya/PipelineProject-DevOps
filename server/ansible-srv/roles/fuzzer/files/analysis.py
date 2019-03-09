@@ -3,7 +3,8 @@ import json
 import os
 from operator import itemgetter
 
-files = os.listdir("/Users/rayandasoriya/Desktop/Projects/devops/iTrust-fuzzer/BuildResults/1/surefire-reports/")
+#files = os.listdir("/Users/rayandasoriya/Desktop/Projects/devops/iTrust-fuzzer/BuildResults/1/surefire-reports/")
+files = os.listdir("/home/vagrant/BuildResults/1/surefire-reports/")
 file = []
 for i in files:
     if ".xml" in i:
@@ -14,11 +15,14 @@ passed = 0
 new_arr = []
 info = []
 
-f_len = os.listdir("/Users/rayandasoriya/Desktop/Projects/devops/iTrust-fuzzer/BuildResults/")
+#f_len = os.listdir("/Users/rayandasoriya/Desktop/Projects/devops/iTrust-fuzzer/BuildResults/")
+f_len = os.listdir("/home/vagrant/BuildResults/")
+print(f_len)
 
 for f in file:
     for i in range(1,len(f_len)):
-        f_name = '/Users/rayandasoriya/Desktop/Projects/devops/iTrust-fuzzer/BuildResults/'+str(i)+'/surefire-reports/'+f
+        #f_name = '/Users/rayandasoriya/Desktop/Projects/devops/iTrust-fuzzer/BuildResults/'+str(i)+'/surefire-reports/'+f
+        f_name = '/home/vagrant/BuildResults/'+str(i)+'/surefire-reports/'+f
         file = open(f_name, 'r') 
         content = file.read()
         a = xmltodict.parse(content)

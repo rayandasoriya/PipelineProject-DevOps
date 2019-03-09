@@ -13,7 +13,10 @@
     src: gitconfig
     dest: /home/vagrant/.gitconfig
 
-
+- name: Copying Analysis.py
+  copy:
+    src: analysis.py
+    dest: /home/vagrant/iTrust/iTrust2
 #- name: Executing script
 #  script: files/run.sh
 
