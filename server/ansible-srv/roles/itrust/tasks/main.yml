@@ -51,9 +51,9 @@
   args:
     chdir: /home/vagrant/iTrust/iTrust2/
     
- - name: Setting timezone for itrust build
-   timezone:
-     name: America/New_York
+- name: Setting timezone for itrust build
+  timezone:
+    name: America/New_York
 #- name: Running the Build job for itrust
 #  command: curl -X POST http://admin:admin@127.0.0.1:9999/job/iTrust2/build
 
