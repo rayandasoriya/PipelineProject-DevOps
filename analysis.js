@@ -1,46 +1,54 @@
 var esprima = require("esprima");
+var fs = require('fs')
+    path = require('path')
+    child_process = require('child_process')
+    http = require('http')
+    ;
+
 var options = {tokens:true, tolerant: true, loc: true, range: true };
 var fs = require("fs");
 
+var pathToTraverse = "/Users/jubeenshah/Desktop/NCSU/SEM-2/CSC519-Devops/Project/Master/screencast/arsh_shraddha-m2/checkbox.io/";
 
+function walkDir(dir, callback) {
+	fs.readdirSync(dir).forEach( f => {
+		let dirPath = path.join(dir, f);
+		let isDirectory = fs.statSync(dirPath).isDirectory();
+		isDirectory ? 
+			walkDir(dirPath, callback) : callback(path.join(dir, f));
+	});
+};
 
+function ExecuteAnalysis(pathToTraverse) {
+var numberOfFile = 0;
+walkDir(pathToTraverse, function(filePath) {
+	const fileContents = fs.readFileSync(filePath, 'utf8');
+	if (filePath.split('.').pop() == "js") {
+			numberOfFile = numberOfFile + 1;
+			//if (numberOfFile <= 2) {
+			//console.log("File being analyzed--> "+filePath)
+			beautifyJS(filePath);
+			complexity(filePath);
 
-
-
-
-
-function main()
-{
-	var args = process.argv.slice(2);
-	//console.log(args);
-	if( args.length == 0 )
-	{
-		args = ["a_analysis.js"];
-	}
-	var filePath = args[0];
-	
-	complexity(filePath);
-
-	// Report
-	for( var node in builders )
-	{
-		var builder = builders[node];
-		builder.report();
-	}
+				//Generate Report
+			for( var node in builders )
+			{
+				var builder = builders[node];
+				builder.report();
+			}
+		//}
+		
+		}
+});
 
 }
 
+const beautifyJS = (pathToFile) => {
+	console.log(pathToFile);
+	child_process.execSync(`js-beautify -r ${pathToFile}`);
+}
+
 var builders = {};
-
-
-
-
-
-
-
-
-
-
 // Represent a reusable "class" following the Builder pattern.
 function FunctionBuilder()
 {
@@ -68,7 +76,7 @@ function FunctionBuilder()
 				"EndLine: {2}\t" +
 				"Loc: {3}\t" +
 				"LongMethod: {4}\t" +
-			  "SimpleCyclomaticComplexity: {4}\t" +
+			  "SimpleCyclomaticComplexity: {5}\t" +
 				"MaxNestingDepth: {6}\t" +
 				"MaxIfConditions: {7}\t" +
 				"Parameters: {8}\n\n"
@@ -76,16 +84,9 @@ function FunctionBuilder()
 			.format(this.FunctionName, this.StartLine, this.EndLine, this.Loc, this.LongMethod, this.SimpleCyclomaticComplexity, 
 			this.MaxNestingDepth, this.MaxIfConditions, this.ParameterCount)
 		);
+		
 	}
 };
-
-
-
-
-
-
-
-
 
 // A builder for storing file level information.
 function FileBuilder()
@@ -108,16 +109,6 @@ function FileBuilder()
 	}
 }
 
-
-
-
-
-
-
-
-
-
-
 // A function following the Visitor pattern.
 // Annotates nodes with parent objects.
 function traverseWithParents(object, visitor)
@@ -138,15 +129,6 @@ function traverseWithParents(object, visitor)
     }
 }
 
-
-
-
-
-
-
-
-
-
 function complexity(filePath)
 {
 	var buf = fs.readFileSync(filePath, "utf8");//resd into filr
@@ -166,12 +148,13 @@ function complexity(filePath)
 		if (node.type === 'FunctionDeclaration') 
 		{
 			var builder = new FunctionBuilder();
-
+			var currentLevel = 0;
 			builder.FunctionName = functionName(node);
 			builder.StartLine    = node.loc.start.line;
 			builder.EndLine    = node.loc.end.line;
+			calculateNestedIf(node, currentLevel, builder);
 			builder.Loc	= (builder.EndLine - builder.StartLine) +1;
-			if(builder.Loc > 10)
+			if(builder.Loc > 100)
 			{
 				builder.LongMethod=true;
 			}
@@ -183,7 +166,7 @@ function complexity(filePath)
 				if(isIfDecision(loopcount)) 
 				{
 					currentCount = 0;
-					builder.SimpleCyclomaticComplexity++;
+					builder.SimpleCyclomaticComplexity+=1 ;
 					traverseWithParents(loopcount, function(conditionCount) 
 					{	
 						if (conditionCount.type == "BinaryExpression" || conditionCount.type == "LogicalExpression" )
@@ -217,14 +200,30 @@ function complexity(filePath)
 	});
 }
 
-
-
-
-
-
-
-
-
+function calculateNestedIf(node, currentLevel, builderPassed) {
+	var key, child;
+	var children = 0;
+	for (key in node) {
+		if (node.hasOwnProperty(key)) {
+				child = node[key];
+				if (typeof child === 'object' && child !== null && key != 'parent') {
+					children++;
+					if( key == "alternate"){
+						calculateNestedIf(child,currentLevel,builderPassed)
+					} else if( child.type == 'IfStatement'){
+							calculateNestedIf(child, currentLevel+1, builderPassed);
+					}	else {
+							calculateNestedIf(child, currentLevel, builderPassed);
+				}
+			}
+		}
+	}
+  if( children == 0 ) {
+    if( builderPassed.MaxNestingDepth < currentLevel ) {
+			builderPassed.MaxNestingDepth = currentLevel;
+    }
+	}
+}
 
 // Helper function for counting children of node.
 function childrenLength(node)
@@ -245,27 +244,6 @@ function childrenLength(node)
 	return count;
 }
 
-
-
-
-
-
-
-/*
-//Helper function for some random function
-function someName(node)
-{
-	console.log("I am being used!!!");
-}
-*/
-
-
-
-
-
-
-
-
 // Helper function for checking if a node is a "decision type node"
 function isDecision(node)
 {
@@ -277,13 +255,6 @@ function isDecision(node)
 	return false;
 }
 
-
-
-
-
-
-
-
 // Helper function for checking if a node is a "if condition"
 function isIfDecision(node)
 {
@@ -293,12 +264,6 @@ function isIfDecision(node)
 	}
 	return false;
 }
-
-
-
-
-
-
 
 // Helper function for printing out function name.
 function functionName( node )
@@ -323,16 +288,7 @@ if (!String.prototype.format) {
   };
 }
 
-
-
-
-
-
-
-
-
-
-function Crazy (argument) 
+Crazy (argument) 
 {
 	var date_bits = element.value.match(/^(\d{4})\-(\d{1,2})\-(\d{1,2})$/);
 	var new_date = null;
@@ -422,10 +378,14 @@ function Crazy (argument)
   }
 }
 
+function duplicatedCode() {
+	console.log("====================Duplicated Code Detection====================");
+	child_process.exec("jsinspect -t 45 -I ../checkbox.io > hello.txt", function(error, stdout, stderr) {
+		// command output is in stdout
+		console.log(stdout);
+	});
+}
 
+ExecuteAnalysis(pathToTraverse);
+duplicatedCode();
 
-
-
- 
-main();
-exports.main = main;
