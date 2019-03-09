@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+Test set: edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 0, Errors: 4, Skipped: 0, Time elapsed: 4.307 s <<< FAILURE! - in edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest
+testGetNonExistentPatientRecord(edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest)  Time elapsed: 0.923 s  <<< ERROR!
+java.lang.IllegalArgumentException: First name must contain 1-20 characters (alphanumeric, -, ', or space)
+	at edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest.setup(APIEmergencyRecordFormTest.java:58)
+
+testEmergencyRecordFormHCPAPI(edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest)  Time elapsed: 1.154 s  <<< ERROR!
+java.lang.IllegalArgumentException: First name must contain 1-20 characters (alphanumeric, -, ', or space)
+	at edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest.setup(APIEmergencyRecordFormTest.java:58)
+
+testEmergencyRecordFormERAPI(edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest)  Time elapsed: 0.985 s  <<< ERROR!
+java.lang.IllegalArgumentException: First name must contain 1-20 characters (alphanumeric, -, ', or space)
+	at edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest.setup(APIEmergencyRecordFormTest.java:58)
+
+testEmergencyRecordForm(edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest)  Time elapsed: 1.239 s  <<< ERROR!
+java.lang.IllegalArgumentException: First name must contain 1-20 characters (alphanumeric, -, ', or space)
+	at edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest.setup(APIEmergencyRecordFormTest.java:58)
+

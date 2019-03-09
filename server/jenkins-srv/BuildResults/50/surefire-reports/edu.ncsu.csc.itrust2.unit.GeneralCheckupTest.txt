@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: edu.ncsu.csc.itrust2.unit.GeneralCheckupTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.051 s <<< FAILURE! - in edu.ncsu.csc.itrust2.unit.GeneralCheckupTest
+testGeneralCheckups(edu.ncsu.csc.itrust2.unit.GeneralCheckupTest)  Time elapsed: 0.043 s  <<< ERROR!
+java.lang.IllegalArgumentException: Systolic must be a 3 digit positive number.
+	at edu.ncsu.csc.itrust2.unit.GeneralCheckupTest.testGeneralCheckups(GeneralCheckupTest.java:55)
+
+testGeneralCheckupForm(edu.ncsu.csc.itrust2.unit.GeneralCheckupTest)  Time elapsed: 0.007 s  <<< ERROR!
+java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
+	at edu.ncsu.csc.itrust2.unit.GeneralCheckupTest.testGeneralCheckupForm(GeneralCheckupTest.java:193)
+

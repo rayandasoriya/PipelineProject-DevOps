@@ -1,0 +1,25 @@
+- name: Copying the files for Fuzzing
+  copy:
+    src: main.js
+    dest: /home/vagrant/iTrust/iTrust2
+
+- name: Copying files for executing the fuzzer
+  copy:
+    src: loop.sh
+    dest: /home/vagrant/iTrust/iTrust2
+
+- name: Copying Gitconfig files
+  copy:
+    src: gitconfig
+    dest: /home/vagrant/.gitconfig
+
+
+#- name: Executing script
+#  script: files/run.sh
+
+#- name: Executing the fuzzing process with builds
+#  command: node /home/vagrant/iTrust/iTrust2/main.js 1
+#  register: output
+
+#- name: Output
+#  debug: msg=output.stdout_lines

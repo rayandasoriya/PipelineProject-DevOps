@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: edu.ncsu.csc.itrust2.unit.ICDCodeTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 1, Errors: 1, Skipped: 0, Time elapsed: 0.024 s <<< FAILURE! - in edu.ncsu.csc.itrust2.unit.ICDCodeTest
+testCodes(edu.ncsu.csc.itrust2.unit.ICDCodeTest)  Time elapsed: 0.011 s  <<< ERROR!
+java.lang.IllegalArgumentException: Description too long (250 characters max): Testing
+	at edu.ncsu.csc.itrust2.unit.ICDCodeTest.testCodes(ICDCodeTest.java:32)
+
+testInvalidCodes(edu.ncsu.csc.itrust2.unit.ICDCodeTest)  Time elapsed: 0.004 s  <<< FAILURE!
+org.junit.ComparisonFailure: expected:<[Code must begin with a capital letter: 111]> but was:<[Description too long (250 characters max): Invalid]>
+	at edu.ncsu.csc.itrust2.unit.ICDCodeTest.testInvalidCodes(ICDCodeTest.java:57)
+

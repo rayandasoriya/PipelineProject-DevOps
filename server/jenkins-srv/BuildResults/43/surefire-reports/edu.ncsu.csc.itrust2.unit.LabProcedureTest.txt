@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: edu.ncsu.csc.itrust2.unit.LabProcedureTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.198 s <<< FAILURE! - in edu.ncsu.csc.itrust2.unit.LabProcedureTest
+testGetBy(edu.ncsu.csc.itrust2.unit.LabProcedureTest)  Time elapsed: 0.034 s  <<< ERROR!
+java.lang.IllegalArgumentException: LDL must be between 0 and 600 inclusive.
+	at edu.ncsu.csc.itrust2.unit.LabProcedureTest.testGetBy(LabProcedureTest.java:216)
+
+testLabProcedureForm(edu.ncsu.csc.itrust2.unit.LabProcedureTest)  Time elapsed: 0.015 s  <<< ERROR!
+java.lang.IllegalArgumentException: LDL must be between 0 and 600 inclusive.
+	at edu.ncsu.csc.itrust2.unit.LabProcedureTest.testLabProcedureForm(LabProcedureTest.java:324)
+

@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+Test set: edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 0, Errors: 4, Skipped: 0, Time elapsed: 4.923 s <<< FAILURE! - in edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest
+testGetNonExistentPatientRecord(edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest)  Time elapsed: 1.369 s  <<< ERROR!
+java.lang.IllegalArgumentException: LDL must be between 0 and 600 inclusive.
+	at edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest.setup(APIEmergencyRecordFormTest.java:59)
+
+testEmergencyRecordFormHCPAPI(edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest)  Time elapsed: 1.143 s  <<< ERROR!
+java.lang.IllegalArgumentException: LDL must be between 0 and 600 inclusive.
+	at edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest.setup(APIEmergencyRecordFormTest.java:59)
+
+testEmergencyRecordFormERAPI(edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest)  Time elapsed: 1.219 s  <<< ERROR!
+java.lang.IllegalArgumentException: LDL must be between 0 and 600 inclusive.
+	at edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest.setup(APIEmergencyRecordFormTest.java:59)
+
+testEmergencyRecordForm(edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest)  Time elapsed: 1.19 s  <<< ERROR!
+java.lang.IllegalArgumentException: LDL must be between 0 and 600 inclusive.
+	at edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest.setup(APIEmergencyRecordFormTest.java:59)
+

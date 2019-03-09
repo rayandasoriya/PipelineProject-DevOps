@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: edu.ncsu.csc.itrust2.unit.LabProcedureTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.325 s <<< FAILURE! - in edu.ncsu.csc.itrust2.unit.LabProcedureTest
+testGetBy(edu.ncsu.csc.itrust2.unit.LabProcedureTest)  Time elapsed: 0.05 s  <<< ERROR!
+java.lang.IllegalArgumentException: Systolic must be a 3 digit positive number.
+	at edu.ncsu.csc.itrust2.unit.LabProcedureTest.testGetBy(LabProcedureTest.java:216)
+
+testLabProcedureForm(edu.ncsu.csc.itrust2.unit.LabProcedureTest)  Time elapsed: 0.04 s  <<< ERROR!
+java.lang.IllegalArgumentException: Systolic must be a 3 digit positive number.
+	at edu.ncsu.csc.itrust2.unit.LabProcedureTest.testLabProcedureForm(LabProcedureTest.java:324)
+

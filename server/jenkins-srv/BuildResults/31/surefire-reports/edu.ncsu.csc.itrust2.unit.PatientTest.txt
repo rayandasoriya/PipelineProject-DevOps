@@ -1,0 +1,17 @@
+-------------------------------------------------------------------------------
+Test set: edu.ncsu.csc.itrust2.unit.PatientTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 1, Errors: 2, Skipped: 0, Time elapsed: 0.037 s <<< FAILURE! - in edu.ncsu.csc.itrust2.unit.PatientTest
+testPatientDateOfDeath(edu.ncsu.csc.itrust2.unit.PatientTest)  Time elapsed: 0.016 s  <<< ERROR!
+java.lang.IllegalArgumentException: Last name must contain 1-30 characters (alphanumeric, -, ', or space)
+	at edu.ncsu.csc.itrust2.unit.PatientTest.testPatientDateOfDeath(PatientTest.java:66)
+
+testFieldValidation(edu.ncsu.csc.itrust2.unit.PatientTest)  Time elapsed: 0.004 s  <<< FAILURE!
+java.lang.AssertionError: expected exception during validation
+	at edu.ncsu.csc.itrust2.unit.PatientTest.expectFailure(PatientTest.java:247)
+	at edu.ncsu.csc.itrust2.unit.PatientTest.testFieldValidation(PatientTest.java:139)
+
+personalRepresentatives(edu.ncsu.csc.itrust2.unit.PatientTest)  Time elapsed: 0.004 s  <<< ERROR!
+java.lang.IllegalArgumentException: Last name must contain 1-30 characters (alphanumeric, -, ', or space)
+	at edu.ncsu.csc.itrust2.unit.PatientTest.personalRepresentatives(PatientTest.java:198)
+

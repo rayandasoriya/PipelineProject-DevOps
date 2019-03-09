@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: edu.ncsu.csc.itrust2.unit.GeneralOphthalmologyTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.328 s <<< FAILURE! - in edu.ncsu.csc.itrust2.unit.GeneralOphthalmologyTest
+testGeneralOphthalmology(edu.ncsu.csc.itrust2.unit.GeneralOphthalmologyTest)  Time elapsed: 0.016 s  <<< ERROR!
+java.lang.IllegalArgumentException: LDL must be between 0 and 600 inclusive.
+	at edu.ncsu.csc.itrust2.unit.GeneralOphthalmologyTest.testGeneralOphthalmology(GeneralOphthalmologyTest.java:48)
+
+testGeneralOphthalmologyForm(edu.ncsu.csc.itrust2.unit.GeneralOphthalmologyTest)  Time elapsed: 0.032 s  <<< ERROR!
+java.lang.IllegalArgumentException: LDL must be between 0 and 600 inclusive.
+	at edu.ncsu.csc.itrust2.unit.GeneralOphthalmologyTest.testGeneralOphthalmologyForm(GeneralOphthalmologyTest.java:164)
+

@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+Test set: edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 0, Errors: 4, Skipped: 0, Time elapsed: 3.723 s <<< FAILURE! - in edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest
+testGetNonExistentPatientRecord(edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest)  Time elapsed: 1.112 s  <<< ERROR!
+java.lang.IllegalArgumentException: Last name must contain 1-30 characters (alphanumeric, -, ', or space)
+	at edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest.setup(APIEmergencyRecordFormTest.java:58)
+
+testEmergencyRecordFormHCPAPI(edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest)  Time elapsed: 0.97 s  <<< ERROR!
+java.lang.IllegalArgumentException: Last name must contain 1-30 characters (alphanumeric, -, ', or space)
+	at edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest.setup(APIEmergencyRecordFormTest.java:58)
+
+testEmergencyRecordFormERAPI(edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest)  Time elapsed: 0.838 s  <<< ERROR!
+java.lang.IllegalArgumentException: Last name must contain 1-30 characters (alphanumeric, -, ', or space)
+	at edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest.setup(APIEmergencyRecordFormTest.java:58)
+
+testEmergencyRecordForm(edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest)  Time elapsed: 0.796 s  <<< ERROR!
+java.lang.IllegalArgumentException: Last name must contain 1-30 characters (alphanumeric, -, ', or space)
+	at edu.ncsu.csc.itrust2.apitest.APIEmergencyRecordFormTest.setup(APIEmergencyRecordFormTest.java:58)
+
