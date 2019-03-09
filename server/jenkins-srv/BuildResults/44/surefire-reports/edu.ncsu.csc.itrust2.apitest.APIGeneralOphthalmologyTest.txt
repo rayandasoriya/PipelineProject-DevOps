@@ -1,8 +1,0 @@
--------------------------------------------------------------------------------
-Test set: edu.ncsu.csc.itrust2.apitest.APIGeneralOphthalmologyTest
--------------------------------------------------------------------------------
-Tests run: 4, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.718 s <<< FAILURE! - in edu.ncsu.csc.itrust2.apitest.APIGeneralOphthalmologyTest
-testGeneralOphthalmologyAPI(edu.ncsu.csc.itrust2.apitest.APIGeneralOphthalmologyTest)  Time elapsed: 0.421 s  <<< ERROR!
-java.lang.IllegalArgumentException: LDL must be between 0 and 600 inclusive.
-	at edu.ncsu.csc.itrust2.apitest.APIGeneralOphthalmologyTest.testGeneralOphthalmologyAPI(APIGeneralOphthalmologyTest.java:263)
-
