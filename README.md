@@ -8,7 +8,7 @@
 2. [About the Milestones](#about-the-milestones)
 	1. [Milestone 1](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone1)
 	2. [Milestone 2](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone2)
-3. [References])(#references)
+3. [References](#references)
 
 ## Our Team
 
