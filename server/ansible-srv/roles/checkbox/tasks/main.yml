@@ -2,6 +2,7 @@
   git:
     repo: "https://github.com/jubeenshah/checkbox.io.git"
     dest: "{{home_path}}/checkbox.io"
+    force: true
 
 - name: Create mongodb Database and User
   mongodb_user:

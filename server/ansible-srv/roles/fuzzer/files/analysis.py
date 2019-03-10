@@ -4,13 +4,11 @@ import os
 from operator import itemgetter
 
 #files = os.listdir("/Users/rayandasoriya/Desktop/Projects/devops/iTrust-fuzzer/BuildResults/1/surefire-reports/")
-files = os.listdir("/home/vagrant/BuildResults/1/surefire-reports/")
+pathToReports = "/Users/jubeenshah/Desktop/NCSU/SEM-2/CSC519-Devops/Project/Master/screencast/CSC519-Project/server/jenkins-srv/BuildResults.1/"
+#pathToReports = "/home/vagrant/BuildResults/"
+files = os.listdir(pathToReports)
 
-file = []
-for i in files:
-    if ".xml" in i:
-        file.append(i)
-        count+=1
+dictonaryOfFiles = {}
 count = 0
 failed = 0
 passed = 0
@@ -18,16 +16,27 @@ errored = 0
 new_arr = []
 info = []
 
-f_len = os.listdir("/home/vagrant/BuildResults/")
+for eachFile in files:
+    eachFileDir = pathToReports + eachFile + "/surefire-reports"
+    detailedReport = os.listdir(eachFileDir)
+    file = []
+    for i in detailedReport:
+        if ".xml" in i:
+            file.append(i)
+    dictonaryOfFiles[eachFile] = file
 
-for f in file:
-    for i in range(1,len(f_len)):
-        f_name = '/home/vagrant/BuildResults/'+str(i)+'/surefire-reports/'+f
-        #f_name = '/Users/rayandasoriya/Desktop/Projects/devops/iTrust-fuzzer/BuildResults/'+str(i)+'/surefire-reports/'+f
-        file = open(f_name, 'r') 
+
+for key in dictonaryOfFiles:
+    #print("\nKEY : "+ key)
+    #print(dictonaryOfFiles[key])
+    #print("\n")
+    for eachXML in dictonaryOfFiles[key]:
+        #print(eachXML)
+        pathToXML = pathToReports + key + "/surefire-reports/" + eachXML
+        file = open(pathToXML, 'r')
         content = file.read()
         a = xmltodict.parse(content)
-
+        #print(a)
         for j in range(0,int(a["testsuite"]["@tests"])):
             try:
                 if int(a["testsuite"]["@tests"]) == 1:
@@ -57,7 +66,6 @@ for f in file:
 
             except:
                 count+=1
-
 test = set()
 for m in info:
     test.add(m[1])
@@ -86,7 +94,11 @@ for i in test:
 res = sorted(res, key= itemgetter(2,4), reverse = True)
 
 for m in res:
+    print("\n")
     print(m[0])
-    print('Passed: {}, Failed: {}, Errored: {}, AvgTime: {} '.format(m[1],m[2],m[3],(-1*m[4])))
+    print('Passed: {}, \tFailed: {}, \tErrored: {}, \tAvgTime: {} '.format(m[1],m[2],m[3],(-1*m[4])))
 
-print('Total Passed: {}, Total Failed: {}, Total Errors: {}, Total Time: {}'.format(passed,failed,errored,(round(ttime,2))))
+print("\n********************************************************************************************\n")
+print('Total Passed: {}, \tTotal Failed: {}, \tTotal \tErrors: {}, \tTotal Time: {}'.format(passed,failed,errored,(round(ttime,2))))
+print("\n********************************************************************************************\n")
+

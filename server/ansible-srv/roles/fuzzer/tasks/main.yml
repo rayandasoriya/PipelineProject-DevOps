@@ -17,6 +17,11 @@
   copy:
     src: analysis.py
     dest: /home/vagrant/iTrust/iTrust2
+
+- name: Installin xmltodict
+  pip:
+    name: xmltodict
+    state: present
 #- name: Executing script
 #  script: files/run.sh
 
