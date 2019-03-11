@@ -1,0 +1,49 @@
+---
+# tasks file for checkbox-analysis
+
+- name: Creating a folder for checkbox-analysis files
+  file:
+    path: /home/vagrant/checkbox.io/server-side/site/checkbox-analysis
+    owner: vagrant
+    group: vagrant
+    state: directory
+
+- name: Copying package.json
+  copy:
+    src: package.json
+    dest: /home/vagrant/checkbox.io/server-side/site/checkbox-analysis
+
+- name: Copying package.json
+  copy:
+    src: analysis.js
+    dest: /home/vagrant/checkbox.io/server-side/site/checkbox-analysis
+
+- name: NPM Install (shell command)
+  become: true
+  shell: npm install
+  args:  
+    chdir: /home/vagrant/checkbox.io/server-side/site/checkbox-analysis
+    creates: .modules-installed.txt    
+
+- name: Installing JS-beautify
+  npm:
+    name: js-beautify
+    global: yes    
+
+- name: creating test folder
+  file:
+    path: /home/vagrant/checkbox.io/server-side/site/checkbox-analysis/test
+    owner: vagrant
+    group: vagrant
+    state: directory
+
+- name: Copying test.js
+  copy:
+    src: test.js
+    dest: /home/vagrant/checkbox.io/server-side/site/checkbox-analysis/test/
+
+- name: Installing mocha
+  become: true
+  npm:
+    name: mocha
+    global: yes 

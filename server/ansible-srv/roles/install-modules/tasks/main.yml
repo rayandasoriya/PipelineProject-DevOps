@@ -50,7 +50,8 @@
     - 'junit'
     - 'postbuild-task'
     - 'jacoco'
-    - 'build-timeout' 
+    - 'build-timeout'
+    - 'findbugs' 
   tags:
     - run_once
 

@@ -1,0 +1,58 @@
+- job:
+    name: iTrust2-test-static
+    workspace: /home/vagrant/iTrust/iTrust2/
+    builders:
+    - maven-target:
+        maven-version: mvn
+        pom: pom-data.xml
+        goals: process-test-classes
+    #- maven-target:
+    #    maven-version: mvn
+    #    pom: /home/vagrant/iTrust/iTrust2/pom.xml
+    #    goals: jetty:run
+    - maven-target:
+        maven-version: mvn
+        pom: pom2.xml
+        goals: clean test verify site checkstyle:checkstyle
+    #- maven-target:
+    #    maven-version: mvn
+    #    pom: /home/vagrant/iTrust/iTrust2/pom.xml
+    #    goals: jetty:run
+    publishers:
+      - junit:
+         results: "**/target/surefire-reports/*.xml"
+         keep-long-stdio: true
+         health-scale-factor: 2.0
+         allow-empty-results: false
+      - jacoco:
+          exec-pattern: '**/**.exec'
+          class-pattern: '**/classes'
+          source-pattern: '**/src/main/java'
+          update-build-status: false
+      - findbugs:
+          pattern: '**/target/findbugsXml.xml'
+          thresholds:
+               unstable:
+                   total-all: 90
+                   total-high: 80
+                   total-normal: 50
+                   total-low: 20
+                   new-all: 95
+                   new-high: 85
+                   new-normal: 55
+                   new-low: 25
+               failed:
+                   total-all: 80
+                   total-high: 70
+                   total-normal: 40
+                   total-low: 10
+                   new-all: 85
+                   new-high: 75
+                   new-normal: 45
+                   new-low: 15
+    wrappers:
+      - timeout:
+          type: absolute
+          timeout: 15
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true 

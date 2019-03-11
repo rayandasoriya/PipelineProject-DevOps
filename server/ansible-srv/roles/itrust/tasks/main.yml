@@ -41,13 +41,30 @@
     src: email.properties.j2
     dest: /home/vagrant/iTrust/iTrust2/src/main/java/email.properties
 
-- name: Copying JJB file to target machine
+
+
+- name: Copying JJB file to target machine (Without static analysis)
   copy:
     src: itrust-build.yml
     dest: /home/vagrant/iTrust/iTrust2/
 
 - name: Configuring the build job
   shell: jenkins-jobs --conf /etc/jenkins_job/jenkins_jobs.ini --user admin --password admin update itrust-build.yml
+  args:
+    chdir: /home/vagrant/iTrust/iTrust2/
+
+- name: Copying new .pom file for satatic analysis
+  copy:
+    src: pom.xml
+    dest: /home/vagrant/iTrust/iTrust2/pom2.xml
+
+- name: Copying JJB file to target machine (With Static Analysis)
+  copy:
+    src: itrust-build-2.yml
+    dest: /home/vagrant/iTrust/iTrust2/
+
+- name: Configuring the build job
+  shell: jenkins-jobs --conf /etc/jenkins_job/jenkins_jobs.ini --user admin --password admin update itrust-build-2.yml
   args:
     chdir: /home/vagrant/iTrust/iTrust2/
     
