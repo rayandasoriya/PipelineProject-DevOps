@@ -48,6 +48,7 @@
     - 'jacoco'
     - 'build-timeout'
     - 'findbugs' 
+    - 'ansicolor'
   tags:
     - run_once
 

@@ -1,4 +1,7 @@
 - job:
     name: Checkbox-analysis
     builders:
-    - shell: "cd /home/vagrant/checkbox.io/server-side/site/checkbox-analysis; npm test"
+    - shell: "cd /home/vagrant/checkbox.io/server-side/site/checkbox-analysis; npm test; npm run test-jenkins"
+    wrappers:
+    - ansicolor:
+        colormap: "xterm"

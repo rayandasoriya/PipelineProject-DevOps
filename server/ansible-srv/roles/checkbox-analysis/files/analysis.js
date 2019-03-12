@@ -462,7 +462,7 @@ for(i =0; i < pathToTraverse.length; i ++ ){
 exportJSON();
 var exec= require('child_process').exec, child; 
 	function stop () {
-		child = exec("mocha",
+		child = exec("mocha --colors",
 				function (error, stdout, stderr) {
 					 console.log('stdout: ' + stdout);
 					 //console.log('stderr: ' + stderr);

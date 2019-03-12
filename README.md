@@ -3,7 +3,7 @@
 ## Milestone 2 - Test & Analysis
 
 ![](./resources/01-NCSU-Logo.png)
-| [MILESTONE 1](#) | [MILESTONE 2](#) | [MILESTONE 3](#) | [MILESTONE 4](#) |
+| [MILESTONE 1](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone1) | [MILESTONE 2](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone2) | [MILESTONE 3](#) | [MILESTONE 4](#) |
 
 # Content
 1. [Our Team](#our-team)
@@ -19,27 +19,36 @@
 ## Our Team
 
 * Arshdeep Singh Syal ([asyal](mailto:asyal@ncsu.edu))
-	* Responsible for Git Hooks integration and README.md write-up
+	* Responsible for Checkbox analysis code (Long method, Cyclomatic Complexity, Max if conditions, parameter count)
 * Jubeen Shah ([jnshah2](mailto:jnshah2@ncsu.edu))
-	* Responsible for Jenkins configuration, Git Hooks integration, Checkbox.io and iTrust Build
+	* Responsible for Jenkins Configuration, iTrust Fuzzing, iTrust Code Coverage, Checkbox analysis for max nesting depth, extending iTrust Build Job, test cases description for Checkbox.
 * Rayan Dasoriya([rdasori](mailto:rdasori@ncsu.edu))
-	* Responsible for pm2/mocha tests, iTrust Build and README.md write-up
+	* Responsible for Test prioritization analysis and report creation
 * Shraddha Bhadauria([sbhadau](mailto:sbhadau@ncsu.edu))
-	* Responsible for pm2/mocha tests
+	* Responsible for Checkbox analysis code (Long method, Cyclomatic Complexity, Max if conditions, parameter count)
 
 ## About the milestone
 
-Continuous Delivery (CD) is a software strategy that enables organizations to deliver new features to users as fast and efficiently as possible. The goal of Continuous Delivery is to enable a constant flow of changes into production via an automated software production line. A typical CD pipeline will include the following stages: configuration management and build automation; test automation; and deployment automation.
+In this milestone, we have extended our work done in [Milestone 1](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone1) demonstrated techniques related to fuzzing, test case priorization, and static analysis to improve the quality of checkbox.io and iTrust. We have:
 
-In this milestone, we have demonstrated the build automation and configuration management using Ansible. We have:
-
-* Provisioned a configuration server ([Ansible](https://www.ansible.com)) and a [Jenkins](https://jenkins.io) server on remote virtual machine instances.
-* Configured the Jenkins server, automatically using Ansible.
-* Used a [jenkins-job-builder](https://docs.openstack.org/infra/jenkins-job-builder/) and Ansible, to automatically setup build jobs for two applications:
-	* A Nodejs web application [`checkbox.io`](https://github.com/chrisparnin/checkbox.io)
-	* An "enterprise" Java system [`iTrust`](https://github.ncsu.edu/engr-csc326-staff/iTrust2-v4/tree/master/iTrust2)
-* Used a combination of [mocha](https://www.npmjs.com/package/mocha)/[pm2](https://www.npmjs.com/package/pm2), to create a test script that will start and stop the `checkbox.io` service on the server.
-* Created a git hook to trigger a build when a push is made to the repo.
+* Installed a [Jacoco](https://wiki.jenkins.io/display/JENKINS/JaCoCo+Plugin) plugin in jenkins for Java Code Coverage for the iTrust Application. 
+	* This measures coverage and display a report within Jenkins on every push to the bare repository, since in the last Milestone, we configured a post-receive hook to start a iTrust Build on Jenkins on port 9999.
+* We also developed a tool that automatically commits new random changes to source code which will trigger a build and run of the test suite. We simply used a pseudo-random generator with a seed value ranging from `1` to `100`. The code for the same can be found [here](https://github.ncsu.edu/jnshah2/CSC519-Project/blob/Milestone2/server/ansible-srv/roles/fuzzer/files/main.js), and [here](https://github.ncsu.edu/jnshah2/CSC519-Project/blob/Milestone2/server/ansible-srv/roles/fuzzer/files/loop.sh). We made the following changes : 
+	* Changed content of some `strings` in code to `"CSC519-Devops_String"`
+	* Swapped `">"`/`">="` and with `"<"`/`"<="` and vice versa
+	* Swapped `"=="` with `"!="` and vice versa
+	* Swapped `0` with `1` and vice versa
+* We also, wrote an [analysis script](https://github.ncsu.edu/jnshah2/CSC519-Project/blob/Milestone2/server/ansible-srv/roles/fuzzer/files/analysis.py) that would analyze the results from the 100 build jobs, and create a report.
+* We modified the [pom.xml](https://github.ncsu.edu/jnshah2/CSC519-Project/blob/Milestone2/server/ansible-srv/roles/itrust-analysis/files/pom.xml) file with support for [`FindBugs`](http://findbugs.sourceforge.net) for a new job `iTrust2-test-static` to be started on jenkins, the Jenkins Job Builder file can be found [here](https://github.ncsu.edu/jnshah2/CSC519-Project/blob/Milestone2/server/ansible-srv/roles/itrust-analysis/files/itrust-build-2.yml).
+	* We also installed a [FindBugs Plugin](https://wiki.jenkins.io/display/JENKINS/FindBugs+Plugin) to support the same.
+	* We tried to use the [Warning Next Generation Plugin](https://wiki.jenkins.io/display/JENKINS/Warnings+Next+Generation+Plugin), but JJB, does not yet support the this plugin, but on manual running it worked, so when JJB starts the support, a simple publisher code should help with the same.
+	* Also, with the [build file](https://github.ncsu.edu/jnshah2/CSC519-Project/blob/Milestone2/server/ansible-srv/roles/itrust-analysis/files/itrust-build-2.yml), we're not failing the build, this is simulated in the screencast, but just needs the altering of the threshold values.
+* Extended the checkbox.io and to analyze and [create custom metrics](https://github.ncsu.edu/jnshah2/CSC519-Project/blob/Milestone2/server/ansible-srv/roles/checkbox-analysis/files/analysis.js) for the same. Then used a [test script](https://github.ncsu.edu/jnshah2/CSC519-Project/blob/Milestone2/server/ansible-srv/roles/checkbox-analysis/files/test.js) to fail a build when necessary. The following metrics are calculated
+	* `Long Method`, failing the build  when a method is longer than 100 lines
+	* `Cyclomatic Complexity`, failing the build when the number of conditional or looping statements is greater than 15
+	* `Max If Conditions`, failing the build when the number of conditions in the if statement are greater than 15.
+	* `Max Parameter Count`, failing the build when the maximum number of parameters passed within a function is greater than 10.
+	* `Max Nesting Depth`, failing the build when the maximum depth of if/else conditons is greater than 15.
 
 ## Prerequisites
 To run this project, you will require the following tools:

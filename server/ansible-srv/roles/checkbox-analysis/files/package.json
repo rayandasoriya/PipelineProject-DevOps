@@ -4,7 +4,8 @@
   "description": "Static and dynamic analysis",
   "main": "analysis.js",
   "scripts": {
-    "test": "node analysis.js" 
+    "test": "node analysis.js",
+    "test-jenkins": "JUNIT_REPORT_PATH=/home/vagrant/checkbox.io/server-side/site/checkbox-analysis/report.xml mocha --colors --reporter mocha-jenkins-reporter"
   },
   "keywords": [
     "static",
@@ -13,13 +14,14 @@
   "dependencies": {
     "chai": "^4.1.2",
     "mocha": "^3.5.0"
-  },	
+  },
   "author": "you",
   "license": "ISC",
   "devDependencies": {
     "escodegen": "^1.4.1",
     "esprima": "^1.2.2",
-    "js-beautify" : "^1.8.0",
-    "object-hash" : "^1.1.8"
+    "js-beautify": "^1.8.0",
+    "mocha-jenkins-reporter": "^0.4.1",
+    "object-hash": "^1.1.8"
   }
 }
