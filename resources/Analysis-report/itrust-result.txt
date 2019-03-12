@@ -1,0 +1,351 @@
+
+
+testDiaryEntryInvalid
+Passed: 30, 	Failed: 67, 	Errored: 0, 	AvgTime: 0.0 
+
+
+testInvalidCodes
+Passed: 131, 	Failed: 63, 	Errored: 3, 	AvgTime: 0.0 
+
+
+testCodeAPI
+Passed: 74, 	Failed: 26, 	Errored: 12, 	AvgTime: 0.08 
+
+
+testPatientAPI
+Passed: 36, 	Failed: 25, 	Errored: 0, 	AvgTime: 0.2 
+
+
+testFieldValidation
+Passed: 68, 	Failed: 24, 	Errored: 5, 	AvgTime: 0.02 
+
+
+testFoodDiaryAPIAsPatient
+Passed: 3, 	Failed: 24, 	Errored: 0, 	AvgTime: 0.14 
+
+
+testRepresentativeAPIPatient
+Passed: 35, 	Failed: 24, 	Errored: 2, 	AvgTime: 0.35 
+
+
+testRepresentativeAPIHCP
+Passed: 35, 	Failed: 24, 	Errored: 2, 	AvgTime: 0.85 
+
+
+testPasswordReset
+Passed: 68, 	Failed: 19, 	Errored: 13, 	AvgTime: 1.5 
+
+
+testFoodDiaryAPIAsHCP
+Passed: 12, 	Failed: 14, 	Errored: 1, 	AvgTime: 0.13 
+
+
+testValidPasswordChanges
+Passed: 52, 	Failed: 13, 	Errored: 4, 	AvgTime: 0.55 
+
+
+testPasswordChangeForm
+Passed: 77, 	Failed: 11, 	Errored: 12, 	AvgTime: 0.54 
+
+
+testPrescriptionAPI
+Passed: 78, 	Failed: 7, 	Errored: 0, 	AvgTime: 0.32 
+
+
+testPreScheduledOphthalmologySurgery
+Passed: 80, 	Failed: 6, 	Errored: 0, 	AvgTime: 0.32 
+
+
+testOphthalmologySurgeryAPI
+Passed: 15, 	Failed: 6, 	Errored: 65, 	AvgTime: 0.59 
+
+
+testInvalidPasswordChanges
+Passed: 64, 	Failed: 5, 	Errored: 0, 	AvgTime: 0.02 
+
+
+testPersonnelAPI
+Passed: 82, 	Failed: 5, 	Errored: 2, 	AvgTime: 0.22 
+
+
+testDrugAPI
+Passed: 84, 	Failed: 5, 	Errored: 1, 	AvgTime: 0.37 
+
+
+testUserAPI
+Passed: 77, 	Failed: 5, 	Errored: 0, 	AvgTime: 0.41 
+
+
+testAdminRole
+Passed: 78, 	Failed: 4, 	Errored: 0, 	AvgTime: 0.01 
+
+
+testPatientUnauthenticated
+Passed: 58, 	Failed: 3, 	Errored: 0, 	AvgTime: 0.01 
+
+
+testNoRole
+Passed: 79, 	Failed: 3, 	Errored: 0, 	AvgTime: 0.01 
+
+
+testEnumAPI
+Passed: 77, 	Failed: 3, 	Errored: 2, 	AvgTime: 0.02 
+
+
+testHospitalAPI
+Passed: 58, 	Failed: 3, 	Errored: 0, 	AvgTime: 0.07 
+
+
+testGetByRole
+Passed: 86, 	Failed: 3, 	Errored: 0, 	AvgTime: 0.09 
+
+
+testCreateBadAppointmentRequest
+Passed: 56, 	Failed: 3, 	Errored: 0, 	AvgTime: 0.2 
+
+
+testAppointmentRequestAPI
+Passed: 54, 	Failed: 3, 	Errored: 2, 	AvgTime: 0.28 
+
+
+testLogByDate
+Passed: 24, 	Failed: 2, 	Errored: 1, 	AvgTime: 0.01 
+
+
+testPatientAsPatient
+Passed: 37, 	Failed: 2, 	Errored: 22, 	AvgTime: 0.04 
+
+
+testFoodDiaryAPIInvalidEntry
+Passed: 25, 	Failed: 2, 	Errored: 0, 	AvgTime: 0.12 
+
+
+testUserLockouts
+Passed: 89, 	Failed: 2, 	Errored: 6, 	AvgTime: 0.15 
+
+
+testPreScheduledGeneralOphthalmology
+Passed: 25, 	Failed: 2, 	Errored: 0, 	AvgTime: 0.23 
+
+
+testPreScheduledGeneralCheckup
+Passed: 25, 	Failed: 2, 	Errored: 0, 	AvgTime: 0.26 
+
+
+testGeneralCheckupAPI
+Passed: 0, 	Failed: 2, 	Errored: 25, 	AvgTime: 0.38 
+
+
+testGeneralOphthalmologyAPI
+Passed: 0, 	Failed: 2, 	Errored: 25, 	AvgTime: 0.39 
+
+
+testGetLabProcedures
+Passed: 27, 	Failed: 2, 	Errored: 0, 	AvgTime: 1.11 
+
+
+testGetMyProcedures
+Passed: 27, 	Failed: 2, 	Errored: 0, 	AvgTime: 1.52 
+
+
+testLogByDateLarge
+Passed: 24, 	Failed: 2, 	Errored: 1, 	AvgTime: 2.05 
+
+
+testDrugForm
+Passed: 100, 	Failed: 0, 	Errored: 0, 	AvgTime: 0.0 
+
+
+testCodes
+Passed: 142, 	Failed: 0, 	Errored: 55, 	AvgTime: 0.0 
+
+
+testEqualsAndProperties
+Passed: 97, 	Failed: 0, 	Errored: 0, 	AvgTime: 0.0 
+
+
+testHospitalForm
+Passed: 97, 	Failed: 0, 	Errored: 0, 	AvgTime: 0.0 
+
+
+testPersonnelForm
+Passed: 98, 	Failed: 0, 	Errored: 0, 	AvgTime: 0.0 
+
+
+testLogEntryTableRow
+Passed: 99, 	Failed: 0, 	Errored: 0, 	AvgTime: 0.0 
+
+
+testGeneralCheckupAppointmentRequest
+Passed: 98, 	Failed: 0, 	Errored: 2, 	AvgTime: 0.01 
+
+
+testGeneralOpthalmologyAppointmentRequest
+Passed: 98, 	Failed: 0, 	Errored: 2, 	AvgTime: 0.01 
+
+
+testRetrieveDomainObject
+Passed: 99, 	Failed: 0, 	Errored: 0, 	AvgTime: 0.01 
+
+
+testGeneralCheckupForm
+Passed: 17, 	Failed: 0, 	Errored: 82, 	AvgTime: 0.01 
+
+
+testGetByPatient
+Passed: 33, 	Failed: 0, 	Errored: 64, 	AvgTime: 0.01 
+
+
+testCreateDomainObject
+Passed: 99, 	Failed: 0, 	Errored: 0, 	AvgTime: 0.01 
+
+
+testDiaryEntry
+Passed: 33, 	Failed: 0, 	Errored: 64, 	AvgTime: 0.01 
+
+
+testGetNonExistentAppointment
+Passed: 59, 	Failed: 0, 	Errored: 0, 	AvgTime: 0.01 
+
+
+testGetNonExistentHospital
+Passed: 61, 	Failed: 0, 	Errored: 0, 	AvgTime: 0.01 
+
+
+testDelete
+Passed: 99, 	Failed: 0, 	Errored: 0, 	AvgTime: 0.01 
+
+
+testDeleteNonExistentAppointment
+Passed: 59, 	Failed: 0, 	Errored: 0, 	AvgTime: 0.01 
+
+
+testGetNonExistentUser
+Passed: 82, 	Failed: 0, 	Errored: 0, 	AvgTime: 0.02 
+
+
+testCopy
+Passed: 99, 	Failed: 0, 	Errored: 0, 	AvgTime: 0.02 
+
+
+testGetNonExistentPatient
+Passed: 61, 	Failed: 0, 	Errored: 0, 	AvgTime: 0.02 
+
+
+testDeleteNonExistentOfficeVisit
+Passed: 140, 	Failed: 0, 	Errored: 0, 	AvgTime: 0.02 
+
+
+testGetNonExistentOfficeVisit
+Passed: 140, 	Failed: 0, 	Errored: 0, 	AvgTime: 0.02 
+
+
+testEmail
+Passed: 97, 	Failed: 0, 	Errored: 0, 	AvgTime: 0.02 
+
+
+testOphthalmologySurgeryForm
+Passed: 24, 	Failed: 0, 	Errored: 75, 	AvgTime: 0.02 
+
+
+testGetNonExistentPersonnel
+Passed: 89, 	Failed: 0, 	Errored: 0, 	AvgTime: 0.03 
+
+
+testGeneralOphthalmologyForm
+Passed: 25, 	Failed: 0, 	Errored: 75, 	AvgTime: 0.03 
+
+
+testLabProcedureForm
+Passed: 17, 	Failed: 0, 	Errored: 79, 	AvgTime: 0.04 
+
+
+testOphthalmologySurgery
+Passed: 19, 	Failed: 0, 	Errored: 80, 	AvgTime: 0.04 
+
+
+testGetBy
+Passed: 186, 	Failed: 0, 	Errored: 108, 	AvgTime: 0.04 
+
+
+testPatientDateOfDeath
+Passed: 67, 	Failed: 0, 	Errored: 30, 	AvgTime: 0.05 
+
+
+personalRepresentatives
+Passed: 67, 	Failed: 0, 	Errored: 30, 	AvgTime: 0.05 
+
+
+testOpthalmologyAppointmentRequest
+Passed: 98, 	Failed: 0, 	Errored: 2, 	AvgTime: 0.05 
+
+
+testLogging
+Passed: 95, 	Failed: 0, 	Errored: 4, 	AvgTime: 0.06 
+
+
+testGeneralOphthalmology
+Passed: 20, 	Failed: 0, 	Errored: 80, 	AvgTime: 0.06 
+
+
+testIPLockouts
+Passed: 85, 	Failed: 0, 	Errored: 12, 	AvgTime: 0.1 
+
+
+testLabProcedure
+Passed: 40, 	Failed: 0, 	Errored: 56, 	AvgTime: 0.11 
+
+
+testGeneralCheckups
+Passed: 12, 	Failed: 0, 	Errored: 87, 	AvgTime: 0.14 
+
+
+testMissingBHM
+Passed: 71, 	Failed: 0, 	Errored: 29, 	AvgTime: 0.18 
+
+
+testDiagnoses
+Passed: 1, 	Failed: 0, 	Errored: 28, 	AvgTime: 0.37 
+
+
+testEmergencyRecordForm
+Passed: 1, 	Failed: 0, 	Errored: 26, 	AvgTime: 1.15 
+
+
+testEmergencyRecordFormHCPAPI
+Passed: 1, 	Failed: 0, 	Errored: 26, 	AvgTime: 1.2 
+
+
+testEmergencyRecordFormERAPI
+Passed: 1, 	Failed: 0, 	Errored: 26, 	AvgTime: 1.21 
+
+
+testGetNonExistentPatientRecord
+Passed: 1, 	Failed: 0, 	Errored: 26, 	AvgTime: 1.3 
+
+
+testLabProcedureLabTechAPI
+Passed: 11, 	Failed: 0, 	Errored: 18, 	AvgTime: 1.41 
+
+
+testRequestReset
+Passed: 62, 	Failed: 0, 	Errored: 7, 	AvgTime: 1.46 
+
+
+testLabProcedureHCPAPI
+Passed: 11, 	Failed: 0, 	Errored: 18, 	AvgTime: 1.5 
+
+
+testSendEmail
+Passed: 80, 	Failed: 0, 	Errored: 17, 	AvgTime: 1.66 
+
+
+testDrugLookup
+Passed: 100, 	Failed: 0, 	Errored: 0, 	AvgTime: 4.95 
+
+********************************************************************************************
+
+Total Passed: 5141, 	Total Failed: 420, 	Total 	Errors: 1414, 	Total Time: 1878.33
+
+********************************************************************************************
+

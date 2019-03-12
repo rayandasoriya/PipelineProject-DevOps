@@ -18,7 +18,7 @@
     - chrome
     - checkbox
     - itrust
-    - build
+    #- build
     - githooks
     - fuzzer
     - checkbox-analysis
