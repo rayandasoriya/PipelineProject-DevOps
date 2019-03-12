@@ -1,6 +1,6 @@
 # CSC519-Project
 
-## Milestone 1 - Configuration Management & Build
+## Milestone 2 - Test & Analysis
 
 ![](./resources/01-NCSU-Logo.png)
 | [MILESTONE 1](#) | [MILESTONE 2](#) | [MILESTONE 3](#) | [MILESTONE 4](#) |
