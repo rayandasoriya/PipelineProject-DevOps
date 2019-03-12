@@ -4,8 +4,8 @@ import os
 from operator import itemgetter
 
 #files = os.listdir("/Users/rayandasoriya/Desktop/Projects/devops/iTrust-fuzzer/BuildResults/1/surefire-reports/")
-pathToReports = "/Users/jubeenshah/Desktop/NCSU/SEM-2/CSC519-Devops/Project/Master/screencast/CSC519-Project/server/jenkins-srv/BuildResults.1/"
-#pathToReports = "/home/vagrant/BuildResults/"
+#pathToReports = "/Users/jubeenshah/Desktop/NCSU/SEM-2/CSC519-Devops/Project/Master/screencast/CSC519-Project/server/jenkins-srv/BuildResults.1/"
+pathToReports = "/home/vagrant/BuildResults/"
 files = os.listdir(pathToReports)
 
 dictonaryOfFiles = {}

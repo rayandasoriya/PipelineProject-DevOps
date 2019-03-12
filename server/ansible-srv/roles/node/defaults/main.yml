@@ -1,3 +1,4 @@
 # Jenkins Admin Username and Password
-admin_username: "jnshah2"
-admin_password: "jnshah2"
+# No longer needed; transferred to variables.yml
+#admin_username: "jnshah2"
+#admin_password: "jnshah2"

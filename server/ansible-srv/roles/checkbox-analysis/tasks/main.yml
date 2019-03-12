@@ -1,28 +1,32 @@
 ---
 # tasks file for checkbox-analysis
+- name: Including variables.yml
+  include_vars:
+    file: variables.yml
 
 - name: Creating a folder for checkbox-analysis files
   file:
-    path: /home/vagrant/checkbox.io/server-side/site/checkbox-analysis
-    owner: vagrant
-    group: vagrant
+    path: "{{home_path}}/{{checkbox_srvP}}/checkbox-analysis"
+    owner: root
+    group: root
+    mode: 0777
     state: directory
 
 - name: Copying package.json
   copy:
     src: package.json
-    dest: /home/vagrant/checkbox.io/server-side/site/checkbox-analysis
+    dest: "{{home_path}}/{{checkbox_srvP}}/checkbox-analysis"
 
 - name: Copying package.json
   copy:
     src: analysis.js
-    dest: /home/vagrant/checkbox.io/server-side/site/checkbox-analysis
+    dest: "{{home_path}}/{{checkbox_srvP}}/checkbox-analysis"
 
 - name: NPM Install (shell command)
   become: true
   shell: npm install
   args:  
-    chdir: /home/vagrant/checkbox.io/server-side/site/checkbox-analysis
+    chdir: "{{home_path}}/{{checkbox_srvP}}/checkbox-analysis"
     creates: .modules-installed.txt    
 
 - name: Installing JS-beautify
@@ -32,7 +36,7 @@
 
 - name: creating test folder
   file:
-    path: /home/vagrant/checkbox.io/server-side/site/checkbox-analysis/test
+    path: "{{home_path}}/{{checkbox_srvP}}/checkbox-analysis/test"
     owner: vagrant
     group: vagrant
     state: directory
@@ -40,10 +44,21 @@
 - name: Copying test.js
   copy:
     src: test.js
-    dest: /home/vagrant/checkbox.io/server-side/site/checkbox-analysis/test/
+    dest: "{{home_path}}/{{checkbox_srvP}}/checkbox-analysis/test/"
 
 - name: Installing mocha
   become: true
   npm:
     name: mocha
-    global: yes 
+    global: yes
+
+- name: Copying JJB file to target machine
+  copy:
+    src: checkbox-build-analysis.yml
+    dest: "{{home_path}}/jenkins-job-builder/checkbox-build-analysis.yml"
+
+- name: Configuring the build job
+  shell: 'jenkins-jobs --conf /etc/jenkins_job/jenkins_jobs.ini --user "{{jenkins_user}}" --password "{{jenkins_password}}" update checkbox-build-analysis.yml'
+  args:
+    chdir: "{{home_path}}/jenkins-job-builder"
+

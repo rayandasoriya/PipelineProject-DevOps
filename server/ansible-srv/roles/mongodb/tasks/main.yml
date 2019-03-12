@@ -1,4 +1,8 @@
-#MongoDB
+---
+# tasks file for mongo-db
+- name: Including variables.yml
+  include_vars:
+    file: variables.yml
 
 - name: Import the public key used by the PMS
   apt_key: 
@@ -16,8 +20,6 @@
     pkg: mongodb 
     state: latest 
     update_cache: yes 
-#  notify: 
-#    - start mongodb
 
 - name: Creating /data/db
   file: 
@@ -39,8 +41,8 @@
   become: true
   mongodb_user:
     database: admin
-    name: "admin"
-    password: "admin"
+    name: '{{mongo_checkbox_user}}'
+    password: '{{mongo_admin_password}}'
     state: present
     roles: readWrite,dbAdmin,userAdmin
 

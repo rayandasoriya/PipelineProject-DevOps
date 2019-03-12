@@ -1,13 +1,19 @@
+---
+# tasks file for install-modules
+
+- name: Including variables.yml
+  include_vars:
+    file: variables.yml
+
 - name: Get Jenkins crumb
   uri:
-    user: admin
-    password: "admin"
+    user: '{{jenkins_user}}'
+    password: '{{jenkins_password}}'
     force_basic_auth: yes
-    url: "http://127.0.0.1:9999/crumbIssuer/api/json"
+    url: "{{local_host}}:{{jenkins_port}}/crumbIssuer/api/json"
     return_content: yes
   register: crumb_token
   run_once: true
-  #ignore_errors: true
   until: crumb_token.content.find('Please wait while Jenkins is getting ready') == -1
   retries: 10
   delay: 10
@@ -15,28 +21,18 @@
     - run_once
 
 - name: Set crumb token
-  #ignore_errors: true
   set_fact:
     crumb: "{{ crumb_token.json.crumbRequestField }}={{ crumb_token.json.crumb }}"
   tags:
     - run_once
 
-#- name: Install plugin
-#  jenkins_plugin:
-#    name: ['dashboard-view','Folders','Ant','Git','sssh-agent','GitHub','NodeJS','Pipline']
-#    url_username: admin
-#    url_password: admin
-#    url: http://localhost:8080
-#  notify: Restart Jenkins
-
 - name: Install plugins
   run_once: true
-  #ignore_errors: true
   uri:
     user: admin
     password: "admin"
     force_basic_auth: yes
-    url: "http://127.0.0.1:9999/pluginManager/install?plugin.{{ item }}.default=on&{{ crumb }}"
+    url: "{{local_host}}:{{jenkins_port}}/pluginManager/install?plugin.{{ item }}.default=on&{{ crumb }}"
     method: POST
     status_code: [200, 302]
   with_items: 
@@ -57,21 +53,16 @@
 
 - name: Wait for plugins to be installed
   run_once: true
-  #ignore_errors: true
   uri:
-    user: admin
-    password: "admin"
+    user: "{{jenkins_user}}"
+    password: "{{jenkins_password}}"
     force_basic_auth: yes
-    url: "http://127.0.0.1:9999/updateCenter/installStatus?{{ crumb }}"
+    url: "{{local_host}}:{{jenkins_port}}/updateCenter/installStatus?{{ crumb }}"
     return_content: yes
   register: plugin_status
-  #debug: 
-    #msg: plugin_status.stdout
   until: "'Pending' not in plugin_status.json.data.jobs|map(attribute='installStatus')"
   retries: 20
   delay: 10
-#- debug:
-#    var: "{{plugin_status.stdout}}"
   tags:
     - run_once
 
@@ -81,15 +72,6 @@
     name: jenkins
     state: restarted
 
-#- name: Check if we need to restart Jenkins to activate plugins
-#  uri:
-#    url: "http://127.0.0.1:8080/updateCenter/api/json?tree=restartRequiredForCompletion&{{ crumb }}"
-#    return_content: yes
-#  register: jenkins_restart_required
-
-#- name: Restart Jenkins to activate new plugins
-#  service: name=jenkins state=restarted
-#  when: jenkins_restart_required.json.restartRequiredForCompletion|bool
-
 - name: Wait for Jenkins to become available
-  wait_for: port=9999
+  wait_for: 
+    port: "{{jenkins_port}}"

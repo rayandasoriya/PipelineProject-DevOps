@@ -1,4 +1,9 @@
-#should be part of a 'tasks'
+---
+# tasks file for mysql
+- name: Including variables.yml
+  include_vars:
+    file: variables.yml
+
 - name: Update and upgrade apt packages
   become: true
   apt:
@@ -12,7 +17,7 @@
   debconf: 
     name: 'mysql-server' 
     question: 'mysql-server/root_password'
-    value: '{{login_passwd_va | quote}}' 
+    value: '{{mysql_password | quote}}' 
     vtype: 'password'
   become: true
   tags: 
@@ -22,7 +27,7 @@
   debconf: 
     name: 'mysql-server' 
     question: 'mysql-server/root_password_again' 
-    value: '{{login_passwd_va | quote}}' 
+    value: '{{mysql_password | quote}}' 
     vtype: 'password'
   become: true
   tags: 
@@ -42,19 +47,17 @@
 - name: Install the Python MySQLB module
   pip:
     name: PyMySQL 
-  #notify: Start MySQL
   tags:
     - dependencies
 
 - name: Creating a new Root User
   ignore_errors: true
   mysql_user:
-    name: root
+    name: "{{mysql_user}}"
     priv: "*.*:ALL,GRANT"
-    login_user: root
-    login_password: "test"
+    login_user: "{{mysql_user}}"
+    login_password: "{{mysql_password}}"
     state: present
-  #notify: Restart MySQL
   tags: 
     - Create User
     - run_once

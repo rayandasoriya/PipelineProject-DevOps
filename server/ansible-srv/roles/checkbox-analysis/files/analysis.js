@@ -451,7 +451,7 @@ function exportJSON() {
 		}
 		
 });
-	child_process.exec(`js-beautify -r ${nameOfFile}`);
+	child_process.exec(`sudo chmod 777 ${nameOfFile}; js-beautify -r ${nameOfFile}`);
 
 }
 

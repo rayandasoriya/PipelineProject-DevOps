@@ -1,4 +1,9 @@
-#should be part of a 'tasks'
+---
+# tasks file for Jenkins 
+- name: Including variables.yml
+  include_vars:
+    file: variables.yml
+
 - name: Update and upgrade apt packages
   become: true
   apt:
@@ -47,15 +52,12 @@
     name: ['openjdk-8-jdk','openjdk-8-jre']
   tags:
     - Installing dependencies
-  
-#- name: Sleep for 10 seconds and continue with play
-#  wait_for:
-#    timeout: 10
 
-
-- name: Fix missing
+- name: Fix missing for Jenkins download (ansible-module not available)
   become: true
   shell: apt-get update --fix-missing
+  args:
+    warn: false
 
 - name: Installing Jenkins
   become: true
@@ -64,27 +66,18 @@
     state: latest
     force: yes
     name: ['jenkins']
-#  notify: Start Jenkins
   tags:
     - Installing dependencies
 
-# Move to handlers later on
-#- name: Start & Enable Jenkins
-#  systemd:
-#    name: jenkins
-#    state: started
-#    enabled: true
-
-# Check if you really need this file
-- name: Sleep for 10 seconds and continue with play
+- name: Sleep for 10 seconds and continue with play (Needed for getting Crumb)
   wait_for:
     timeout: 10
 
 - name: Copying jenkins.install.UpgradeWizard.state to target machine
   copy:
     src: jenkins.install.UpgradeWizard.state
-    dest: /var/lib/jenkins/jenkins.install.UpgradeWizard.state
-#  notify: Restart Jenkins
+    #dest: /var/lib/jenkins/jenkins.install.UpgradeWizard.state
+    dest: "{{ jenkins_path }}/jenkins.install.UpgradeWizard.state" 
   tags: 
     - Jenkins Configuration
 
@@ -94,23 +87,14 @@
       regexp: '^JAVA_ARGS='
       line: 'JAVA_ARGS="-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false"'
       insertbefore: '^DAEMON_ARGS='
-#  notify: Restart Jenkins
   tags: 
     - Jenkins Configuration
-
-# No longer need it
-#- name: Copying the initial Admin password
-#  become: true
-#  command: cat /var/lib/jenkins/secrets/initialAdminPassword
-#  register: output
-
-#- debug:
-#    msg: output.stdout
 
 - name: Creating init.groovy.d
   become: true
   file: 
-    path: /var/lib/jenkins/init.groovy.d
+    #path: /var/lib/jenkins/init.groovy.d
+    path: "{{ jenkins_path }}/init.groovy.d"
     state: directory
     owner: root
     group: root
@@ -121,12 +105,12 @@
 - name: Copying Groovy file to target machine
   template:
     src:  setup-admin.groovy.j2
-    dest: /var/lib/jenkins/init.groovy.d/setup-admin.groovy
- # notify: Restart Jenkins
+    #dest: /var/lib/jenkins/init.groovy.d/setup-admin.groovy
+    dest: "{{jenkins_path}}//init.groovy.d/setup-admin.groovy"
   tags: 
     - Jenkins Configuration
 
-- name: Copying the default configuration on target machine
+- name: Copying the jenkins configuration file to target machine (jenkins_port=9999)
   template:
     src: jenkins.j2
     dest: /etc/default/jenkins

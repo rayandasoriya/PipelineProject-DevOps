@@ -1,7 +1,10 @@
-#Node
+---
+# tasks file for Node
 
 - name: Getting 8.x setup files for node
   shell: curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
+  args: 
+    warn: false
 
 - name: Installing node
   become: true

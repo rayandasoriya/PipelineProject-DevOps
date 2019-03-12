@@ -1,4 +1,9 @@
-#should be part of a 'tasks'
+---
+# tasks file for maven
+- name: Including variables.yml
+  include_vars:
+    file: variables.yml
+
 - name: Update and upgrade apt packages
   become: true
   apt:
@@ -38,13 +43,12 @@
   become: true
   copy:
     src: maven.sh
-    dest: /etc/profile.d/maven.sh
+    dest: "{{mvn_sh}}"
     mode: 0777
 
 - name: Executing the script
   become: true
-  shell: /etc/profile.d/maven.sh
-  #remote_src: yes
+  shell: "{{mvn_sh}}"
   
 - name: Checking Maven Installation
   shell: mvn -version
@@ -58,7 +62,7 @@
   become: true
   run_once: true
   ignore_errors: true
-  shell: mysqladmin -u root -p'test' password ''
+  shell: mysqladmin --user="{{mysql_user}}" --password="{{mysql_password}}" password ''
   args: 
     creates: .removedPassword.txt
   tags:

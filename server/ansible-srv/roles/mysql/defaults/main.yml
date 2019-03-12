@@ -1,3 +1,4 @@
 # Vars for DB Login
-login_user_name: 'root'
-login_passwd_va: 'test'
+#moved to variables.yml
+#login_user_name: 'root'
+#login_passwd_va: 'test'

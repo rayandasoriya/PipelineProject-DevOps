@@ -1,6 +1,10 @@
+- name: Including variables.yml
+  include_vars:
+    file: variables.yml
+
 - name: Create test-repo folder in HOME for holding bare-repositories
   file:
-    path: /home/vagrant/test-repo
+    path: "{{home_path}}/test-repo"
     state: directory
 
 - name: Creating a bare-repo for checkbox.io
@@ -14,7 +18,7 @@
     state: directory
 
 - name: Initializing a bare repo for Checkbox and iTrust
-  shell: git init --bare {{checkbox_bare}}/; git init --bare {{itrust_bare}}/; touch .bare
+  shell: "git init --bare {{checkbox_bare}}/; git init --bare {{itrust_bare}}/; touch .bare"
   args:
     creates: .bare
 

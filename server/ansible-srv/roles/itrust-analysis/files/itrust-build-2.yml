@@ -6,18 +6,10 @@
         maven-version: mvn
         pom: pom-data.xml
         goals: process-test-classes
-    #- maven-target:
-    #    maven-version: mvn
-    #    pom: /home/vagrant/iTrust/iTrust2/pom.xml
-    #    goals: jetty:run
     - maven-target:
         maven-version: mvn
         pom: pom2.xml
         goals: clean test verify site checkstyle:checkstyle
-    #- maven-target:
-    #    maven-version: mvn
-    #    pom: /home/vagrant/iTrust/iTrust2/pom.xml
-    #    goals: jetty:run
     publishers:
       - junit:
          results: "**/target/surefire-reports/*.xml"

@@ -1,3 +1,9 @@
+---
+# tasks file for chrome
+- name: Including variables.yml
+  include_vars:
+    file: variables.yml
+
 - name: Ensure apt-transport-https is installed
   apt: 
     name: apt-transport-https 
@@ -25,9 +31,8 @@
     name: google-chrome-stable 
     state: present
 
-
 # Install chrome driver
-- name: Ensure unzip is installed
+- name: Install unzip 
   apt: 
     name: unzip 
     state: present
@@ -63,8 +68,3 @@
     src: "templates/chromedriver.conf.j2"
     dest: "/etc/init/chromedriver.conf"
     mode: 0644
-
-#- name: Start chromedriver service now, if not running
-#  service:
-#    name: "{{ upstart_service_name }}"
-#    state: restarted

@@ -1,78 +1,55 @@
+- name: Including variables.yml
+  include_vars:
+    file: variables.yml
+
 - name: Getting iTrust Repository
   git: 
-    repo: https://github.com/jubeenshah/iTrust.git
-    dest: /home/vagrant/iTrust
+    repo: "{{itrust_repo}}"
+    dest: "{{home_path}}/iTrust"
     force: yes
 
 - name: Changing Permissions 
   file:
-    path: "/home/vagrant/iTrust/iTrust2"
+    path: "{{home_path}}/iTrust/iTrust2"
     mode: 0777
 
 - name: Copy a "db.properties.template" file on the remote machine for editing
   copy:
-    src: /home/vagrant/iTrust/iTrust2/src/main/java/db.properties.template
-    dest: /home/vagrant/iTrust/iTrust2/src/main/java/db.properties
+    src: "{{home_path}}/{{db_path}}/db.properties.template"
+    dest: "{{home_path}}/{{db_path}}/db.properties"
     remote_src: yes
 
 - name: Deleting Old file of db
   file:
-    path: /home/vagrant/iTrust/iTrust2/src/main/java/db.properties.template
+    path: "{{home_path}}/{{db_path}}/db.properties.template"
     state: absent
-
-#- name: Deleting Old file of email
-#  file:
-#    path: /home/vagrant/iTrust/iTrust2/src/main/java/email.properties.template
-#    state: absent
 
 - name: Copy a "email.properties.template" file on the remote machine for editing
   copy:
-    src: /home/vagrant/iTrust/iTrust2/src/main/java/email.properties.template
-    dest: /home/vagrant/iTrust/iTrust2/src/main/java/email.properties
+    src: "{{home_path}}/{{db_path}}/email.properties.template"
+    dest: "{{home_path}}/{{db_path}}/email.properties"
     remote_src: yes
 
 - name: Deleting Old file of email
   file: 
-    path: /home/vagrant/iTrust/iTrust2/src/main/java/email.properties.template
+    path: "{{home_path}}/{{db_path}}/email.properties.template"
     state: absent
 
 - name: Copying the new email.properties with updated credentials
   template:
     src: email.properties.j2
-    dest: /home/vagrant/iTrust/iTrust2/src/main/java/email.properties
-
-
+    dest: "{{home_path}}/{{db_path}}/email.properties"
 
 - name: Copying JJB file to target machine (Without static analysis)
   copy:
     src: itrust-build.yml
-    dest: /home/vagrant/iTrust/iTrust2/
+    dest: "{{home_path}}/iTrust/iTrust2/"
 
 - name: Configuring the build job
   shell: jenkins-jobs --conf /etc/jenkins_job/jenkins_jobs.ini --user admin --password admin update itrust-build.yml
   args:
-    chdir: /home/vagrant/iTrust/iTrust2/
-
-- name: Copying new .pom file for satatic analysis
-  copy:
-    src: pom.xml
-    dest: /home/vagrant/iTrust/iTrust2/pom2.xml
-
-- name: Copying JJB file to target machine (With Static Analysis)
-  copy:
-    src: itrust-build-2.yml
-    dest: /home/vagrant/iTrust/iTrust2/
-
-- name: Configuring the build job
-  shell: jenkins-jobs --conf /etc/jenkins_job/jenkins_jobs.ini --user admin --password admin update itrust-build-2.yml
-  args:
-    chdir: /home/vagrant/iTrust/iTrust2/
+    chdir: "{{home_path}}/iTrust/iTrust2/"
     
 - name: Setting timezone for itrust build
   timezone:
     name: America/New_York
-#- name: Running the Build job for itrust
-#  command: curl -X POST http://admin:admin@127.0.0.1:9999/job/iTrust2/build
-
-#- name: Running the Build job for itrust
-#  command: curl -X POST http://admin:admin@127.0.0.1:9999/job/checkbox/build

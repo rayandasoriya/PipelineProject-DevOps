@@ -7,6 +7,4 @@ env_vars:
     MONGO_IP: "localhost"
     MONGO_USER: "admin"
     MONGO_PASSWORD: "admin"
-    MAIL_USER: "iocheckbox"
-    MAIL_PASSWORD: "iamabotuser"
     MAIL_SMTP: "smtp.gmail.com"
