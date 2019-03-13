@@ -156,7 +156,7 @@ Once complete, the jenkins server will be available at [192.168.33.100:9999](htt
 
 ## Screencast
 
-The screencast for Milestone 2 is available [here]().
+The screencast for Milestone 2 is available [here](https://youtu.be/lFrX53iuUzw).
 
 ## References
 
