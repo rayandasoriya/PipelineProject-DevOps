@@ -101,14 +101,16 @@ Now, from the ansible-srv folder inside the configuration server, we run our sit
 15. [Checkbox-Analysis](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone2/server/ansible-srv/roles/checkbox-analysis)
 16. [iTrust-Analysis](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone2/server/ansible-srv/roles/itrust-analysis)
 
-We will run the `site.yml` file with the inventory (to target the Jenkins server) to install these dependencies and run the build for checkbox.io and iTrust. There is also a `variables.yml` file with a list of all the variables that we have used throughout the play. We use the following command:
+We will run the `site.yml` file with the inventory (to target the Jenkins server) to install these dependencies and run the build for checkbox.io and iTrust. There is also a [`variables.yml`](https://github.ncsu.edu/jnshah2/CSC519-Project/blob/Milestone2/server/ansible-srv/variables.yml) file with a list of all the variables that we have used throughout the play. We use the following command:
 
 ```
 ansible-playbook site.yml -i inventory
 ```
-A snippet of the successful completion of the ansible playbook is illustrated below:
+A snippet of the successful completion of the ansible playbook is added below:
 
 <img width="1440" alt="jenkins" src="./resources/script.png">
+
+Once complete, the jenkins server will be available at [192.168.33.100:9999](http://192.168.33.100:9999)
 
 <img width="1440" alt="jenkins" src="./resources/jenkins.png">
 
@@ -120,7 +122,7 @@ A snippet of the successful completion of the ansible playbook is illustrated be
 
 * Installed a [Jacoco](https://wiki.jenkins.io/display/JENKINS/JaCoCo+Plugin) plugin in jenkins for Java Code Coverage for the iTrust Application. 
 	* This measures coverage and display a report within Jenkins on every push to the bare repository, since in the last Milestone, we configured a post-receive hook to start a iTrust Build on Jenkins on port 9999.
-	<img width = 2520 alt="Hundred Builds" src="./resources/code-coverage.png">
+	<img width = 2520 alt="Code Coverage" src="./resources/code-coverage.png">
 * We also developed a tool that automatically commits new random changes to source code which will trigger a build and run of the test suite. We simply used a pseudo-random generator with a seed value ranging from `1` to `100`. The code for the same can be found [here](https://github.ncsu.edu/jnshah2/CSC519-Project/blob/Milestone2/server/ansible-srv/roles/fuzzer/files/main.js), and [here](https://github.ncsu.edu/jnshah2/CSC519-Project/blob/Milestone2/server/ansible-srv/roles/fuzzer/files/loop.sh). We made the following changes : 
 	* Changed content of some `strings` in code to `"CSC519-Devops_String"`
 	* Swapped `">"`/`">="` and with `"<"`/`"<="` and vice versa
@@ -145,7 +147,7 @@ A snippet of the successful completion of the ansible playbook is illustrated be
 	* `Max If Conditions`, failing the build when the number of conditions in the if statement are greater than 15.
 	* `Max Parameter Count`, failing the build when the maximum number of parameters passed within a function is greater than 10.
 	* `Max Nesting Depth`, failing the build when the maximum depth of if/else conditons is greater than 15.
-	
+
 	<img width = 1972.5 alt="Find Bugs report" src="./resources/checkbox-analysis.png">
 
 ## Report
