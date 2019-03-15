@@ -75,7 +75,7 @@ In this project, we have used the following ports for different services:
 * iTrust- :8080 
 * jenkins - :9999
 
-Now, from the ansible-srv folder inside the configuration server, we run our site.yml file. The `site.yml` file contains several roles.
+Now, from the ansible-srv folder inside the configuration server, we run our playbook.yml file. The `playbook.yml` file contains several roles.
 
 <img width="400" alt="role" src="./resources/role.png">
 
@@ -104,7 +104,7 @@ Now, from the ansible-srv folder inside the configuration server, we run our sit
 We will run the `site.yml` file with the inventory (to target the Jenkins server) to install these dependencies and run the build for checkbox.io and iTrust. There is also a [`variables.yml`](https://github.ncsu.edu/jnshah2/CSC519-Project/blob/Milestone2/server/ansible-srv/variables.yml) file with a list of all the variables that we have used throughout the play. We use the following command:
 
 ```
-ansible-playbook site.yml -i inventory
+ansible-playbook playbook.yml -i inventory
 ```
 A snippet of the successful completion of the ansible playbook is added below:
 
