@@ -1,0 +1,137 @@
+- name: Including Variables.yml
+  include_vars:
+    file: variables.yml
+    
+- name: Cloning repository
+  git:
+    repo: "{{checkbox_repo}}"
+    dest: "{{home_path}}/checkbox.io"
+    force: true
+
+- name: Create mongodb Database and User
+  mongodb_user:
+    database: admin
+    name: "{{env_vars.MONGO_USER}}"
+    password: "{{env_vars.MONGO_PASSWORD}}"
+    state: present
+    roles: readWrite,dbAdmin,userAdmin
+
+- name: NPM Install (shell command)
+  become: true
+  shell: npm install
+  args:  
+    chdir: "{{home_path}}/{{checkbox_srvP}}/"
+    creates: .modules-installed.txt
+
+- name: Installing pm2
+  npm:
+    name: pm2
+    global: yes
+    state: present
+
+- name: "Check list of Node.js apps running."
+  become: no
+  command: pm2 list
+  register: pm2
+  changed_when: false
+
+- name: Installing express
+  become: true
+  apt:
+    name: ['node-express-generator']
+    state: present
+
+- name: Installing dependencies
+  become: true
+  npm:
+    name: cors
+    global: yes
+    state: present
+
+- name: update config file
+  blockinfile:
+    dest: "{{nginx_config_path}}"
+    insertbefore: "sendfile on;"
+    block: "upstream app_nodejs_design {
+      server 127.0.0.1:3002;
+      }"
+
+- name: Replacing the site-enable config
+  template:
+    force: yes
+    src: "templates/default.conf.j2"
+    dest: "{{nginx_sites_path}}"
+    mode: 0700
+
+- service: 
+    name: nginx
+    state: restarted
+
+- name: Copying package.json
+  become: true
+  copy:
+    src: package.json
+    dest: "{{home_path}}/{{checkbox_srvP}}/package.json"
+
+- name: creating test/
+  file:
+    path: "{{home_path}}/{{checkbox_srvP}}/test/"
+    state: directory
+
+- name: Copying test.js
+  become: true
+  copy:
+    src: test.js
+    dest: "{{home_path}}/{{checkbox_srvP}}/test/test.js"
+
+- name: Copying package.json
+  become: true
+  copy:
+    src: startstop.js
+    dest: "{{home_path}}/{{checkbox_srvP}}/startstop.js"
+
+- name: NPM Install (shell command)
+  become: true
+  shell: npm install
+  args:  
+    chdir: "{{home_path}}/{{checkbox_srvP}}/"
+    creates: .modules-installed.txt
+
+- name: Installing pm2
+  npm:
+    name: pm2
+    global: yes
+    state: present
+
+- name: "Check list of Node.js apps running."
+  become: no
+  command: pm2 list
+  register: pm2
+  changed_when: false
+
+- name: Installing express
+  become: true
+  apt:
+    name: ['node-express-generator']
+    state: present
+
+- name: Installing dependencies
+  become: true
+  npm:
+    name: cors
+    global: yes
+    state: present
+
+- name: Copying JJB file to target machine
+  copy:
+    src: checkbox-build.yml
+    dest: "{{home_path}}/jenkins-job-builder/checkbox-build.yml"
+
+- name: Configuring the build job
+  shell: 'jenkins-jobs --conf /etc/jenkins_job/jenkins_jobs.ini --user "{{jenkins_user}}" --password "{{jenkins_password}}" update checkbox-build.yml'
+  args:
+    chdir: "{{home_path}}/jenkins-job-builder"
+
+- service: 
+    name: nginx
+    state: restarted

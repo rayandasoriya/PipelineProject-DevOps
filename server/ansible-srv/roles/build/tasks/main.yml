@@ -1,0 +1,9 @@
+- name: Including variables.yml
+  include_vars:
+    file: variables.yml
+
+- name: Running the Build job for iTrust
+  command: "curl -X POST http://{{jenkins_user}}:{{jenkins_password}}@127.0.0.1:{{jenkins_port}}/job/iTrust2/build"
+
+- name: Running the Build job for Checkbox
+  command: "curl -X POST http://{{jenkins_user}}:{{jenkins_password}}@127.0.0.1:{{jenkins_port}}/job/checkbox/build"

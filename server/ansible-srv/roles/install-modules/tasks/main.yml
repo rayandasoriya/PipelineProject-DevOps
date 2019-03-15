@@ -1,0 +1,78 @@
+---
+# tasks file for install-modules
+
+- name: Including variables.yml
+  include_vars:
+    file: variables.yml
+
+- name: Get Jenkins crumb
+  uri:
+    user: '{{jenkins_user}}'
+    password: '{{jenkins_password}}'
+    force_basic_auth: yes
+    url: "{{local_host}}:{{jenkins_port}}/crumbIssuer/api/json"
+    return_content: yes
+  register: crumb_token
+  run_once: true
+  until: crumb_token.content.find('Please wait while Jenkins is getting ready') == -1
+  retries: 10
+  delay: 10
+  tags:
+    - run_once
+
+- name: Set crumb token
+  set_fact:
+    crumb: "{{ crumb_token.json.crumbRequestField }}={{ crumb_token.json.crumb }}"
+  tags:
+    - run_once
+
+- name: Install plugins
+  run_once: true
+  uri:
+    user: admin
+    password: "admin"
+    force_basic_auth: yes
+    url: "{{local_host}}:{{jenkins_port}}/pluginManager/install?plugin.{{ item }}.default=on&{{ crumb }}"
+    method: POST
+    status_code: [200, 302]
+  with_items: 
+    - 'git'
+    - 'ant'
+    - 'job-dsl'
+    - 'workflow-aggregator'
+    - 'workflow-cps'
+    - 'github'
+    - 'maven-plugin'
+    - 'junit'
+    - 'postbuild-task'
+    - 'jacoco'
+    - 'build-timeout'
+    - 'findbugs' 
+    - 'ansicolor'
+  tags:
+    - run_once
+
+- name: Wait for plugins to be installed
+  run_once: true
+  uri:
+    user: "{{jenkins_user}}"
+    password: "{{jenkins_password}}"
+    force_basic_auth: yes
+    url: "{{local_host}}:{{jenkins_port}}/updateCenter/installStatus?{{ crumb }}"
+    return_content: yes
+  register: plugin_status
+  until: "'Pending' not in plugin_status.json.data.jobs|map(attribute='installStatus')"
+  retries: 20
+  delay: 10
+  tags:
+    - run_once
+
+- name: Restart Jenkins
+  become: true
+  systemd:
+    name: jenkins
+    state: restarted
+
+- name: Wait for Jenkins to become available
+  wait_for: 
+    port: "{{jenkins_port}}"

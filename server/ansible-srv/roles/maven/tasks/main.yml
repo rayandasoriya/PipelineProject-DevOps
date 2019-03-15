@@ -1,0 +1,69 @@
+---
+# tasks file for maven
+- name: Including variables.yml
+  include_vars:
+    file: variables.yml
+
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+  tags:
+    - Update apt packages
+ 
+- name: Installing Maven
+  become: true
+  apt:
+    name: ['maven','default-jdk']
+  tags:
+    - Installing Dependencies
+
+# If it doesn't work, see of -p option
+- name: Downloading binaries
+  get_url:
+    url: https://www-us.apache.org/dist/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz 
+    dest: /tmp 
+
+- name: Unarchiving the downloaded binaries
+  become: true
+  unarchive:
+    src: /tmp/apache-maven-3.6.0-bin.tar.gz
+    dest: /opt/
+    remote_src: yes
+
+- name: Creating symlinks for the downloaded files
+  become: true
+  file:
+    src: /opt/apache-maven-3.6.0
+    dest: /opt/maven
+    state: link
+
+- name: Copying shell script to host machine for setting environment variables
+  become: true
+  copy:
+    src: maven.sh
+    dest: "{{mvn_sh}}"
+    mode: 0777
+
+- name: Executing the script
+  become: true
+  shell: "{{mvn_sh}}"
+  
+- name: Checking Maven Installation
+  shell: mvn -version
+  register: mvncheck
+
+- name: Completing Maven Installation check
+  debug:
+    var: mvncheck.stdout
+
+- name: Set root user password
+  become: true
+  run_once: true
+  ignore_errors: true
+  shell: mysqladmin --user="{{mysql_user}}" --password="{{mysql_password}}" password ''
+  args: 
+    creates: .removedPassword.txt
+  tags:
+    - run_once

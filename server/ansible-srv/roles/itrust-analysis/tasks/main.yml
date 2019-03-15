@@ -1,0 +1,20 @@
+---
+# tasks file for itrust-analysis
+- name: Including variables.yml
+  include_vars:
+    file: variables.yml
+    
+- name: Copying new .pom file for satatic analysis
+  copy:
+    src: pom.xml
+    dest: "{{home_path}}/iTrust/iTrust2/pom2.xml"
+
+- name: Copying JJB file to target machine (With Static Analysis)
+  copy:
+    src: itrust-build-2.yml
+    dest: "{{home_path}}/iTrust/iTrust2/"
+
+- name: Configuring the build job
+  shell: jenkins-jobs --conf /etc/jenkins_job/jenkins_jobs.ini --user admin --password admin update itrust-build-2.yml
+  args:
+    chdir: "{{home_path}}/iTrust/iTrust2/"

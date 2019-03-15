@@ -1,0 +1,8 @@
+---
+# tasks file for NginX
+- name: Installing NginX
+  become: true
+  apt: 
+     name: ['nginx']
+  tags:
+    - Installing dependencies

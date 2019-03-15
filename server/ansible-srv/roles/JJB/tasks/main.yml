@@ -1,0 +1,118 @@
+---
+# tasks file for JJB
+- name: Including variables.yml
+  include_vars:
+    file: variables.yml
+
+- name: Getting jenkins-job-builder repo
+  git:
+    repo: "{{jjb_repo}}"
+    dest: "{{home_path}}/jenkins-job-builder"
+    force: yes
+
+- name: Installing Python-pip
+  apt:
+    name: python-pip
+
+- name: Install virtualenv via pip
+  pip:
+    name: virtualenv
+    executable: pip
+
+- name: Install requirements
+  pip: 
+    requirements: "{{home_path}}/jenkins-job-builder/requirements.txt"
+    virtualenv: "{{home_path}}/jenkins-job-builder"
+    virtualenv_python: python2.7
+
+- name: Manually create the initial virtualenv
+  command: virtualenv {{home_path}}/jenkins-job-builder -p python2.7 creates="{{home_path}}/jenkins-job-builder"  
+
+- name: Installing Pyyaml
+  pip:
+    name: pyyaml
+    virtualenv: "{{home_path}}/jenkins-job-builder"
+
+- name: Installing pbr
+  pip:
+    name: pbr
+    virtualenv: "{{home_path}}/jenkins-job-builder"
+
+- name: Installing python-jenkins
+  pip:
+    name: python-jenkins
+    virtualenv: "{{home_path}}/jenkins-job-builder"
+  
+- name: Installing Setuptools
+  pip:
+    name: setuptools
+    virtualenv: "{{home_path}}/jenkins-job-builder"
+
+- name: Installing ordereddict
+  pip:
+    name: ordereddict
+    virtualenv: "{{home_path}}/jenkins-job-builder"
+
+- name: Downloading Jenkins Cli
+  get_url:
+    url: "{{local_host}}:{{jenkins_port}}/jnlpJars/jenkins-cli.jar"
+    dest: "{{home_path}}"
+
+- name: Installing stevedore
+  pip:
+    name: stevedore
+    virtualenv: "{{home_path}}/jenkins-job-builder/"
+
+- name: Installing fasteners
+  pip:
+    name: fasteners
+    virtualenv: "{{home_path}}/jenkins-job-builder/"
+
+- name: Intalling JJB
+  pip:
+    name: jenkins-job-builder
+
+- name: Installing jenkins-job-builder
+  command: python setup.py install
+  args:
+    chdir: "{{ home_path }}/jenkins-job-builder"
+    creates: .installed-jenkins.txt
+
+- name: Ensuring Install
+  command: pip install -r requirements.txt
+  args:
+    creates: .exececuted.txt
+    chdir: "{{ home_path }}/jenkins-job-builder"
+
+- name: Setting up directory structure for JJB
+  file:
+    path: /etc/jenkins_job/
+    state: directory
+
+- name: Copying the jenkins_job.ini file to target machine
+  copy:
+    src: jenkins_jobs.ini
+    dest: /etc/jenkins_job/
+
+- name: Disabling Security
+  become: true
+  copy:
+    src: config.xml
+    dest: /var/lib/jenkins/config.xml
+
+- name: Restart Jenkins
+  become: true
+  systemd:
+    name: jenkins
+    state: restarted
+
+- name: Sleep
+  wait_for:
+    timeout: 5
+
+- name: Reloading Jenkins
+  become: true
+  command: curl -X POST "http://{{jenkins_user}}:{{jenkins_password}}@127.0.0.1:{{jenkins_port}}/reload"
+  args: 
+    warn: false
+

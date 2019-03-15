@@ -1,0 +1,37 @@
+- name: Including variables.yml
+  include_vars:
+    file: variables.yml
+    
+- name: Copying the files for Fuzzing
+  copy:
+    src: main.js
+    dest: "{{itrust_path}}"
+
+- name: Copying files for executing the fuzzer
+  copy:
+    src: loop.sh
+    dest: "{{itrust_path}}"
+
+- name: Copying Gitconfig files
+  copy:
+    src: gitconfig
+    dest: /home/vagrant/.gitconfig
+
+- name: Copying Analysis.py
+  copy:
+    src: analysis.py
+    dest: "{{itrust_path}}"
+
+- name: Installing xmltodict
+  pip:
+    name: xmltodict
+    state: present
+#- name: Executing script
+#  script: files/run.sh
+
+#- name: Executing the fuzzing process with builds
+#  command: node "{{itrust_path}}"/main.js 1
+#  register: output
+
+#- name: Output
+#  debug: msg=output.stdout_lines

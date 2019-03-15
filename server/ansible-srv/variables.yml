@@ -1,0 +1,56 @@
+# Variables for role/Jenkins
+jenkins_path: /var/lib/jenkins
+jenkins_user: "admin"
+jenkins_password: "admin"
+jenkins_port: 9999
+
+# Variables for role/install-modules
+local_host: "http://127.0.0.1"
+
+# Varaibles for role/mongodb
+mongo_admin_password: "admin"
+mongo_checkbox_user: "admin"
+mongo_checkbox_password: "admin"
+home_path: /home/vagrant
+nginx_sites_path: /etc/nginx/sites-enabled/default
+nginx_config_path: /etc/nginx/nginx.conf
+env_vars: 
+    MONGO_PORT: "3002"
+    MONGO_IP: "localhost"
+    MONGO_USER: "admin"
+    MONGO_PASSWORD: "admin"
+    MAIL_SMTP: "smtp.gmail.com"
+
+# Variables for role/JJB
+jjb_repo: "https://github.com/jubeenshah/jenkins-job-builder.git"
+
+# Variables for role/mysql
+mysql_user: 'root'
+mysql_password: 'test'
+
+#Variables for role/maven
+mvn_sh: /etc/profile.d/maven.sh
+
+# Variables for role/chrome
+upstart_service_name: chromedriver
+get_version_url: "http://chromedriver.storage.googleapis.com/LATEST_RELEASE"
+platform: linux64
+
+# Variables for role/checkbox
+checkbox_repo: https://github.com/jubeenshah/checkbox.io.git
+checkbox_srvP: checkbox.io/server-side/site
+
+# Variables for role/itrust
+email_username: "csc519grad11@gmail.com"
+email_password: "11grad519csc"
+itrust_repo: "https://github.com/jubeenshah/iTrust.git"
+db_path: iTrust/iTrust2/src/main/java
+
+# Variables for role/githooks
+checkbox_bare: "/home/vagrant/test-repo/checkbox-bare.git"
+itrust_bare: "/home/vagrant/test-repo/itrust-bare.git"
+
+# Variables for role/fuzzer
+itrust_path: /home/vagrant/iTrust/iTrust2
+
+# Variables for role/checkbox-analysis
