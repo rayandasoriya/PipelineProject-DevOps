@@ -101,7 +101,7 @@ Now, from the ansible-srv folder inside the configuration server, we run our pla
 15. [Checkbox-Analysis](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone2/server/ansible-srv/roles/checkbox-analysis)
 16. [iTrust-Analysis](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone2/server/ansible-srv/roles/itrust-analysis)
 
-We will run the `site.yml` file with the inventory (to target the Jenkins server) to install these dependencies and run the build for checkbox.io and iTrust. There is also a [`variables.yml`](https://github.ncsu.edu/jnshah2/CSC519-Project/blob/Milestone2/server/ansible-srv/variables.yml) file with a list of all the variables that we have used throughout the play. We use the following command:
+We will run the `playbook.yml` file with the inventory (to target the Jenkins server) to install these dependencies and run the build for checkbox.io and iTrust. There is also a [`variables.yml`](https://github.ncsu.edu/jnshah2/CSC519-Project/blob/Milestone2/server/ansible-srv/variables.yml) file with a list of all the variables that we have used throughout the play. We use the following command:
 
 ```
 ansible-playbook playbook.yml -i inventory
