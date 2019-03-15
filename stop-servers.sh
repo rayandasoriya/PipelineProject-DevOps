@@ -1,6 +1,6 @@
 sudo baker status
 cd server/ansible-srv/
-sudo baker destroy
+sudo baker stop
 cd ../jenkins-srv/
-sudo baker destroy
+sudo baker stop
 sudo baker status
