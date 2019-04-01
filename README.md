@@ -1,13 +1,14 @@
 # CSC519-Project
 
 ![](./resources/01-NCSU-Logo.png)
-| [MILESTONE 1](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone1) | [MILESTONE 2](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone2) | [MILESTONE 3](#) | [MILESTONE 4](#) |
+| [MILESTONE 1](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone1) | [MILESTONE 2](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone2) | [MILESTONE 3](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone3) |
 
 # Content
 1. [Our Team](#our-team)
 2. [About the Milestones](#about-the-milestones)
 	1. [Milestone 1](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone1)
 	2. [Milestone 2](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone2)
+	3. [Milestone 3](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone3)
 3. [References](#references)
 
 ## Our Team
@@ -42,6 +43,7 @@ In this milestone, we have demonstrated the build automation and configuration m
 * For the iTrust build job, extended to build job to support running an existing static analysis tool on the source code, process its results, and report its findings and fail the build minimum testing criteria and analysis criteria.
 * For checkbox.io, extend the build job to support the custom metrics and fail the build if any of these metrics exceed a given threshold.
 
+### [Milestone 3](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone3)
 
 ## References
 
