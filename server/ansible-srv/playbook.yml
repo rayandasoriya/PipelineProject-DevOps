@@ -1,11 +1,15 @@
 ---
+- name: Configuring Localhost
+  hosts: localhost
+  become: true
+  gather_facts: false
+  roles:
+    - AWS
+
 - name: Configuring Jenkins
   hosts: all
   become: true
-  gather_facts: true
-  #include_vars:
-  #  file: variables.yml
-# Would prefer to add a role for checkbox and combine nginx, node and mongoDB roles.
+  gather_facts: false
   roles: 
     - jenkins
     - install-modules
@@ -20,6 +24,6 @@
     - itrust
     #- build
     - githooks
-    - fuzzer
-    - checkbox-analysis
-    - itrust-analysis
+    #- fuzzer
+    #- checkbox-analysis
+    #- itrust-analysis

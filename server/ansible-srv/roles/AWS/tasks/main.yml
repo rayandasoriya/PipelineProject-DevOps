@@ -1,0 +1,15 @@
+---
+# tasks file for AWS Configuring AWS
+
+- name: Npm install AWS
+  become: true
+  shell: npm install
+  args:
+    chdir: /ansible-srv/AWS/
+
+- name: Installing awscli
+  become: true
+  apt:
+     name: awscli
+  
+
