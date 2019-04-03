@@ -1,15 +1,38 @@
 ---
 # tasks file for AWS Configuring AWS
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+  tags:
+    - Update apt packages
+  
+- name: Installing npm and nodejs
+  become: true
+  apt:
+    name:  ['npm', 'nodejs-legacy']
+    
+- name: Copying AWS content
+  become: true
+  shell: cp -r /ansible-srv/AWS/ ~/AWS/; sudo chmod -R 777 ~/AWS/
 
 - name: Npm install AWS
-  become: true
   shell: npm install
   args:
-    chdir: /ansible-srv/AWS/
+    chdir: ~/AWS/
 
 - name: Installing awscli
   become: true
   apt:
-     name: awscli
+    name: awscli
   
+- name: Executing AWS
+  shell: node aws.js
+  args:
+    chdir: ~/AWS/
 
+- name: Sleep for 10 seconds
+  wait_for:
+    timeout: 10
+    

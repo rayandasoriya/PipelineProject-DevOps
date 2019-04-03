@@ -7,7 +7,8 @@ var fs = require('fs')
     ;
 var ec2 = new AWS.EC2();
 
-stringVal = "DevOps-key"
+stringVal = "DevOps-pro"
+inventoryString = "[web]\n"
 var keypair = {
 KeyName: stringVal
 }
@@ -15,7 +16,7 @@ var params = {
     
     ImageId: "ami-0565af6e282977273", //Ubuntu 16.04
     InstanceType: "t2.medium",  
-    MaxCount: 2, 
+    MaxCount: 1, 
     MinCount: 1,
     KeyName: stringVal,
      SecurityGroupIds: [
@@ -46,7 +47,21 @@ function createInstance() {
         setTimeout(function() {
         ec2.describeInstances(paramsPassed, function(err, data) {
             if (err) console.log(err, err.stack);
-            else     console.log("Use the following command to test connectivity \nping ",data.Reservations[0].Instances[0].PublicIpAddress);
+            else     {
+               console.log("Use the following command to test connectivity \nping ",data.Reservations[0].Instances[0].PublicIpAddress);
+               inventoryString+=data.Reservations[0].Instances[0].PublicDnsName + ` ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/AWS/${stringVal}.pem\n`
+               inventoryString+="[web:vars]\n"
+               inventoryString+="ansible_python_interpreter=/usr/bin/python3"
+               inventoryFile = "inventory";
+               console.log("*************************\n"+inventoryString);
+ 	            fs.writeFile(inventoryFile, inventoryString, function(err) {
+               if (err) {
+                  console.log(err);
+                  
+                  }
+               child_process.exec(`cp ${inventoryFile} /ansible-srv/`);
+            });
+            }
           });
         }, 20000);
      
@@ -102,6 +117,8 @@ ec2.createKeyPair(keypair, function(err, data) {
 //       console.log(data.KeyPairs[0].KeyFingerprint);
 // 	}
 // });
+
+
 
 
 

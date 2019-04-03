@@ -1,11 +1,4 @@
 ---
-- name: Configuring Localhost
-  hosts: localhost
-  become: true
-  gather_facts: false
-  roles:
-    - AWS
-
 - name: Configuring Jenkins
   hosts: all
   become: true
@@ -22,8 +15,8 @@
     - chrome
     - checkbox
     - itrust
-    #- build
-    - githooks
+    - build
+    #- githooks
     #- fuzzer
     #- checkbox-analysis
     #- itrust-analysis

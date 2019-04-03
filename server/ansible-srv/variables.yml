@@ -11,7 +11,7 @@ local_host: "http://127.0.0.1"
 mongo_admin_password: "admin"
 mongo_checkbox_user: "admin"
 mongo_checkbox_password: "admin"
-home_path: /home/vagrant
+home_path: /home/ubuntu
 nginx_sites_path: /etc/nginx/sites-enabled/default
 nginx_config_path: /etc/nginx/nginx.conf
 env_vars: 
@@ -47,10 +47,10 @@ itrust_repo: "https://github.com/jubeenshah/iTrust.git"
 db_path: iTrust/iTrust2/src/main/java
 
 # Variables for role/githooks
-checkbox_bare: "/home/vagrant/test-repo/checkbox-bare.git"
-itrust_bare: "/home/vagrant/test-repo/itrust-bare.git"
+checkbox_bare: "/home/ubuntu/test-repo/checkbox-bare.git"
+itrust_bare: "/home/ubuntu/test-repo/itrust-bare.git"
 
 # Variables for role/fuzzer
-itrust_path: /home/vagrant/iTrust/iTrust2
+itrust_path: /home/ubuntu/iTrust/iTrust2
 
 # Variables for role/checkbox-analysis

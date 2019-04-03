@@ -1,5 +1,5 @@
 #MongoDB
-home_path: /home/vagrant
+home_path: /home/ubuntu
 nginx_sites_path: /etc/nginx/sites-enabled/default
 nginx_config_path: /etc/nginx/nginx.conf
 env_vars: 
