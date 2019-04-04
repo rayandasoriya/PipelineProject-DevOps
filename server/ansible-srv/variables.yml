@@ -41,8 +41,8 @@ checkbox_repo: https://github.com/jubeenshah/checkbox.io.git
 checkbox_srvP: checkbox.io/server-side/site
 
 # Variables for role/itrust
-email_username: "csc519grad11@gmail.com"
-email_password: "11grad519csc"
+email_username: "gradcsc9@gmail.com"
+email_password: "9cscgrad"
 itrust_repo: "https://github.com/jubeenshah/iTrust.git"
 db_path: iTrust/iTrust2/src/main/java
 
