@@ -23,5 +23,5 @@
       state: restarted
 
   - name: Create Feature Flag (Default off)
-    command: redis-cli set mdFlag false
+    command: redis-cli set value false
 
