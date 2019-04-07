@@ -21,7 +21,3 @@
     service: 
       name: redis-server
       state: restarted
-
-  - name: Create Feature Flag (Default off)
-    command: redis-cli set value false
-
