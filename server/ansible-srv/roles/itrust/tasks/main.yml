@@ -6,6 +6,7 @@
   git: 
     repo: "{{itrust_repo}}"
     dest: "{{home_path}}/iTrust"
+    version: redis
     force: yes
 
 - name: Changing Permissions 
