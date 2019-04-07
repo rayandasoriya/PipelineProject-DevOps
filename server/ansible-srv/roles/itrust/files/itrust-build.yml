@@ -18,6 +18,8 @@
     #    maven-version: mvn
     #    pom: /home/vagrant/iTrust/iTrust2/pom.xml
     #    goals: jetty:run
+    triggers:
+      - github
     publishers:
       - junit:
          results: "**/target/surefire-reports/*.xml"
