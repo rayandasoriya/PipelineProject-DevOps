@@ -1,8 +1,4 @@
 [web]
-<<<<<<< HEAD
-192.168.33.100 ansible_ssh_user=vagrant ansible_ssh_private_key_file=~/.ssh/web-srv
-=======
-ec2-35-174-111-71.compute-1.amazonaws.com ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/AWS/DevOps-pro.pem
->>>>>>> 57a0cf476927ab7fad64f2b6d33a5d523ff28fb9
+ec2-54-224-235-130.compute-1.amazonaws.com ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/AWS/DevOps-pro.pem
 [web:vars]
 ansible_python_interpreter=/usr/bin/python3

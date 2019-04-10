@@ -1,0 +1,84 @@
+---
+# tasks file for kubernetes
+
+- hosts: localhost
+  become: yes
+  environment:
+    KOPS_CLUSTER_NAME: jubeen.k8s.local
+    KOPS_STATE_STORE: s3://kops-jubeen
+  tasks:
+    - name: install apt dependencies
+      apt:
+        name: ['git', 'python-pip', 'curl', 'snapd']
+        state: installed
+        update_cache: true
+        cache_valid_time: 500000
+
+    - name: install pip dependencies
+      pip:
+        name: awscli
+
+    - name: Install kubectl
+      shell: snap install kubectl --classic
+
+    - name: "Verify that the repository exists"
+      stat:
+        path: /usr/local/bin/kops
+      register: repo_verify
+
+    - name: install kubectl
+      shell: |
+          curl -LO https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64
+          chmod +x kops-linux-amd64
+          sudo mv kops-linux-amd64 /usr/local/bin/kops
+      args:
+        chdir: /home/ubuntu/ # "{{ ansible_env.HOME }}"
+      when: repo_verify.stat.exists == False 
+
+
+    - name: Create an AWS S3 bucket for kops to persist its state
+      shell: |
+        aws s3api create-bucket --bucket kops-jubeen --region us-east-1
+
+    - name: Enable versioning for the above S3 bucket
+      shell: |
+        aws s3api put-bucket-versioning --bucket kops-jubeen --versioning-configuration Status=Enabled
+
+    - name: "Verify that the repository exists"
+      stat:
+        path: /home/ubuntu/.ssh/id_rsa.pub
+      register: repo_verify
+    
+    - name: Gnerate key
+      shell: |
+        ssh-keygen -N '' -f /home/ubuntu/.ssh/id_rsa
+      when: repo_verify.stat.exists == False
+
+    - name: Check if Kubernetes cluster exists or not
+      shell: |
+        kops describe secrets --name=jubeen.k8s.local
+      register: clusterExists
+      ignore_errors: yes
+
+    - name: Create a Kubernetes cluster definition using kops      
+      shell: |
+        kops create cluster --name=jubeen.k8s.local --node-count=3 --node-size=t2.medium --master-size=t2.medium --zones=us-east-1a --ssh-public-key=/home/ubuntu/.ssh/id_rsa.pub
+      when: clusterExists.stderr_lines[1] is defined and clusterExists.stderr_lines[1].find('\"jubeen.k8s.local\" not found') != -1
+
+    - name: Create a Kubernetes cluster actually using kops      
+      shell: |
+        kops update cluster --name=jubeen.k8s.local --yes
+      when: clusterExists.stderr_lines[1] is defined and clusterExists.stderr_lines[1].find('\"jubeen.k8s.local\" not found') != -1 
+
+    - name: Validate the cluster
+      shell: |
+        kops validate cluster
+      register: result
+      until: result.stdout.find("is ready") != -1
+      retries: 150
+      delay: 30
+
+    - name: Deploy Checkbox on K8s cluster
+      shell: |
+        kubectl apply -f checkbox.yml
+      ignore_errors: true     

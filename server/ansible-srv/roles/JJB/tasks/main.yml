@@ -68,6 +68,11 @@
     name: fasteners
     virtualenv: "{{home_path}}/jenkins-job-builder/"
 
+- name: Installing Python-Pip
+  apt:
+    name: ['python3-pip']
+    state: latest
+
 - name: Intalling JJB
   pip:
     name: jenkins-job-builder

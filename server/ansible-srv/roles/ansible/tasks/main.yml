@@ -1,0 +1,41 @@
+---
+# tasks file for ansible
+- name: Including Variables.yml
+  include_vars:
+    file: variables.yml
+
+- name: Installing software-properties-common
+  become: true
+  apt:
+    name: ['software-properties-common']
+
+- name: Adding repository for Ansible
+  become: true
+  apt_repository:
+    repo: 'ppa:ansible/ansible'
+  tags:
+    - Update apt packages
+
+- name: Installing ansible
+  become: true
+  apt:
+    name: ['ansible']
+
+- name: host_key_checking is set to false
+  lineinfile:
+     path: /etc/ansible/ansible.cfg
+     line: host_key_checking = False
+     insertafter: [defaults]
+
+- name: Configuring the build job
+  shell: jenkins-jobs --conf /etc/jenkins_job/jenkins_jobs.ini --user admin --password admin update configure-ansible.yml
+  args:
+    chdir: /home/ubuntu/
+
+- name: Chmod 777
+  become: true
+  shell: |
+          chmod 777 -R /home/ubuntu/
+          
+
+

@@ -6,18 +6,22 @@
   roles: 
     - jenkins
     - install-modules
-    - nginx
-    - node
-    - mongodb
     - JJB
-    - mysql
-    - maven
-    - chrome
-    - checkbox
-    - itrust
-    - build
+    - configure-jenkins
+    - ansible
+    #- nginx
+    #- node
+    #- mongodb
+    #- JJB
+    #- mysql
+    #- maven
+    #- chrome
+    #- checkbox
+    #- itrust
+    #- build
     #- githooks
     #- fuzzer
     #- checkbox-analysis
     #- itrust-analysis
-    - redis
+    #- redis
+    #- kubernetes

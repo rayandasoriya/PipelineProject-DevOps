@@ -7,7 +7,7 @@ var fs = require('fs')
     ;
 var ec2 = new AWS.EC2();
 
-stringVal = "DevOps-pro"
+stringVal = "DevOps-pro-2"
 inventoryString = "[web]\n"
 var keypair = {
 KeyName: stringVal
@@ -49,7 +49,7 @@ function createInstance() {
             if (err) console.log(err, err.stack);
             else     {
                console.log("Use the following command to test connectivity \nping ",data.Reservations[0].Instances[0].PublicIpAddress);
-               inventoryString+=data.Reservations[0].Instances[0].PublicDnsName + ` ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/AWS/${stringVal}.pem\n`
+               inventoryString+=data.Reservations[0].Instances[0].PublicDnsName + ` ansible_ssh_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/${stringVal}.pem\n`
                inventoryString+="[web:vars]\n"
                inventoryString+="ansible_python_interpreter=/usr/bin/python3"
                inventoryFile = "inventory";
@@ -59,7 +59,7 @@ function createInstance() {
                   console.log(err);
                   
                   }
-               child_process.exec(`cp ${inventoryFile} /ansible-srv/`);
+               child_process.exec(`cp ${inventoryFile} /home/ubuntu`);
             });
             }
           });
@@ -131,6 +131,3 @@ sleep(2000).then(() => {
 function sleep(ms) {
    return new Promise(resolve => setTimeout(resolve, ms));
  }
-
- //sudo docker tag checkbox jubeenshah/checkbox:latest
- //sudo docker push jubeenshah/checkbox:latest

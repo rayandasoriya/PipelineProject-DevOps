@@ -39,6 +39,7 @@
     - 'git'
     - 'ant'
     - 'job-dsl'
+    - 'ansible'
     - 'workflow-aggregator'
     - 'workflow-cps'
     - 'github'
