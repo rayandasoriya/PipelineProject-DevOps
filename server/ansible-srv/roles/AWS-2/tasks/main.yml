@@ -21,7 +21,7 @@
 - name: Npm install AWS
   shell: npm install
   args:
-    chdir: /home/ubuntu/AWS/
+    chdir: "{{home_path}}/roles/AWS-2/files/AWS/"
 
 - name: Installing awscli
   become: true
@@ -31,17 +31,20 @@
 - name: Configuring AWS
   shell: | 
       aws configure set aws_access_key_id "{{access_key_id}}"
-      aws configure set Caws_secret_access_key "{{secret_access_key}}"
+      aws configure set aws_secret_access_key "{{secret_access_key}}"
       aws configure set default.region "{{aws_az}}"
     
 
 - name: Executing AWS
   shell: node aws.js
   args:
-    chdir: /home/ubuntu/AWS/
+    chdir: "{{home_path}}/roles/AWS-2/files/AWS/"
 
 
 - name: Sleep for 10 seconds
   wait_for:
     timeout: 10
-    
+
+- name: Copy private key
+  shell: |
+      cp /home/ubuntu/roles/AWS-2/files/AWS/DevOps-pro-2.pem /home/ubuntu ; chmod 777 /home/ubuntu/DevOps-pro-2.pem   

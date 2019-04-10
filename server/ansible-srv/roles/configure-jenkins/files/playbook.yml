@@ -11,7 +11,7 @@
     - nginx
     - node
     - mongodb
-    - JJB
+    #- JJB
     - mysql
     - maven
     - chrome
@@ -23,5 +23,5 @@
     #- checkbox-analysis
     #- itrust-analysis
     #- redis
-    - kubernetes
+    #- kubernetes
 

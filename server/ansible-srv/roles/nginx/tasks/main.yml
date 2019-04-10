@@ -1,5 +1,17 @@
 ---
 # tasks file for NginX
+- name: Including variables.yml
+  include_vars:
+    file: variables.yml
+
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+  tags:
+    - Update apt packages
+
 - name: Installing NginX
   become: true
   apt: 

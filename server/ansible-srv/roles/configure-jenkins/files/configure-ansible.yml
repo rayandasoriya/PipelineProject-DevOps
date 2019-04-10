@@ -3,8 +3,6 @@
     builders:
     - shell: |
            cd /home/ubuntu/
-           ansible-playbook setUpLocal-2.yml
-           sleep 5
            ansible-playbook -i inventory playbook.yml
     triggers:
     - github

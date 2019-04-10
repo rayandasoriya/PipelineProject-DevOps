@@ -22,20 +22,23 @@
     name: ['ansible']
 
 - name: host_key_checking is set to false
-  lineinfile:
-     path: /etc/ansible/ansible.cfg
-     line: host_key_checking = False
-     insertafter: [defaults]
+  become: true
+  copy:
+     src: ansible.cfg
+     dest: /etc/ansible/ansible.cfg
 
 - name: Configuring the build job
-  shell: jenkins-jobs --conf /etc/jenkins_job/jenkins_jobs.ini --user admin --password admin update configure-ansible.yml
+  shell: "jenkins-jobs --conf /etc/jenkins_job/jenkins_jobs.ini --user {{jenkins_user}} --password {{jenkins_password}} update configure-ansible.yml"
   args:
-    chdir: /home/ubuntu/
+    chdir: "{{home_path}}"
 
 - name: Chmod 777
   become: true
   shell: |
-          chmod 777 -R /home/ubuntu/
-          
+          chmod 777 -R /home/ubuntu/; ansible-playbook setUpLocal-2.yml; sleep 30;
+
+#- name: Running the Build job for iTrust
+#  command: "curl -X POST http://{{jenkins_user}}:{{jenkins_password}}@127.0.0.1:{{jenkins_port}}/job/Configure/build"
+ 
 
 

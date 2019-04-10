@@ -2,6 +2,25 @@
   include_vars:
     file: variables.yml
 
+- name: Copying JJB file to target machine
+  copy:
+    src: checkbox-build.yml
+    dest: "{{home_path}}/jenkins-job-builder/checkbox-build.yml"
+
+- name: Copying JJB file to target machine (Without static analysis)
+  copy:
+    src: itrust-build.yml
+    dest: "{{home_path}}/iTrust/iTrust2/"
+
+- name: Configuring the build job
+  shell: 'jenkins-jobs --conf /etc/jenkins_job/jenkins_jobs.ini --user "{{jenkins_user}}" --password "{{jenkins_password}}" update checkbox-build.yml'
+  args:
+    chdir: "{{home_path}}/jenkins-job-builder"
+- name: Configuring the build job
+  shell: jenkins-jobs --conf /etc/jenkins_job/jenkins_jobs.ini --user admin --password admin update itrust-build.yml
+  args:
+    chdir: "{{home_path}}/iTrust/iTrust2/"
+
 - name: Running the Build job for iTrust
   command: "curl -X POST http://{{jenkins_user}}:{{jenkins_password}}@127.0.0.1:{{jenkins_port}}/job/iTrust2/build"
 
