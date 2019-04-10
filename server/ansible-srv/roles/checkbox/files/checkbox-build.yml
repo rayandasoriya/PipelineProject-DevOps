@@ -2,3 +2,5 @@
     name: Checkbox
     builders:
     - shell: "cd /home/ubuntu/checkbox.io/server-side/site/; npm test"
+    triggers:
+      - github
