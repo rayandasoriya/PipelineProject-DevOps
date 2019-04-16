@@ -36,6 +36,17 @@
       when: repo_verify.stat.exists == False 
 
 
+    - name: Including variables.yml
+      include_vars:
+        file: ../defaults/variables.yml
+
+    - name: Configuring AWS
+      shell: |
+             aws configure set aws_access_key_id "{{access_key_id}}"
+             aws configure set aws_secret_access_key "{{secret_access_key}}"
+             aws configure set default.region "{{aws_az}}"
+
+
     - name: Create an AWS S3 bucket for kops to persist its state
       shell: |
         aws s3api create-bucket --bucket kops-jubeen --region us-east-1
@@ -62,17 +73,17 @@
 
     - name: Create a Kubernetes cluster definition using kops      
       shell: |
-        kops create cluster --name=jubeen.k8s.local --node-count=3 --node-size=t2.medium --master-size=t2.medium --zones=us-east-1a --ssh-public-key=/home/ubuntu/.ssh/id_rsa.pub
+        kops create cluster --name=jubeen.k8s.local --node-count=3 --node-size=t2.micro --master-size=t2.micro --zones=us-east-1a --ssh-public-key=/home/ubuntu/.ssh/id_rsa.pub --state=s3://kops-jubeen
       when: clusterExists.stderr_lines[1] is defined and clusterExists.stderr_lines[1].find('\"jubeen.k8s.local\" not found') != -1
 
     - name: Create a Kubernetes cluster actually using kops      
       shell: |
-        kops update cluster --name=jubeen.k8s.local --yes
+        kops update cluster --name=jubeen.k8s.local --yes --state=s3://kops-jubeen
       when: clusterExists.stderr_lines[1] is defined and clusterExists.stderr_lines[1].find('\"jubeen.k8s.local\" not found') != -1 
 
     - name: Validate the cluster
       shell: |
-        kops validate cluster
+        kops validate cluster --state=s3://kops-jubeen
       register: result
       until: result.stdout.find("is ready") != -1
       retries: 150
@@ -81,4 +92,24 @@
     - name: Deploy Checkbox on K8s cluster
       shell: |
         kubectl apply -f checkbox.yml
+        kubectl expose deployment nginx-deployment --type=LoadBalancer --name=load-balancer
+        kubectl get services
+      args:
+        chdir: "{{home_path}}/roles/kubernetes/files/"
       ignore_errors: true     
+
+    - name: Deploy kubernetes dashboard
+      shell: |
+         kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
+         kubectl apply -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/heapster.yaml
+         kubectl apply -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/influxdb.yaml
+         kubectl apply -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/rbac/heapster-rbac.yaml
+         kubectl apply -f eks-admin-service-account.yaml
+         kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep eks-admin | awk '{print $1}')
+         kops get secrets kube --type secret -oplaintext
+      args:
+        chdir: "{{home_path}}/roles/kubernetes/files/"
+      ignore_errors: true
+
+# /api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login
+# sudo kops delete cluster jubeen.k8s.local --state=s3://kops-jubeen --yes
