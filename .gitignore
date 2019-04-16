@@ -5,4 +5,5 @@
 *.ali
 
 *.pem
+*.retry
 .DS_Store
