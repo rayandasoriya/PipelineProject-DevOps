@@ -36,6 +36,8 @@ In this milestone, we have demonstrated the build automation and configuration m
 
 ### [Milestone 2](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone2)
 
+In this milestone, we have demonstrated the test and analysis using Ansible. We have:
+
 * Developed a tool that automatically commits random changes to source code which will trigger a build and run of the test suite.
 * Created a corresponding jenkins job which enables you to run the test suite against this branch and handle rollback
 * Using your automated commit fuzzer, generated 100 random commits (that still compile) and test runs
@@ -44,6 +46,13 @@ In this milestone, we have demonstrated the build automation and configuration m
 * For checkbox.io, extend the build job to support the custom metrics and fail the build if any of these metrics exceed a given threshold.
 
 ### [Milestone 3](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone3)
+
+In this milestone, we have demonstrated the deployment and monitoring analysis using Ansible. We have:
+
+* Deploy the applications on AWS using the git trigger hooks
+* Configured redis client to turn off some features using feature flags
+* Extracted a microservice and deployed sereral instances using Kuberneets
+* Implemented the monitoring analysis of the project as a special componenet
 
 ## References
 
