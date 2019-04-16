@@ -1,4 +1,4 @@
 name: web-srv
 vm:
-  memory: 4096
+  memory: 1024
   ip: 192.168.33.100

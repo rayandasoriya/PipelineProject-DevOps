@@ -51,7 +51,7 @@
     
     - name: Gnerate key
       shell: |
-        ssh-keygen -N '' -f /home/ubuntu/.ssh/id_rsa
+        ssh-keygen -N '' -f /home/ubuntu/.ssh/id_rsa; export KOPS_STATE_STORE=s3://kops-jubeen/
       when: repo_verify.stat.exists == False
 
     - name: Check if Kubernetes cluster exists or not

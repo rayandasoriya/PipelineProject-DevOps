@@ -22,6 +22,6 @@
     #- fuzzer
     #- checkbox-analysis
     #- itrust-analysis
-    #- redis
+    - redis
     #- kubernetes
 

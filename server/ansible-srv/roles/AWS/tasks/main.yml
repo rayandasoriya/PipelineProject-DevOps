@@ -13,10 +13,10 @@
   tags:
     - Update apt packages
   
-- name: Installing npm and nodejs
-  become: true
-  apt:
-    name:  ['npm', 'nodejs-legacy']
+#- name: Installing npm and nodejs
+#  become: true
+#  apt:
+#    name:  ['npm', 'nodejs-legacy']
     
 - name: Copying AWS content
   become: true
