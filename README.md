@@ -13,6 +13,7 @@
 	1. [Cloning](#cloning)
 	2. [Build and Deployment](#build-and-deployment)
 	3. [Test and Analysis](#test-and-analysis)
+	4. [Deployment and Monitoring Analysis](#deployment-and-monitoring-analysis)
 5. [Report](#report)
 6. [Screencast](#screencast)
 7. [References](#references)
@@ -20,17 +21,17 @@
 ## Our Team
 
 * Arshdeep Singh Syal ([asyal](mailto:asyal@ncsu.edu))
-	* Responsible for Checkbox analysis code (Long method, Cyclomatic Complexity, Max if conditions, parameter count)
+	* Responsible for implementing the monitoring analysis
 * Jubeen Shah ([jnshah2](mailto:jnshah2@ncsu.edu))
-	* Responsible for Jenkins Configuration, iTrust Fuzzing, iTrust Code Coverage, Checkbox analysis for max nesting depth, extending iTrust Build Job, test cases description for Checkbox.
+	* Responsible for AWS deployment and infrastructure upgrade using Kuvbernetes
 * Rayan Dasoriya([rdasori](mailto:rdasori@ncsu.edu))
-	* Responsible for Test prioritization analysis and report creation
+	* Responsible for the feature flags feature using Redis client
 * Shraddha Bhadauria([sbhadau](mailto:sbhadau@ncsu.edu))
-	* Responsible for Checkbox analysis code (Long method, Cyclomatic Complexity, Max if conditions, parameter count)
+	* Responsible for implementing the monitoring analysis
 
 ## About the milestone
 
-In this milestone, we have extended our work done in [Milestone 2](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone2) demonstrated techniques related to tetsing and analysis of checkbox.io and iTrust. 
+In this milestone, we have extended our work done in [Milestone 2](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone2) demonstrated techniques related to deployment and monitoring of Checkbox.io and iTrust. 
 
 ## Prerequisites
 To run this project, you will require the following tools:
@@ -118,12 +119,15 @@ Once complete, the jenkins server will be available at [192.168.33.100:9999](htt
 
 <img width="1440" alt="jenkins" src="./resources/jenkins.png">
 
-### Test and Analysis
+### Deployment and Monitoring Analysis
  
  The new roles, intrdoced in this Milestone, are described in the previous section, [here](#new-roles-from-milestone-3).
  
  In this Milestone, we have completed the following tasks:
-
+ * Deploy the applications on AWS using the git trigger hooks
+ * Configured redis client to turn off some features using feature flags
+ * Extracted a microservice and deployed sereral instances using Kuberneets
+ * Implemented the monitoring analysis of the project as a special componenet
 
 ## Report
 
