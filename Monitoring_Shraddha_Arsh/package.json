@@ -1,0 +1,27 @@
+{
+  "name": "monkey",
+  "version": "0.0.1",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "nodemon main.js",
+    "http-server": "cd www && http-server",
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^0.11.1",
+    "nodemon": "^1.18.10"
+  },
+  "dependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^2.0.1",
+    "dateformat": "^3.0.3",
+    "http-proxy": "^1.17.0",
+    "mocha": "^3.5.0",
+    "node-datetime": "^2.1.2",
+    "request": "^2.55.0",
+    "socket.io": "^1.7.3"
+  }
+}
