@@ -2,60 +2,24 @@ var http = require('http');
 var request = require('request');
 var os = require('os');
 
-
-
 var exec = require('child_process').exec;
 
 // websocket server that website connects to.
 var io = require('socket.io')(3000);
-//let date = require('node-datetime');
 var dateFormat = require('dateformat');
 
 var startTime = Date.now() ;
 var startTimeFormatted =dateFormat(startTime, 'dd/mm/yyyy HH:mm:ss');
-//var errorMessage = '';
-//var liveliness ='Alive';
-/// CHILDREN nodes
 
-var ifaces = os.networkInterfaces();
-//console.log(`Trying to get IP address : ${ifaces.address}`);
+/// CHILDREN nodes
 var nodeServers = 
 [
-	{url:"http://localhost:8080", latency: 0, name: "client 1", errorMessage: '',liveliness: 'Alive'},
-	{url:"http://localhost:4000", latency: 0, name: "client 2", errorMessage: '',liveliness: 'Alive'},
-	//{url:"http://localhost:9002", latency: 0}
+	//{url:"http://localhost:8080", latency: 0, name: "client 1", errorMessage: '',liveliness: 'Alive'},
+	{url:"http://a229f5eaf619511e9a3b50a3f6cdbed7-1305493250.us-east-1.elb.amazonaws.com", latency: 0, name: "client 2", errorMessage: '',liveliness: 'Alive'},
 ];
-
-// Launch servers.
-/*
-exec("node fastService.js");
-exec("node mediumService.js");
-exec("node slowService.js");
-*/
-/*
-function createProxy(target, port)
-{
-    // Proxy.
-    var options = {};
-    var proxy   = httpProxy.createProxyServer(options);
-
-    var server  = http.createServer(function(req, res)
-    {
-        let delay = (port == 7001) ? 1000 : 0;
-		setTimeout(function()
-		{
-            proxy.web( req, res, {target: target } );
-        }, delay);
-    });
-	var liveliness = server.listen(port);
-	
-    return `http://localhost:${port}`;
-}
-*/
 
 function memoryLoad()
 {
-	// console.log( os.totalmem(), os.freemem() );
 	let load = (os.totalmem()-os.freemem())/os.totalmem()*100.0;
 	return load.toFixed(2);
 }
@@ -86,7 +50,6 @@ function cpuTicksAcrossCores()
 
 var startMeasure = cpuTicksAcrossCores();
 
-
 function cpuAverage()
 {
 	var endMeasure = cpuTicksAcrossCores(); 
@@ -100,6 +63,27 @@ function cpuAverage()
 	return [(busy/totalDifference*100.0).toFixed(2), (idleDifference/totalDifference *100.0).toFixed(2)];
 }
 
+var ip=getIPAddress();
+console.log("IP Address: ",ip);
+function getIPAddress() 
+{
+	var interfaces = require('os').networkInterfaces();
+	for (var devName in interfaces) 
+	{
+	  var iface = interfaces[devName];
+  
+	  for (var i = 0; i < iface.length; i++) 
+	  {
+		var alias = iface[i];
+		if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal)
+		{
+			return alias.address;
+		}
+	  }
+	}
+	return '0.0.0.0';
+  }
+
 function measureLatenancy(server)
 {
 	//startTime = Date.now();
@@ -112,44 +96,20 @@ function measureLatenancy(server)
 	
 	//console.log("Line 1 ==========================================================");
 	
-	//console.log(`request to url : ${server.name}`);
-	/*console.log("Start time : ",startTimeFormatted);
-	console.log("Current Time : ",currentTimeFormatted); */
 	request(options, function (error, res, body) 
 	{
-		
 		if(error)
 		{
-			//console.log(`Server : ${server.url} is not responding !! `);
 			server.errorMessage = error;
 			server.liveliness = 'Not Alive';
 			server.latency = 0;
-			//console.log(error);
-			//console.log(`liveliness : ${liveliness}`);
 		}
 		else if(res.statusCode == 200)
 		{
-			//console.log(`response status : ${res.statusCode}`);
-			//console.log(`Server is alive ${server.url}`);
-			//console.log(res.statusCode, server.url);
-			//console.log("Uptime is : ",process.uptime());
-			//server.latency = (Date.now() - startTime);
-			//console.log(`${server.name} latency : ${server.latency}`)
-			//liveliness = 'Alive';
-			//errorMessage = '';
-			//console.log(`liveliness : ${liveliness}`);
 			server.latency = (Date.now() - startTime);
-			//errorMessage = '';
-			//liveliness = 'Alive';
 		}
-		
-		//Math.floor(millis/1000)
-		//console.log("Start time : ",startTime);
-		//console.log(`liveliness : ${liveliness}`);
-		//console.log(`error  : ${errorMessage}`);
-		//console.log("Line 2==========================================================");
 	});
-	return [startTimeFormatted, currentTimeFormatted , server.latency, process.uptime(), server.errorMessage, server.liveliness];
+	return [startTimeFormatted, currentTimeFormatted , server.latency, os.uptime(), server.errorMessage, server.liveliness];
 }
 function calculateColor()
 {
@@ -183,10 +143,9 @@ function calculateColor()
                 {
                         color = "#00ff00";
                 }
-                console.log( latency );
+                console.log(latency);
                 return {color: color};
         });
-        //console.log( nodes );
         return nodes;
 }
 
@@ -202,14 +161,13 @@ io.on('connection', function (socket) {
 		startTime = Date.now();
 		for(i=0; i<nodeServers.length; i++)
 		{
-			//console.log(`liveliness from connection  : ${ measureLatenancy(nodeServers[i])[6]} `);
 			var data = { 
 				name: nodeServers[i].name, 
 				url: nodeServers[i].url,
+				ip: getIPAddress(),
 				cpu: cpuAverage()[0],
 				IdleTime: cpuAverage()[1], 
 				memoryLoad: memoryLoad(), 
-				//name:measureLatenancy(nodeServers[i])[0],
 				startTime: measureLatenancy(nodeServers[i])[0],
 				currentTime: measureLatenancy(nodeServers[i])[1],
 				latency: measureLatenancy(nodeServers[i])[2],
@@ -220,11 +178,17 @@ io.on('connection', function (socket) {
 			};
 			console.log("interval", data);	
 			socket.emit("heartbeat", data);
+			exec(`curl -i -XPOST 'http://192.168.33.100:8086/write?db=statsdemo' --data-binary 'name,host=serverA value='${data.name}`);
+			exec(`curl -i -XPOST 'http://192.168.33.100:8086/write?db=statsdemo' --data-binary 'url,host=serverA value='${data.url}`);
+			exec(`curl -i -XPOST 'http://192.168.33.100:8086/write?db=statsdemo' --data-binary 'ip,host=serverA value='${data.ip}`);
+			exec(`curl -i -XPOST 'http://192.168.33.100:8086/write?db=statsdemo' --data-binary 'cpu,host=serverA value='${data.cpu}`);
+			exec(`curl -i -XPOST 'http://192.168.33.100:8086/write?db=statsdemo' --data-binary 'IdleTime,host=serverA value='${data.IdleTime}`);
+			exec(`curl -i -XPOST 'http://192.168.33.100:8086/write?db=statsdemo' --data-binary 'MemoryLoad,host=serverA value='${data.memoryLoad}`);
+			exec(`curl -i -XPOST 'http://192.168.33.100:8086/write?db=statsdemo' --data-binary 'latency,host=serverA value='${data.latency}`);
+			exec(`curl -i -XPOST 'http://192.168.33.100:8086/write?db=statsdemo' --data-binary 'uptime,host=serverA value='${data.uptime}`);
+			exec(`curl -i -XPOST 'http://192.168.33.100:8086/write?db=statsdemo' --data-binary 'errorMessage,host=serverA value='${data.errorMessage}`);
+			exec(`curl -i -XPOST 'http://192.168.33.100:8086/write?db=statsdemo' --data-binary 'Liveness,host=serverA value='${data.liveliness}`);
 		}
-		
-			
-		//io.sockets.emit('heartbeat', data );
-		
 	}, 5000);
 
 	socket.on('disconnect', function () {
