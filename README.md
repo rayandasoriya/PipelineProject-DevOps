@@ -23,7 +23,7 @@
 * Arshdeep Singh Syal ([asyal](mailto:asyal@ncsu.edu))
 	* Responsible for implementing the monitoring analysis
 * Jubeen Shah ([jnshah2](mailto:jnshah2@ncsu.edu))
-	* Responsible for AWS deployment and infrastructure upgrade using Kuvbernetes
+	* Responsible for AWS deployment and infrastructure upgrade using Kubernetes and docker + Grafana integration
 * Rayan Dasoriya([rdasori](mailto:rdasori@ncsu.edu))
 	* Responsible for the feature flags feature using Redis client
 * Shraddha Bhadauria([sbhadau](mailto:sbhadau@ncsu.edu))
