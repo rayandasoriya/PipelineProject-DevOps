@@ -16,6 +16,15 @@
     state: present
     roles: readWrite,dbAdmin,userAdmin
 
+- name: Downloading nodejs 11
+  shell: |
+     curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
+
+- name: Installing nodejs 11
+  become: true
+  apt-get: 
+    name:['nodejs']
+
 - name: NPM Install (shell command)
   become: true
   shell: npm install

@@ -47,6 +47,12 @@
     src: /ansible-srv/variables.yml
     dest: "{{home_path}}"
 
+- name: Copying variables.yml
+  become: true
+  copy: 
+    src: deploy.yml
+    dest: "{{home_path}}"
+
 
 
 

@@ -5,7 +5,7 @@
   become: yes
   environment:
     KOPS_CLUSTER_NAME: jubeen.k8s.local
-    KOPS_STATE_STORE: s3://kops-jubeen
+    KOPS_STATE_STORE: s3://kops-jubee
   tasks:
     - name: install apt dependencies
       apt:
@@ -49,11 +49,11 @@
 
     - name: Create an AWS S3 bucket for kops to persist its state
       shell: |
-        aws s3api create-bucket --bucket kops-jubeen --region us-east-1
+        aws s3api create-bucket --bucket kops-jubee --region us-east-1
 
     - name: Enable versioning for the above S3 bucket
       shell: |
-        aws s3api put-bucket-versioning --bucket kops-jubeen --versioning-configuration Status=Enabled
+        aws s3api put-bucket-versioning --bucket kops-jubee --versioning-configuration Status=Enabled
 
     - name: "Verify that the repository exists"
       stat:
@@ -62,7 +62,7 @@
     
     - name: Gnerate key
       shell: |
-        ssh-keygen -N '' -f /home/ubuntu/.ssh/id_rsa; export KOPS_STATE_STORE=s3://kops-jubeen/
+        ssh-keygen -N '' -f /home/ubuntu/.ssh/id_rsa; export KOPS_STATE_STORE=s3://kops-jubee/
       when: repo_verify.stat.exists == False
 
     - name: Check if Kubernetes cluster exists or not
@@ -73,17 +73,17 @@
 
     - name: Create a Kubernetes cluster definition using kops      
       shell: |
-        kops create cluster --name=jubeen.k8s.local --node-count=3 --node-size=t2.micro --master-size=t2.micro --zones=us-east-1a --ssh-public-key=/home/ubuntu/.ssh/id_rsa.pub --state=s3://kops-jubeen
+        kops create cluster --name=jubeen.k8s.local --node-count=3 --node-size=t2.micro --master-size=t2.micro --zones=us-east-1a --ssh-public-key=/home/ubuntu/.ssh/id_rsa.pub --state=s3://kops-jubee
       when: clusterExists.stderr_lines[1] is defined and clusterExists.stderr_lines[1].find('\"jubeen.k8s.local\" not found') != -1
 
     - name: Create a Kubernetes cluster actually using kops      
       shell: |
-        kops update cluster --name=jubeen.k8s.local --yes --state=s3://kops-jubeen
+        kops update cluster --name=jubeen.k8s.local --yes --state=s3://kops-jubee
       when: clusterExists.stderr_lines[1] is defined and clusterExists.stderr_lines[1].find('\"jubeen.k8s.local\" not found') != -1 
 
     - name: Validate the cluster
       shell: |
-        kops validate cluster --state=s3://kops-jubeen
+        kops validate cluster --state=s3://kops-jubee
       register: result
       until: result.stdout.find("is ready") != -1
       retries: 150
@@ -157,7 +157,7 @@
 
     - name: Getting admin password
       shell: |
-         kops get secrets kube --type secret -oplaintext --state=s3://kops-jubeen
+         kops get secrets kube --type secret -oplaintext --state=s3://kops-jubee
       args:
         chdir: "{{home_path}}/roles/kubernetes/files/"
       ignore_errors: true
@@ -234,7 +234,7 @@
       ignore_errors: true
 
 # /api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login
-# sudo kops delete cluster jubeen.k8s.local --state=s3://kops-jubeen --yes
+# sudo kops delete cluster jubeen.k8s.local --state=s3://kops-jubee --yes
 
 #sudo kubectl apply -f namespace.yml
 #sudo kubectl apply -f prometheus-rbac.yaml

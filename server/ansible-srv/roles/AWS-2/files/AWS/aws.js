@@ -20,7 +20,7 @@ var params = {
     MinCount: 1,
     KeyName: stringVal,
      SecurityGroupIds: [
-        "sg-7d52bc0a"
+        "sg-56e70510"
      ],  
     TagSpecifications: [
        {

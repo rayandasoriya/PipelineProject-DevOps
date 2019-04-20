@@ -32,10 +32,25 @@
   args:
     chdir: "{{home_path}}"
 
-- name: Chmod 777
+- name: Setting up another AWS instance
   become: true
   shell: |
-          chmod 777 -R /home/ubuntu/; ansible-playbook setUpLocal-2.yml; sleep 30;
+          chmod 777 -R /home/ubuntu/; ansible-playbook setUpLocal-2.yml; sleep 30; chmod 600 DevOps-pro-2.pem
+
+- name: Setting permissions for root
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^%sudo'
+    line: '%sudo ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+
+- name: Setting permissions for jenkins
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    line: 'jenkins ALL= NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
 
 #- name: Running the Build job for iTrust
 #  command: "curl -X POST http://{{jenkins_user}}:{{jenkins_password}}@127.0.0.1:{{jenkins_port}}/job/Configure/build"

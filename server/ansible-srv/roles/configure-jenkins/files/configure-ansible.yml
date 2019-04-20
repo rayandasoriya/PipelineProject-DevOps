@@ -3,8 +3,16 @@
     builders:
     - shell: |
            cd /home/ubuntu/
-           ansible-playbook -i inventory playbook.yml
+           ansible-playbook playbook.yml -vv
+           cd /home/ubuntu/iTrust/iTrust2/
+           mvn -f pom-data.xml process-test-classes
+           mvn package 
+           cd /home/ubuntu/
+           sudo ansible-playbook -i inventory deploy.yml -vv
+           sudo ansible-playbook -i inventory roles/kubernetes/tasks/main.yml -vv
     triggers:
     - github
+    #I need to add some post build tasks for setting up the itrust repo on the remote machine?? Do i still need to? still need to have the kubernetes playbook.yml run
+    # shift the setUpLocal2.yml ansible here
 
     
