@@ -12,8 +12,8 @@
 4. [Setup Instructions](#setup-instructions)
 	1. [Cloning](#cloning)
 	2. [Build and Deployment](#build-and-deployment)
-	3. [Test and Analysis](#test-and-analysis)
-	4. [Deployment and Monitoring Analysis](#deployment-and-monitoring-analysis)
+	3. [Infrastructure Upgrade](#infrastructure-upgrade)
+	4. [Monitoring Analysis](#monitoring-analysis-something-special-fire)
 5. [Report](#report)
 6. [Screencast](#screencast)
 7. [References](#references)
@@ -79,7 +79,7 @@ The roles in red are not used in this milestone, since they were releated to dev
 - Build- Running the build job for Checkbox.io and iTrust
 - Checkbox - Cloning and configuring the checkbox.io
 + Chrome - Installing headless chrome for iTrust
-- Fithooks- For creating the post-receive hook on the jenkins server
+- Githooks- For creating the post-receive hook on the jenkins server
 + Install-Modules - Installing the prerequisite modules
 + iTrust - Cloning the iTrust Repo
 + Jenkins- Installing and configuring Jenkins
@@ -106,6 +106,12 @@ The roles in red are not used in this milestone, since they were releated to dev
 + Tomcat - Used to setup Tomcat server to host the iTrust Application.
 ```
 The setup of the Jenkins server should take about 10 minutes to execute. You can then trigger a build event by pushing to `iTrust` repo to initiate the deployment of iTrust, and to `Checkbox.io` repo to initiate the deployment of Checkbox.io cluster with Docker and Kubernetes.
+
+### Infrastructure Upgrade
+
+For this part of the milestone, we used Docker along with Kubernetes to deploy the Checkbox.io service on `three` nodes to make it resistant to node failures. We seperated the rendering for markdown into a seperate microservice, the repo to which can be found [here](https://github.com/jubeenshah/checkbox.io/tree/infra-upgrade).  
+
+We then used [AWS Kops](https://aws.amazon.com/blogs/compute/kubernetes-clusters-aws-kops/) to manage the Kubernetes Cluster.
 
 ### Monitoring Analysis... Something special :fire:
 
