@@ -131,7 +131,7 @@ You can also look at all the dashboards [here](./roles/kubernetes/README.md#dash
 
 ## Screencast
 
-The screencast for Milestone 3 is available [here]().
+The screencast for Milestone 3 is available [here](https://youtu.be/78HHSHWss1I).
 
 ## References
 
