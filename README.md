@@ -109,9 +109,7 @@ The setup of the Jenkins server should take about 10 minutes to execute. You can
 
 ### Infrastructure Upgrade
 
-For this part of the milestone, we used Docker along with Kubernetes to deploy the Checkbox.io service on `three` nodes to make it resistant to node failures. We seperated the rendering for markdown into a seperate microservice, the repo to which can be found [here](https://github.com/jubeenshah/checkbox.io/tree/infra-upgrade).  
-
-We then used [AWS Kops](https://aws.amazon.com/blogs/compute/kubernetes-clusters-aws-kops/) to manage the Kubernetes Cluster.
+For this part of the milestone, we used Docker along with Kubernetes to deploy the Checkbox.io service on `three` nodes to make it resistant to node failures. We seperated the rendering for markdown into a seperate microservice, the repo to which can be found [here](https://github.com/jubeenshah/checkbox.io/tree/infra-upgrade).  We then used [AWS Kops](https://aws.amazon.com/blogs/compute/kubernetes-clusters-aws-kops/) to manage the Kubernetes Cluster to deploy the checkbox container that we created on the cluster. The code to docker containers can be found [here](https://github.com/jubeenshah/checkboxdocker).
 
 ### Monitoring Analysis... Something special :fire:
 
