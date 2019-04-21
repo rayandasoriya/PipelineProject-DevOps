@@ -1,5 +1,8 @@
 sudo ansible-playbook setUpLocal.yml --vault-id password.txt
-sleep 5
+cd ~/AWS/
+node aws.js
+sleep 10
+cd /ansible-srv/
 sudo ansible all -m ping -i inventory
-sleep 5
+sleep 10
 sudo ansible-playbook -i inventory playbook.yml --vault-id password.txt

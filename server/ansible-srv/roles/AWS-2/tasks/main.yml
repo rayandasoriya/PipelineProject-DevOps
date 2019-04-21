@@ -36,6 +36,7 @@
     
 
 - name: Executing AWS
+  become: false
   shell: node aws.js
   args:
     chdir: "{{home_path}}/roles/AWS-2/files/AWS/"

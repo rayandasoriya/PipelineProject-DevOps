@@ -27,8 +27,18 @@
      src: ansible.cfg
      dest: /etc/ansible/ansible.cfg
 
-- name: Configuring the build job
+- name: Configuring the build job for iTrust
   shell: "jenkins-jobs --conf /etc/jenkins_job/jenkins_jobs.ini --user {{jenkins_user}} --password {{jenkins_password}} update configure-ansible.yml"
+  args:
+    chdir: "{{home_path}}"
+
+- name: Copying JJB file for checkbox
+  copy:
+    src: configure-checkbox.yml
+    dest: "{{home_path}}"
+
+- name: Configuring the build job for checkbox and kubernetes
+  shell: "jenkins-jobs --conf /etc/jenkins_job/jenkins_jobs.ini --user {{jenkins_user}} --password {{jenkins_password}} update configure-checkbox.yml"
   args:
     chdir: "{{home_path}}"
 

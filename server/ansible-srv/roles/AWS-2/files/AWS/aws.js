@@ -12,6 +12,78 @@ inventoryString = "[web]\n"
 var keypair = {
 KeyName: stringVal
 }
+var vpc = null
+var securityGroupIDValue = null
+var DescriptionSecurityGroup = "TestSecurityGroup-2"
+var GroupNameSecurityGroup = "DevOpsSecurityGroup-2"
+// Retrieve the ID of a VPC
+ec2.describeVpcs(function(err, data) {
+   if (err) {
+     console.log("Cannot retrieve a VPC", err);
+   } else {
+     vpc = data.Vpcs[0].VpcId;
+     var paramsSecurityGroup = {
+        Description: DescriptionSecurityGroup,
+        GroupName: GroupNameSecurityGroup,
+        VpcId: vpc
+     };
+     // Create the instance
+     ec2.createSecurityGroup(paramsSecurityGroup, function(err, data) {
+        if (err) {
+           console.log("Error", err);
+        } else {
+           var SecurityGroupId = data.GroupId;
+           console.log("Success", SecurityGroupId);
+           securityGroupIDValue = SecurityGroupId;
+           var paramsIngress = {
+             GroupName: GroupNameSecurityGroup,
+             IpPermissions:[
+                {
+                   IpProtocol: "tcp",
+                   FromPort: 80,
+                   ToPort: 80,
+                   IpRanges: [{"CidrIp":"0.0.0.0/0"}]
+               },
+               {
+                   IpProtocol: "tcp",
+                   FromPort: 22,
+                   ToPort: 22,
+                   IpRanges: [{"CidrIp":"0.0.0.0/0"}]
+               },
+
+               {
+                   IpProtocol: "tcp",
+                   FromPort: 8080,
+                   ToPort: 8080,
+                   IpRanges: [{"CidrIp":"0.0.0.0/0"}]
+                },
+               {
+                   IpProtocol: "tcp",
+                   FromPort: 9999,
+                   ToPort: 9999,
+                   IpRanges: [{"CidrIp":"0.0.0.0/0"}]
+                },
+               {
+                   IpProtocol: "-1",
+                   FromPort: 0,
+                   ToPort: 65535,
+                   IpRanges: [{"CidrIp":"0.0.0.0/0"}]
+                }
+
+             ]
+           };
+           ec2.authorizeSecurityGroupIngress(paramsIngress, function(err, data) {
+             if (err) {
+               console.log("Error", err);
+             } else {
+               console.log("Ingress Successfully Set", data);
+               console.log('Newly Created Security Group is:', securityGroupIDValue);
+             }
+          });
+        }
+     });
+   }
+});
 var params = {
     
     ImageId: "ami-0565af6e282977273", //Ubuntu 16.04
@@ -20,7 +92,7 @@ var params = {
     MinCount: 1,
     KeyName: stringVal,
      SecurityGroupIds: [
-        "sg-56e70510"
+        securityGroupIDValue
      ],  
     TagSpecifications: [
        {

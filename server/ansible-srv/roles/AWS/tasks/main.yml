@@ -39,12 +39,13 @@
       aws configure set default.region "{{aws_az}}"
     
   
-- name: Executing AWS
-  shell: node aws.js
-  args:
-    chdir: ~/AWS/
+#- name: Executing AWS
+#  become: false
+#  shell: node aws.js
+#  args:
+#    chdir: ~/AWS/
 
-- name: Sleep for 10 seconds
-  wait_for:
-    timeout: 10
+#- name: Sleep for 10 seconds
+#  wait_for:
+#    timeout: 10
     
