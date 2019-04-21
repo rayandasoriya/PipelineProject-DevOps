@@ -1,0 +1,6 @@
+- name: Configuring Localhost
+  hosts: localhost
+  become: true
+  gather_facts: false
+  roles:
+    - AWS-2

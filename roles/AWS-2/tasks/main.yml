@@ -1,0 +1,51 @@
+---
+# tasks file for AWS Configuring AWS
+
+- name: Including variables.yml
+  include_vars:
+    file: variables.yml
+
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+  tags:
+    - Update apt packages
+  
+- name: Installing npm and nodejs
+  become: true
+  apt:
+    name:  ['npm', 'nodejs-legacy']
+    
+- name: Npm install AWS
+  shell: npm install
+  args:
+    chdir: "{{home_path}}/roles/AWS-2/files/AWS/"
+
+- name: Installing awscli
+  become: true
+  apt:
+    name: awscli
+
+- name: Configuring AWS
+  shell: | 
+      aws configure set aws_access_key_id "{{access_key_id}}"
+      aws configure set aws_secret_access_key "{{secret_access_key}}"
+      aws configure set default.region "{{aws_az}}"
+    
+
+- name: Executing AWS
+  become: false
+  shell: node aws.js
+  args:
+    chdir: "{{home_path}}/roles/AWS-2/files/AWS/"
+
+
+- name: Sleep for 10 seconds
+  wait_for:
+    timeout: 10
+
+- name: Copy private key
+  shell: |
+      cp /home/ubuntu/roles/AWS-2/files/AWS/DevOps-pro-2.pem /home/ubuntu ; chmod 777 /home/ubuntu/DevOps-pro-2.pem   

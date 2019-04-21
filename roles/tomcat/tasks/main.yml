@@ -1,0 +1,133 @@
+---
+# tasks file for tomcat
+- name: Including variables.yml
+  include_vars:
+    file: variables.yml
+
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+  tags:
+    - Update apt packages
+
+- name: Install the OpenJDK package 
+  become: true
+  apt: 
+    name: ['default-jdk']
+
+- name: Add group "tomcat"
+  group: 
+    name: tomcat
+
+- name: Add user "tomcat"
+  user: 
+    name: tomcat
+    group: tomcat 
+    home: "{{home_path}}"
+    createhome: no
+
+- name: Download Tomcat 9
+  get_url: 
+    url: http://apache.mirrors.hoobly.com/tomcat/tomcat-9/v9.0.19/bin/apache-tomcat-9.0.19.tar.gz 
+    checksum: sha256:03afe0cfe5c7f1a7ec01ec8da2727123160d005fc3d0caa49683db0e0e5cb9b7
+    dest:  "{{home_path}}"   
+    mode: 0755
+    force: yes
+
+- name: Create /opt/tomcat
+  file:
+    path: /opt/tomcat
+    state: directory
+    owner: tomcat
+    group: tomcat
+    mode: 0755
+
+- name: Extract Tomcat (unarchive module error)
+  become: true
+  shell: |
+     tar xf /home/ubuntu/apache-tomcat-9.0.19.tar.gz -C /opt/tomcat
+
+- name: Symlink install directory
+  file: 
+    src: /opt/tomcat/apache-tomcat-9.0.19
+    path: /opt/tomcat/latest
+    state: link
+    force: yes
+
+- name: Change ownership of Tomcat installation
+  file: 
+    path: /opt/tomcat/latest
+    owner: tomcat
+    group: tomcat
+    state: directory
+    recurse: yes
+
+- name: Executable scripts
+  become: true
+  file: 
+    path: /opt/tomcat/latest/bin/
+    mode: 0777
+    force: yes
+    recurse: yes
+
+
+- name: Copying Configuration files tomcat.service
+  copy:
+    src: tomcat.service
+    dest: /etc/systemd/system/tomcat.service
+    
+- name: Allow firewall
+  become: true
+  shell: |
+     ufw allow 8080/tcp
+- name: Copy users.xml
+  copy: 
+    src: tomcat-users.xml
+    dest: /opt/tomcat/latest/conf/tomcat-users.xml
+  
+
+- name: Copy context.xml
+  copy: 
+    src: context-manager.xml
+    dest: /opt/tomcat/latest/webapps/manager/META-INF/context.xml
+
+- name: Copy context.xml
+  copy:
+    src: context-host-manager.xml
+    dest: /opt/tomcat/latest/webapps/host-manager/META-INF/context.xml
+
+- name: Start tomcat
+  become: true
+  systemd:
+    name: tomcat
+    state: started
+    enabled: true
+
+- name: Restart Tomcat
+  become: true
+  systemd:
+    name: tomcat
+    state: restarted
+
+- name: Wait for tomcat to start
+  wait_for: 
+    port: 8080
+
+- name: deploy war file
+  become: true
+  copy:
+    src: "{{home_path}}/iTrust2.war"
+    dest: /opt/tomcat/apache-tomcat-9.0.19/webapps/
+    remote_src: yes
+
+- name: Restart tomcat
+  become: true
+  systemd:
+    name: tomcat
+    state: restarted
+
+- name: Wait for tomcat to start
+  wait_for:
+    port: 8080

@@ -1,0 +1,23 @@
+- job:
+    name: iTrust2
+    workspace: /home/ubuntu/iTrust/iTrust2/
+    builders:
+    - maven-target:
+        maven-version: mvn
+        pom: pom-data.xml
+        goals: process-test-classes
+    #- maven-target:
+    #    maven-version: mvn
+    #    pom: /home/vagrant/iTrust/iTrust2/pom.xml
+    #    goals: jetty:run
+    - maven-target:
+        maven-version: mvn
+        pom: pom.xml
+        goals: package
+    #- maven-target:
+    #    maven-version: mvn
+    #    pom: /home/vagrant/iTrust/iTrust2/pom.xml
+    #    goals: jetty:run
+    triggers:
+      - github
+  

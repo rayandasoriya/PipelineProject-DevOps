@@ -1,0 +1,17 @@
+---
+# tasks file for itrust-deploy
+- name: Copying War file to remote server
+  copy: 
+    src: /home/ubuntu/iTrust/iTrust2/target/iTrust2.war
+    dest: /home/ubuntu
+
+- name: Copy database dump file
+  copy:
+    src: /home/ubuntu/itrust.sql
+    dest: /tmp
+
+- name: Restoring Database
+  become: false
+  shell: |
+     mysqladmin create iTrust2 -u root
+     mysql iTrust2 < /tmp/itrust.sql -u root 

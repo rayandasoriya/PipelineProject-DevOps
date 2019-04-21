@@ -29,7 +29,7 @@
     src: post-receive-checkbox
     dest: "{{checkbox_bare}}/hooks/post-receive"
 
-- name: Copying the post-receive  file in iTrust-bare.git
+- name: Copying the post-receive file in iTrust-bare.git
   become: true
   copy:
     mode: 0111
@@ -40,7 +40,7 @@
   become: true
   shell: git remote add pushtest {{checkbox_bare}}/; touch .remote-check
   args:
-    chdir: /home/vagrant/checkbox.io
+    chdir: /home/ubuntu/checkbox.io
     creates: .remote-check
 
 
@@ -48,5 +48,5 @@
   become: true
   shell: git remote add pushtest {{itrust_bare}}/; touch .remote-itrust
   args:
-    chdir: /home/vagrant/iTrust
+    chdir: /home/ubuntu/iTrust
     creates: .remote-itrust

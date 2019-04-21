@@ -1,6 +1,6 @@
 - job:
     name: iTrust2
-    workspace: /home/vagrant/iTrust/iTrust2/
+    workspace: /home/ubuntu/iTrust/iTrust2/
     builders:
     - maven-target:
         maven-version: mvn
@@ -18,6 +18,8 @@
     #    maven-version: mvn
     #    pom: /home/vagrant/iTrust/iTrust2/pom.xml
     #    goals: jetty:run
+    triggers:
+      - github
     publishers:
       - junit:
          results: "**/target/surefire-reports/*.xml"

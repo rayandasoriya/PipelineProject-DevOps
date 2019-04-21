@@ -1,4 +1,6 @@
 - job:
     name: Checkbox
     builders:
-    - shell: "cd /home/vagrant/checkbox.io/server-side/site/; npm test"
+    - shell: "cd /home/ubuntu/checkbox.io/server-side/site/; npm test"
+    triggers:
+      - github

@@ -1,0 +1,9 @@
+---
+# tasks file for mysql-dump
+- name: Creating MysqlDump
+  mysql_db:
+    state: dump
+    name: iTrust2
+    login_user: root
+    login_password: ''
+    target: /home/ubuntu/itrust.sql

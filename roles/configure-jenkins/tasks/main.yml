@@ -1,0 +1,58 @@
+---
+# tasks file for configure-jenkins
+
+- name: Including Variables.yml
+  include_vars:
+    file: variables.yml
+    
+- name: Copying JJB file to Jenkins-Srv
+  copy:
+    src: configure-ansible.yml
+    dest: "{{home_path}}"
+
+- name: Copying Roles to Jenkins-Srv
+  become: true 
+  copy: 
+    src: /ansible-srv/roles
+    dest: "{{home_path}}"
+    directory_mode: true
+
+- name: Copying AWS folder
+  become: true
+  copy:
+    src: /ansible-srv/AWS
+    dest: "{{home_path}}"
+    directory_mode: true
+
+- name: Copying playbook.yml
+  become: true
+  copy: 
+    src: playbook.yml
+    dest: "{{home_path}}"
+
+- name: Copying setUpLocal.yml
+  become: true
+  copy: 
+    src: /ansible-srv/setUpLocal-2.yml
+    dest: "{{home_path}}"
+
+- name: Copying Password.txt
+  copy: 
+    src: /ansible-srv/password.txt
+    dest: "{{home_path}}"
+  
+- name: Copying variables.yml
+  become: true
+  copy: 
+    src: /ansible-srv/variables.yml
+    dest: "{{home_path}}"
+
+- name: Copying variables.yml
+  become: true
+  copy: 
+    src: deploy.yml
+    dest: "{{home_path}}"
+
+
+
+
