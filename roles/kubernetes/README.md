@@ -1,38 +1,46 @@
-Role Name
+Kubernetes 
 =========
 
-A brief description of the role goes here.
+In this we're going to briefly explain how to setup the Grafana and Prometheus for your cluster in two easy steps.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+You can run the [main.yml](./tasks/main.yml) file for your cluster making changes to the `KOPS_CLUSTER_NAME` and `KOPS_STATE_STORE`. You can also make changes to the required [configuration files](./files/) if you need to. Once you have your cluster ready with the deployments, you can follow the following two steps.
 
-Role Variables
+Step 1
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Add a `Data Source` in your Grafana Dashboard to `Prometheus` out of the many options that are avilable to you. You can fill in the values as shown in the image below. The port for prometheus database is :9090 and is exposed as `http://prometheus`
 
-Dependencies
+![Prometheus Setup](./resources/setup-prometheus.png)
+
+Step 2
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+* `Enable Kubernetes` from your dashboard, and then go to `Add a new Cluster` where you can enter your cluster information. 
+	* For example, for me the load balancer endpoint as given by AWS was `https://api-jubeen-k8s.local` which was `KOPS_CLUSTER_NAME` that I set. 
+* You can then select access method as `Server (Default)` and then select `Basic Auth` and `With CA cert` in the **Auth** section. 
+	* For the username and password for `Basic Auth` would be `admin` and the value you get from running `kops get secrets kube --type secret -oplaintext` command. 
+	* You can then find the CA cert in your `AWS S3` bucket under the `issued` folder.
 
-Example Playbook
-----------------
+![Setting up your cluster](./resources/setup-cluster.png)
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+That's it, you can now view the cluster information on your dashboards. Some example images for the dashboard are shown below.
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+Dashboards
+-------------
+![Dashboard for Kubernetes Cluster](./resources/Dashboard-1.png)
 
-License
--------
+![Dashboard for Kubernetes Container](./resources/Dashboard-2.png)
 
-BSD
+![Dashboard for Kubernetes Deployment](./resources/Dashboard-3.png)
+
+![Dashboard for Kubernetes Node](./resources/Dashboard-4.png)
+
+![Dashboard for Kubernetes Node](./resources/Dashboard-5.png)
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Jubeen Shah

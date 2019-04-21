@@ -31,14 +31,13 @@
 
 ## About the milestone
 
-In this milestone, we have extended our work done in [Milestone 2](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone2) demonstrated techniques related to deployment and monitoring of Checkbox.io and iTrust. 
+In this milestone, we have extended our work done in [Milestone 2](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone2) demonstrated techniques related to deployment and monitoring of Checkbox.io and iTrust. We've used Ansible, for spawning AWS instances; Jenkins, for deployment into the production environment; [Kubernetes](https://kubernetes.io/), for making the infrastructure redundant and tolerant to node failures; [Prometheus](https://prometheus.io) and [Grafana](https://grafana.com), for monitoring and analysis.
 
 ## Prerequisites
 To run this project, you will require the following tools:
-1. [Virtualbox](https://www.virtualbox.org/) (Recommended v5.2.2)
+1. [Virtualbox](https://www.virtualbox.org/) 
 2. [Baker](https://getbaker.io/)
-3. [Cloud Services](#)
-4. [Kubernetes](https://kubernetes.io/)
+3. [AWS Account](https://aws.amazon.com)
 
 ## Setup Instructions
 
@@ -47,87 +46,76 @@ To run this project, you will require the following tools:
 Clone this repository.
 
 ```
-git clone --branch Milestone2 https://github.ncsu.edu/jnshah2/CSC519-Project.git
+git clone --branch Milestone3 https://github.ncsu.edu/jnshah2/CSC519-Project.git
 ```
 
 ### Build and Deployment
 
-Go to the CSC519-Project directory `cd CSC519-Project`. To begin with the setup, we have created two local VMs using Baker.
+Go to the CSC519-Project directory `cd CSC519-Project`. To begin with the setup, and run the `run.sh` script by `sh run.sh`. This will automate the following tasks.
 
-    (i)  Configuration Server (Ansible Server)
-    (ii) Jenkins Server
+* Run `ansible-playbook setUpLocal.yml`
+	* This `play` is responsible for instantiating an AWS EC2 Instance which would host the `Jenkins` server and create an `inventory` file for ansible.
+	* We have used `ansible-vault` to encrypt the `variables.yml` file for security purposes.
+* Run a test `ping` command to ensure that the server can be reached
+* Run another `play`, using `ansible-playbook -i inventory playbook.yml`
+	* This is responsible for setting up the `Jenkins` server with the required dependecies to enable deployment of [iTrust](https://github.ncsu.edu/engr-csc326-staff/iTrust2-v4) and [Checkbox.io](https://github.com/chrisparnin/checkbox.io) in the production environment.
+	* This would also setup [Github Webhooks](https://developer.github.com/webhooks/) to allow us to build the Jenkins Jobs whenever a push is triggered to the repository.
     
-To start and stop the server, we can use `sh start-server.sh` and `sh stop-server.sh` respectively. The `start-server.sh` will create the two servers by running `baker bake` and will also generate a public-private key pair(web-srv) which will be used for setting up the connection between the configuration server and the Jenkins server. The `sh destroy-server.sh` will be used to destroy the servers using `baker destroy`.
- 
-After the successful configuration of the two servers, we will create an SSH connection between the two servers. We will copy the private key (web-srv) generated in the jenkins-srv folder, do `baker ssh` and then paste it in a newly created web-srv (`vi ~/.ssh/web-srv`) file inside the .ssh folder inside configuration server. Change the permission of the private key using the command:
-
-```
-chmod 600 ~/.ssh/web-srv
-```
-
-Now, copy the public key (web-srv.pub) generated in the jenkins-srv folder, do `baker ssh` and paste it in the authorized_keys file inside the .ssh folder (`vi ~/.ssh/authorized_keys`) in the Jenkins server.
-
-We have setup an ssh access from the configuration server to the Jenkins server. To test this, run the following command from the configuration server:
-
-```
-ssh -i ~/.ssh/web-srv vagrant@192.168.33.100
-```
-
 In this project, we have used the following ports for different services:
-* checkbox.io- :80 (default)
-* iTrust- :8080 
-* jenkins - :9999
 
-Now, from the ansible-srv folder inside the configuration server, we run our playbook.yml file. The `playbook.yml` file contains several roles.
-
-<img width="400" alt="role" src="./resources/role.png">
+|Service|Port|
+|------|--------|
+|Checkbox.io| :80 (default)|
+|iTrust   | :8080/iTrust2|
+|Jenkins | :9999|
+|Tomcat  | :8080|
+|Grafana |:3000|
 
 #### Old roles from Milestone 2
 
-1. [build](./server/ansible-srv/roles/build) - Running the build job for Checkbox.io and iTrust
-2. [checkbox](./server/ansible-srv/roles/checkbox) - Cloning and configuring the checkbox.io
-3. [chrome](./server/ansible-srv/roles/chrome) - Installing headless chrome for iTrust
-4. [githooks](./server/ansible-srv/roles/githooks) - For creating the post-receive hook on the jenkins server
-5. [install-modules](./server/ansible-srv/roles/install-modules) - Installing the prerequisite modules
-6. [itrust](./server/ansible-srv/roles/itrust) - Cloning the iTrust Repo
-7. [jenkins](./server/ansible-srv/roles/jenkins) - Installing and configuring Jenkins
-8. [JJB](./server/ansible-srv/roles/jjb) - Jenkins Job Builder
-9. [maven](./server/ansible-srv/roles/maven) - Installing and configuring Maven
-10. [mongodb](./server/ansible-srv/roles/mongodb) - Installing and configuring MongoDB
-11. [mysql](./server/ansible-srv/roles/mysql) - Installing and configuring MySQL
-12. [nginx](./server/ansible-srv/roles/nginx)  - Installing and configuring Nginx web server
-13. [node](./server/ansible-srv/roles/node) - Installing Node.js
-14. [Fuzzer](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone2/server/ansible-srv/roles/fuzzer)
-15. [Checkbox-Analysis](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone2/server/ansible-srv/roles/checkbox-analysis)
-16. [iTrust-Analysis](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone2/server/ansible-srv/roles/itrust-analysis)
+The roles in red are not used in this milestone, since they were releated to development part of the pipeline. 
 
-#### New roles from Milestone 3
-
-17.
-18. 
-
-We will run the `playbook.yml` file with the inventory (to target the Jenkins server) to install these dependencies and run the build for checkbox.io and iTrust. There is also a [`variables.yml`](https://github.ncsu.edu/jnshah2/CSC519-Project/blob/Milestone3/server/ansible-srv/variables.yml) file with a list of all the variables that we have used throughout the play. We use the following command:
-
+```diff
+- Build- Running the build job for Checkbox.io and iTrust
+- Checkbox - Cloning and configuring the checkbox.io
++ Chrome - Installing headless chrome for iTrust
+- Fithooks- For creating the post-receive hook on the jenkins server
++ Install-Modules - Installing the prerequisite modules
++ iTrust - Cloning the iTrust Repo
++ Jenkins- Installing and configuring Jenkins
++ JJB]- Jenkins Job Builder
++ Maven- Installing and configuring Maven
+- Mongodb- Installing and configuring MongoDB
++ MySQL - Installing and configuring MySQL
+- Nginx- Installing and configuring Nginx web server
++ Node - Installing Node.js
+- Fuzzer - Used for fuzzing the iTrust code
+- Checkbox-Analysis - Used for analyzing the Checkbox.io code
+- iTrust-Analysis - Used for analyzing the fuzzed iTrust Code
 ```
-ansible-playbook playbook.yml -i inventory
+#### New roles for Milestone 3
+
+```diff
++ AWS - Used for setup of the AWS instances
++ Ansible - Used for setup of ansible on the remote server
++ Configure-Jenkins - Used for copying necessary files to the remote server
++ iTrust-Deploy - Used for deploying the iTrust war file on the remote server
++ Kubernetes - Used to setup Kubernetes cluster to host checkbox.io and also setup monitoring and analysis
++ MySQL-Dump - Used for creating a dump of the MySQL database to deploy on the remote server
++ Redis - Used to setup a redis client on the remote server
++ Tomcat - Used to setup Tomcat server to host the iTrust Application.
 ```
-A snippet of the successful completion of the ansible playbook is added below:
+The setup of the Jenkins server should take about 10 minutes to execute. You can then trigger a build event by pushing to `iTrust` repo to initiate the deployment of iTrust, and to `Checkbox.io` repo to initiate the deployment of Checkbox.io cluster with Docker and Kubernetes.
 
-<img width="1440" alt="jenkins" src="./resources/script.png">
+### Monitoring Analysis... Something special :fire:
 
-Once complete, the jenkins server will be available at [192.168.33.100:9999](http://192.168.33.100:9999)
+In the special component of the milestone we used prometheus to monitor the AWS cluster. The configuration files can be found [here](./roles/kubernetes/files). To setup the prometheus along with Grafana there are a few things that you need to setup. The instructions to which can be found in the kubernetes role page [here](./roles/kubernetes/README.md). We integrated [`Prometheus`](https://prometheus.io) with [`Grafana`](https://grafana.com) to create dashboards that can be seen below. 
 
-<img width="1440" alt="jenkins" src="./resources/jenkins.png">
+![Dashboard for Kubernetes Cluster](./resources/Dashboard-1.png)
 
-### Deployment and Monitoring Analysis
- 
- The new roles, intrdoced in this Milestone, are described in the previous section, [here](#new-roles-from-milestone-3).
- 
- In this Milestone, we have completed the following tasks:
- * Deploy the applications on AWS using the git trigger hooks
- * Configured redis client to turn off some features using feature flags
- * Extracted a microservice and deployed sereral instances using Kuberneets
- * Implemented the monitoring analysis of the project as a special componenet
+![Dashboard for Kubernetes Node](./resources/Dashboard-4.png)
+
+You can also look at all the dashboards [here](./roles/kubernetes/README.md#dashboards).
 
 ## Report
 
@@ -143,4 +131,14 @@ The screencast for Milestone 3 is available [here]().
 
 [[2] https://jenkins.io/doc/book/getting-started/installing/](https://jenkins.io/doc/book/getting-started/installing/ "https://jenkins.io/doc/book/getting-started/installing/")
 
-[[3] http://docs.ansible.com](http://docs.ansible.com "http://docs.ansible.com")<br/>
+[[3] http://docs.ansible.com](http://docs.ansible.com "http://docs.ansible.com")
+
+[[4] https://eksworkshop.com/monitoring/](https://eksworkshop.com/monitoring/)
+
+[[5] https://grafana.com/dashboards/315](https://grafana.com/dashboards/315)
+
+[[6] https://blog.kubernauts.io/cloud-native-monitoring-with-prometheus-and-grafana-9c8003ab9c7 ](https://blog.kubernauts.io/cloud-native-monitoring-with-prometheus-and-grafana-9c8003ab9c7)
+
+[[7] https://medium.com/devopslinks/setup-prometheus-grafana-monitoring-on-kubernetes-cluster-9be4d80a45b1](https://medium.com/devopslinks/setup-prometheus-grafana-monitoring-on-kubernetes-cluster-9be4d80a45b1)
+
+[[8] https://sysdig.com/blog/kubernetes-monitoring-with-prometheus-alertmanager-grafana-pushgateway-part-2/](https://sysdig.com/blog/kubernetes-monitoring-with-prometheus-alertmanager-grafana-pushgateway-part-2/)
