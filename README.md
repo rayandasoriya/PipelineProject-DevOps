@@ -49,7 +49,11 @@ Clone this repository.
 git clone --branch Milestone3 https://github.ncsu.edu/jnshah2/CSC519-Project.git
 ```
 
+
+
 ### Build and Deployment
+
+Before you run the project make sure you enter the values for `Access key ID` and `Secret access key` into the [variables.yml](./variables.yml) by running `ansible-vault edit variables.yml` and entering the password as given in [password.txt](./server/ansible-srv/password.txt).
 
 Go to the CSC519-Project directory `cd CSC519-Project`. To begin with the setup, and run the `run.sh` script by `sh run.sh`. This will automate the following tasks.
 
