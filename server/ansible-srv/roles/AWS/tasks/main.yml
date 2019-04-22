@@ -12,11 +12,16 @@
     update_cache: yes
   tags:
     - Update apt packages
+
+- name: Getting 8.x setup files for node
+  shell: curl -sL https://deb.nodesource.com/setup_11.x | sudo bash -
+  args: 
+    warn: false
   
-#- name: Installing npm and nodejs
-#  become: true
-#  apt:
-#    name:  ['npm', 'nodejs-legacy']
+- name: Installing npm and nodejs
+  become: true
+  apt:
+    name:  ['npm', 'nodejs']
     
 - name: Copying AWS content
   become: true
