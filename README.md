@@ -6,10 +6,11 @@
 # Content
 1. [Our Team](#our-team)
 2. [About the Milestones](#about-the-milestones)
-	1. [Milestone 1](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone1)
-	2. [Milestone 2](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone2)
-	3. [Milestone 3](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone3)
-3. [References](#references)
+	1. [Milestone 1](#milestone-1) 
+	2. [Milestone 2](#milestone-2)
+	3. [Milestone 3](#milestone-3)
+3. [Screencast](#screencast)
+4. [References](#references)
 
 ## Our Team
 
@@ -34,6 +35,8 @@ In this milestone, we have demonstrated the build automation and configuration m
 * Used a combination of [mocha](https://www.npmjs.com/package/mocha)/[pm2](https://www.npmjs.com/package/pm2), to create a test script that will start and stop the `checkbox.io` service on the server.
 * Created a git hook to trigger a build when a push is made to the repo.
 
+[Screencast](https://youtu.be/9UFJjtvXmZY)
+
 ### [Milestone 2](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone2)
 
 In this milestone, we have demonstrated the test and analysis using Ansible. We have:
@@ -45,6 +48,8 @@ In this milestone, we have demonstrated the test and analysis using Ansible. We 
 * For the iTrust build job, extended to build job to support running an existing static analysis tool on the source code, process its results, and report its findings and fail the build minimum testing criteria and analysis criteria.
 * For checkbox.io, extend the build job to support the custom metrics and fail the build if any of these metrics exceed a given threshold.
 
+[Screencast](https://youtu.be/lFrX53iuUzw)
+
 ### [Milestone 3](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone3)
 
 In this milestone, we have demonstrated the deployment and monitoring analysis using Ansible. We have:
@@ -53,6 +58,11 @@ In this milestone, we have demonstrated the deployment and monitoring analysis u
 * Configured redis client to turn off some features using feature flags
 * Extracted a microservice and deployed sereral instances using Kuberneets
 * Implemented the monitoring analysis of the project as a special componenet
+
+[Screencast](https://youtu.be/78HHSHWss1I)
+## Screencast
+
+[Overall Project Screencast](https://youtu.be/zY5L-M_cXSY)
 
 ## References
 
