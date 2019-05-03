@@ -3,7 +3,7 @@
 ## Milestone 1 - Configuration Management & Build
 
 ![](./resources/01-NCSU-Logo.png)
-| [MILESTONE 1](#) | [MILESTONE 2](#) | [MILESTONE 3](#) | [MILESTONE 4](#) |
+| [MILESTONE 1](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone1) ([Screencast](https://youtu.be/9UFJjtvXmZY)) | [MILESTONE 2](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone2) ([Screencast](https://youtu.be/lFrX53iuUzw)) | [MILESTONE 3](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone3) ([Screencast](https://youtu.be/78HHSHWss1I))| 
 
 # Content
 1. [Our Team](#our-team)
