@@ -1,7 +1,7 @@
 # CSC519-Project
 
 ![](./resources/01-NCSU-Logo.png)
-| [MILESTONE 1](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone1) ([Screencast](https://youtu.be/9UFJjtvXmZY)) | [MILESTONE 2](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone2) ([Screencast](https://youtu.be/lFrX53iuUzw)) | [MILESTONE 3](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone3) ([Screencast](https://youtu.be/78HHSHWss1I))|
+| [MILESTONE 1](https://github.com/rayandasoriya/PipelineProject-DevOps/tree/Milestone1) ([Screencast](https://youtu.be/9UFJjtvXmZY)) | [MILESTONE 2](https://github.com/rayandasoriya/PipelineProject-DevOps/tree/Milestone2) ([Screencast](https://youtu.be/lFrX53iuUzw)) | [MILESTONE 3](https://github.com/rayandasoriya/PipelineProject-DevOps/tree/Milestone3) ([Screencast](https://youtu.be/78HHSHWss1I))|
 
 # Content
 1. [Our Team](#our-team)
@@ -23,7 +23,7 @@
 
 Continuous Delivery (CD) is a software strategy that enables organizations to deliver new features to users as fast and efficiently as possible. The goal of Continuous Delivery is to enable a constant flow of changes into production via an automated software production line. A typical CD pipeline will include the following stages: configuration management and build automation; test automation; and deployment automation.
 
-### [Milestone 1](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone1)
+### [Milestone 1](https://github.com/rayandasoriya/PipelineProject-DevOps/tree/Milestone1)
 
 In this milestone, we have demonstrated the build automation and configuration management using Ansible. We have:
 
@@ -37,7 +37,7 @@ In this milestone, we have demonstrated the build automation and configuration m
 
 [Screencast](https://youtu.be/9UFJjtvXmZY)
 
-### [Milestone 2](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone2)
+### [Milestone 2](https://github.com/rayandasoriya/PipelineProject-DevOps/tree/Milestone2)
 
 In this milestone, we have demonstrated the test and analysis using Ansible. We have:
 
@@ -50,7 +50,7 @@ In this milestone, we have demonstrated the test and analysis using Ansible. We 
 
 [Screencast](https://youtu.be/lFrX53iuUzw)
 
-### [Milestone 3](https://github.ncsu.edu/jnshah2/CSC519-Project/tree/Milestone3)
+### [Milestone 3](https://github.com/rayandasoriya/PipelineProject-DevOps/tree/Milestone3)
 
 In this milestone, we have demonstrated the deployment and monitoring analysis using Ansible. We have:
 
